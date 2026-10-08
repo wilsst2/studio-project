@@ -1,4 +1,6 @@
-﻿namespace studio_project
+﻿using System.Net.NetworkInformation;
+
+namespace studio_project
 {
     internal class Program
     {
@@ -34,7 +36,27 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
             //Dominik
+            
+
+
+
+
+
+
+
+
+
 
 
 
@@ -94,6 +116,16 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
             //David
 
 
@@ -124,7 +156,57 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
             //John
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
 }
