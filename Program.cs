@@ -87,7 +87,7 @@ namespace studio_project
 
 
                     //Akirah
-
+                
 
 
 
@@ -128,7 +128,10 @@ namespace studio_project
 
                     //David
 
-
+            if (forest == true)
+            {
+                Console.WriteLine("");
+            }
 
 
 
