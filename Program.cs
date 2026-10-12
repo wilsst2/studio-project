@@ -46,7 +46,7 @@ namespace studio_project
 
 
 
-                    //Dominik
+            //Dominik
 
 
 
@@ -86,7 +86,7 @@ namespace studio_project
 
 
 
-                    //Akirah
+            //Akirah
 
 
 
@@ -126,7 +126,7 @@ namespace studio_project
 
 
 
-                    //David
+            //David
 
 
 
@@ -166,12 +166,53 @@ namespace studio_project
 
 
 
-                    //John
+            //John
+            static void Dairy()
+            {
+                Console.Clear();
 
+                Console.WriteLine("Welcome to the Abandoned Dairy!");
+                Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
+                Console.WriteLine("You feel that something mysterious is nearby.");
+                Console.WriteLine();
 
+                Console.WriteLine("What do you want to do?");
+                Console.WriteLine("1. Search the counter");
+                Console.WriteLine("2. Look behind the dairy");
+                Console.WriteLine("3. Inspect the shelves");
+                Console.WriteLine("4. Leave the dairy");
+                Console.Write("Enter your choice: ");
 
+                string choice = Console.ReadLine();
 
+                if (choice == "1")
+                {
+                    Console.WriteLine("You search the dusty counter.");
+                    Console.WriteLine("You find an old rusty key!");
+                }
+                else if (choice == "2")
+                {
+                    Console.WriteLine("You look behind the dairy.");
+                    Console.WriteLine("You hear a strange noise in the darkness.");
+                }
+                else if (choice == "3")
+                {
+                    Console.WriteLine("You inspect the shelves.");
+                    Console.WriteLine("You find an old note with a strange symbol.");
+                }
+                else if (choice == "4")
+                {
+                    Console.WriteLine("You leave the dairy and return to the path.");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
 
+                Console.WriteLine();
+                Console.WriteLine("Press Enter to continue...");
+                Console.ReadLine();
+            }  
 
 
 
@@ -207,6 +248,8 @@ namespace studio_project
 
 
 
-            }
+
+
+        }
     }
 }
