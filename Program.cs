@@ -8,72 +8,69 @@ namespace studio_project
         static void Main()
         {
             //Blake
-            //Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type 'help' and you will recieve a more in depth tutorial (this is not finished yet so you actually won't - it will instead break the game)");
-            //Console.WriteLine("\nPress enter to start the game");
-            //Console.ReadLine();
-            //Courtyard();
-            Puzzle1();
+            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type 'help' and you will recieve a more in depth tutorial (this is not finished yet so you actually won't - it will instead break the game)");
+            Console.WriteLine("\nPress enter to start the game");
+            Console.ReadLine();
+            Courtyard();
         }
 
-        //static void Courtyard()
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("You stand in front of an old manor. The building looms over you, trapping you between itself and the moon-shadows of the trees. The front doors are open wide and welcoming.");
-        //    Console.WriteLine("\nWhat do you want to do?");
-        //    Console.WriteLine("1. Look around\n2. Enter manor\n3. Leave");
-        //    string user = Console.ReadLine();
-        //    if (user == "1")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("The manor is in a state of disrepair. Overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows.");
-        //        Console.ReadLine();
-        //        Courtyard();
-        //    }
-        //    else if (user == "2")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("You take the steps up to the front door and enter the manor.");
-        //        Console.ReadLine();
-        //        //method to call whatever the first room is
-        //    }
-        //    else if (user == "3")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
-        //        Console.ReadLine();
-        //        Street();
-        //    }
-        //}
+        static void Courtyard()
+        {
+            Console.Clear();
+            Console.WriteLine("You stand in front of an old manor. The building looms over you, trapping you between itself and the moon-shadows of the trees. The front doors are open wide and welcoming.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Look around\n2. Enter manor\n3. Leave");
+            string user = Console.ReadLine();
+            if (user == "1")
+            {
+                Console.Clear();
+                Console.WriteLine("The manor is in a state of disrepair. Overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows.");
+                Console.ReadLine();
+                Courtyard();
+            }
+            else if (user == "2")
+            {
+                Console.Clear();
+                Console.WriteLine("You take the steps up to the front door and enter the manor.");
+                Console.ReadLine();
+                //method to call whatever the first room is
+            }
+            else if (user == "3")
+            {
+                Console.Clear();
+                Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
+                Console.ReadLine();
+                Street();
+            }
+        }
 
-        //static void Street()
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
-        //    Console.WriteLine("\nWhat do you want to do?");
-        //    Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
-        //    string user = (Console.ReadLine());
+        static void Street()
+        {
+            Console.Clear();
+            Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
+            string user = (Console.ReadLine());
 
-        //    if (user == "1")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
-        //        Console.ReadLine();
-        //        Street();
-        //    }
-        //    else if (user == "2")
-        //    {
-        //        Dairy();
-        //    }
-        //    else if (user == "3")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
-        //        Console.ReadLine();
-        //        Courtyard();
-        //    }
-        //}
-
-
+            if (user == "1")
+            {
+                Console.Clear();
+                Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
+                Console.ReadLine();
+                Street();
+            }
+            else if (user == "2")
+            {
+                Dairy();
+            }
+            else if (user == "3")
+            {
+                Console.Clear();
+                Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
+                Console.ReadLine();
+                Courtyard();
+            }
+        }
 
 
 
@@ -85,7 +82,9 @@ namespace studio_project
 
 
 
-            //Dominik
+
+
+        //Dominik
         static void Puzzle1()
         {
             Random rand = new Random();
@@ -101,8 +100,55 @@ namespace studio_project
             }
             string jumble = new string(letters);
         }
+        static void TextEvent()
+        {
+            Random rand = new Random();
+            int x = rand.Next(1, 16);
+            switch (x)
+            {
+                case 1:
+                    {
+                        Console.WriteLine("You can feel yourself being watched...");
+                        Console.WriteLine("Press ENTER to look around");
+                        Console.ReadLine();
+                        Console.WriteLine();
+                        Console.WriteLine("You think you're completely alone.");
+                        Console.WriteLine();
+                        break;
+                    }
+                case 2:
+                    {
+                        Console.WriteLine("A cold breeze passes...");
+                        Console.WriteLine("Press ENTER to steady yourself");
+                        Console.ReadLine();
+                        Console.WriteLine();
+                        break;
+                    }
+                case 3:
+                    {
+                        Console.WriteLine("You feel chills down your spine...");
+                        Console.WriteLine();
+                        break;
+                    }
+                case 4:
+                    {
+                        Console.WriteLine("You don't feel safe here...");
+                        Console.WriteLine();
+                        break;
+                    }
+                case 5:
+                    {
+                        Console.WriteLine("You can smell the rotting and decaying...");
+                        Console.WriteLine();
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
 
-
+        }
 
 
 
