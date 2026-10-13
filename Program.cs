@@ -7,71 +7,70 @@ namespace studio_project
     {
         static void Main()
         {
-            ////Blake
-            //Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type 'help' and you will recieve a more in depth tutorial (this is not finished yet so you actually won't - it will instead break the game)");
-            //Console.WriteLine("\nPress enter to start the game");
-            //Console.ReadLine();
-            //Courtyard();
-            Puzzle1();
+            //Blake
+            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type 'help' and you will recieve a more in depth tutorial (this is not finished yet so you actually won't - it will instead break the game)");
+            Console.WriteLine("\nPress enter to start the game");
+            Console.ReadLine();
+            Courtyard();
         }
 
-        //static void Courtyard()
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("You stand in front of an old manor. The building looms over you, trapping you between itself and the moon-shadows of the trees. The front doors are open wide and welcoming.");
-        //    Console.WriteLine("\nWhat do you want to do?");
-        //    Console.WriteLine("1. Look around\n2. Enter manor\n3. Leave");
-        //    string user = Console.ReadLine();
-        //    if (user == "1")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("The manor is in a state of disrepair. Overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows.");
-        //        Console.ReadLine();
-        //        Courtyard();
-        //    }
-        //    else if (user == "2")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("You take the steps up to the front door and enter the manor.");
-        //        Console.ReadLine();
-        //        //method to call whatever the first room is
-        //    }
-        //    else if (user == "3")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
-        //        Console.ReadLine();
-        //        Street();
-        //    }
-        //}
+        static void Courtyard()
+        {
+            Console.Clear();
+            Console.WriteLine("You stand in front of an old manor. The building looms over you, trapping you between itself and the moon-shadows of the trees. The front doors are open wide and welcoming.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Look around\n2. Enter manor\n3. Leave");
+            string user = Console.ReadLine();
+            if (user == "1")
+            {
+                Console.Clear();
+                Console.WriteLine("The manor is in a state of disrepair. Overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows.");
+                Console.ReadLine();
+                Courtyard();
+            }
+            else if (user == "2")
+            {
+                Console.Clear();
+                Console.WriteLine("You take the steps up to the front door and enter the manor.");
+                Console.ReadLine();
+                //method to call whatever the first room is
+            }
+            else if (user == "3")
+            {
+                Console.Clear();
+                Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
+                Console.ReadLine();
+                Street();
+            }
+        }
 
-        //static void Street()
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
-        //    Console.WriteLine("\nWhat do you want to do?");
-        //    Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
-        //    string user = (Console.ReadLine());
+        static void Street()
+        {
+            Console.Clear();
+            Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
+            string user = (Console.ReadLine());
 
-        //    if (user == "1")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
-        //        Console.ReadLine();
-        //        Street();
-        //    }
-        //    else if (user == "2")
-        //    {
-        //        Dairy();
-        //    }
-        //    else if (user == "3")
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
-        //        Console.ReadLine();
-        //        Courtyard();
-        //    }
-        //}
+            if (user == "1")
+            {
+                Console.Clear();
+                Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
+                Console.ReadLine();
+                Street();
+            }
+            else if (user == "2")
+            {
+                Dairy();
+            }
+            else if (user == "3")
+            {
+                Console.Clear();
+                Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
+                Console.ReadLine();
+                Courtyard();
+            }
+        }
 
 
 
@@ -90,18 +89,18 @@ namespace studio_project
         {
             Random rand = new Random();
             string[] puzzle = {"sinister", "macabre", "apparition",};
-            string chosen = puzzle[rand.Next(puzzle.Length)];
-            string input;
+            string chosen = puzzle[rand.Next(puzzle.Length)]; //Chooses a random word from the puzzle array
+            string input;                                  
             string choice = "Y";
-            char[] letters = chosen.ToCharArray();
-            for (int i = 0; i < letters.Length; i++)
+            char[] letters = chosen.ToCharArray(); //Convert chosen string to array of characters                    
+            for (int i = 0; i < letters.Length; i++) //Repeat for every letter in the array
             {
-                int RI = rand.Next(letters.Length);
-                char temp = letters[i];
-                letters[i] = letters[RI];
-                letters[RI] = temp; 
+                int randomIndex = rand.Next(letters.Length);     //Chooses random char in the array
+                char temp = letters[i];                          //Stores letter about to be changed in temp
+                letters[i] = letters[randomIndex];              //Changes the stored letter that was just stored to the chosen random char
+                letters[randomIndex] = temp;                    //Stores the used word in temp
             }
-            string jumble = new string(letters);
+            string jumble = new string(letters);                //Creates a string with the new jumbled word
             Console.WriteLine("There's a strange set of letters carved into the case:");
             Console.WriteLine();
             Console.WriteLine(jumble);
@@ -111,12 +110,12 @@ namespace studio_project
             {
                 Console.Write("Attempt to unscramble: ");
                 input = Console.ReadLine().ToLower();
-                if (input != chosen)
+                if (input != chosen)                            //Get user's attempt to unscramble word
                 {
-                    Console.WriteLine("Nothing happened, try again? (Y/N)");
-                    choice = Console.ReadLine().ToUpper();
+                    Console.Write("Nothing happened, try again? (Y/N): ");
+                    choice = Console.ReadLine().ToUpper();      //Get user's choice on if they want to replay or leave
                 }
-            } while (input != chosen && choice == "Y");
+            } while (input != chosen && choice == "Y");         //Check: User hasn't gotten the puzzle correct and insists on retrying
             if (choice != "Y")
             {
                 Console.WriteLine("You give up and leave the case.");
@@ -126,10 +125,14 @@ namespace studio_project
                 Console.WriteLine("You open the case successfully.");
             }
         }
+        static void Puzzle2()
+        {
+
+        }
         static void TextEvent()
         {
             Random rand = new Random();
-            int x = rand.Next(1, 16);
+            int x = rand.Next(1, 16);       //1/3 Chance to print one of these, otherwise does nothing
             switch (x)
             {
                 case 1:
