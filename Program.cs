@@ -1,4 +1,5 @@
 ﻿using System.Net.NetworkInformation;
+using System.Reflection.Metadata;
 
 namespace studio_project
 {
@@ -7,20 +8,21 @@ namespace studio_project
         static void Main()
         {
             //Blake
-            int user;
             Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type 'help' and you will recieve a more in depth tutorial (this is not finished yet so you actually won't - it will instead break the game)");
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             Console.Clear();
             Console.WriteLine("placeholder for scene setting & manor description in courtyard location");
-            Console.WriteLine("What do you want to do?");
-            Console.WriteLine("1. option 1\n2. option 2\n3. option 3");
-            user = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Leave\n2. Enter manor\n3. (things that will be specific to courtyard area)");
+            int user = Convert.ToInt32(Console.ReadLine());
             switch (user)
             {
                 case 1:
-                    Console.WriteLine("Placeholder that will eventually call a method");
+                    Console.Clear();
+                    Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
                     Console.ReadLine();
+                    Street();
                     break;
                 case 2:
                     Console.WriteLine("Placeholder that will eventually call a method");
@@ -31,8 +33,31 @@ namespace studio_project
                     Console.ReadLine();
                     break;
             }
+        }
 
+        static void Street()
+        {
+            Console.Clear();
+            Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
+            string user = (Console.ReadLine());
 
+            if (user == "1")
+            {
+                Console.WriteLine("\nThe road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
+                Console.ReadLine();
+                Street();
+            }
+            else if (user == "2")
+            {
+                Dairy();
+            }
+            else if (user == "3")
+            {
+                Console.WriteLine("Placeholder");
+            }
+        }
 
 
 
@@ -250,6 +275,5 @@ namespace studio_project
 
 
 
-        }
     }
 }
