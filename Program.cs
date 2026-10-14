@@ -214,6 +214,29 @@ namespace studio_project
 
 
         //Akirah
+        static void Hallway()
+        {
+            Console.Clear();
+            Console.WriteLine("You are in the hallway of the haunted manor.");
+            Console.WriteLine("The hallway is dark, and the floorboards creak beneath your feet.");
+            Console.WriteLine("There are two doors in front of you.");
+
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Enter bathroom");
+            Console.WriteLine("2. Enter living room");
+
+            string user = Console.ReadLine();
+
+            if (user == "1")
+            {
+                BathRoom();
+            }
+            else if (user == "2")
+            {
+                LivingRoom();
+            }
+        }
+
 
 
 
