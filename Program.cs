@@ -214,7 +214,9 @@ namespace studio_project
 
 
         //Akirah
-        static void Hallway()
+
+        // hallway with options to enter bathroom or living room
+        static void Hallway()           
         {
             Console.Clear();
             Console.WriteLine("You are in the hallway of the haunted manor.");
@@ -243,7 +245,8 @@ namespace studio_project
             }
         }
 
-        static void BathRoom()
+        //bathroom scene and added a choice to go back to the hallway
+        static void BathRoom()                
         {
             Console.Clear();
             Console.WriteLine("You enter the bathroom.");
@@ -260,7 +263,8 @@ namespace studio_project
             }
         }
 
-        static void LivingRoom()
+        //living room description and options to explore the kitchen or return to the hallway
+        static void LivingRoom()            
         {
             Console.Clear();
             Console.WriteLine("You enter the living room.");
@@ -283,6 +287,7 @@ namespace studio_project
             }
         }
 
+        // kitchen that include an option to go back to the living rooom
         static void Kitchen()
         {
             Console.Clear();
