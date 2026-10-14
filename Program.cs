@@ -254,6 +254,28 @@ namespace studio_project
             }
         }
 
+        static void LivingRoom()
+        {
+            Console.Clear();
+            Console.WriteLine("You enter the living room.");
+            Console.WriteLine("Dusty furniture fills the room, and an old fireplace stands against the wall.");
+            Console.WriteLine("There is one door leading into the kitchen.");
+
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Enter kitchen");
+            Console.WriteLine("2. Return to hallway");
+
+            string user = Console.ReadLine();
+
+            if (user == "1")
+            {
+                Kitchen();
+            }
+            else if (user == "2")
+            {
+                Hallway();
+            }
+        }
 
 
 
