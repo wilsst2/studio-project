@@ -277,6 +277,30 @@ namespace studio_project
             }
         }
 
+        static void Kitchen()
+        {
+            Console.Clear();
+            Console.WriteLine("You enter the kitchen.");
+            Console.WriteLine("Old cupboards line the walls, and rusty pots hang from the ceiling.");
+            Console.WriteLine("A rotten smell lingers in the air.");
+
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Return to living room");
+
+            string user = Console.ReadLine();
+
+            if (user == "1")
+            {
+                LivingRoom();
+            }
+        }
+
+
+
+
+
+
+
 
 
 
