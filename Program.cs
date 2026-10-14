@@ -235,6 +235,12 @@ namespace studio_project
             {
                 LivingRoom();
             }
+            else
+            {
+                Console.WriteLine("Invalid choice. Please try again.");
+                Console.ReadKey();
+                Hallway();
+            }
         }
 
         static void BathRoom()
