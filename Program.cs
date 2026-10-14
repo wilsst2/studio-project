@@ -86,8 +86,8 @@ namespace studio_project
 
 
 
-                    //Akirah
-                
+            //Akirah
+
 
 
 
@@ -127,11 +127,25 @@ namespace studio_project
 
 
             //David
-
-            if (forest == true)
+            static void HauntedForest()
             {
-                Console.WriteLine("");
+                Console.WriteLine("You enter the Haunted Forest!");
+                Random random = new Random();
+                int eventNumber = random.Next(1, 4);
+                if (eventNumber == 1)
+                {
+                    Console.WriteLine("You found a key!");
+                }
+                else if (eventNumber == 2)
+                {
+                    Console.WriteLine("You found a health potion!");
+                }
+                else
+                {
+                    Console.WriteLine("A ghost appears!");
+                }
             }
+
 
 
 
