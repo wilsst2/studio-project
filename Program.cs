@@ -237,6 +237,24 @@ namespace studio_project
             }
         }
 
+        static void BathRoom()
+        {
+            Console.Clear();
+            Console.WriteLine("You enter the bathroom.");
+            Console.WriteLine("The mirror is cracked, the sink is stained, and the room feels unusually cold.");
+
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Return to hallway");
+
+            string user = Console.ReadLine();
+
+            if (user == "1")
+            {
+                Hallway();
+            }
+        }
+
+
 
 
 
