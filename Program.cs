@@ -88,7 +88,7 @@ namespace studio_project
         static void Puzzle1()
         {
             Random rand = new Random();
-            string[] puzzle = { "sinister", "macabre", "apparition", };
+            string[] puzzle = { "sinister", "october", "apparition", "halloween", };
             string chosen = puzzle[rand.Next(puzzle.Length)]; //Chooses a random word from the puzzle array
             string input;
             string choice = "Y";
@@ -122,7 +122,9 @@ namespace studio_project
             }
             if (input == chosen)
             {
-                Console.WriteLine("You open the case successfully.");
+                Console.WriteLine("You open the case successfully. Inside is a key radiating an sinister aura...");
+                Console.WriteLine("You've won, thank you for playtesting our demo! We hope you enjoyed.");
+                Console.ReadLine();
             }
         }
         static void Puzzle2()
