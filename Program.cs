@@ -287,6 +287,11 @@ namespace studio_project
             {
                 Hallway();
             }
+            else if ( user == "3")
+            {
+                Puzzle1();
+            }
+
         }
 
         // kitchen that include an option to go back to the living rooom
