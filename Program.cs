@@ -8,7 +8,7 @@ namespace studio_project
         static void Main()
         {
             //Blake
-            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type 'help' and you will recieve a more in depth tutorial (this is not finished yet so you actually won't - it will instead break the game)");
+            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial");
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             Courtyard();
@@ -20,27 +20,32 @@ namespace studio_project
             Console.WriteLine("You stand in front of an old manor. The building looms over you, trapping you between itself and the moon-shadows of the trees. The front doors are open wide and welcoming.");
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Look around\n2. Enter manor\n3. Leave");
-            string user = Console.ReadLine();
-            if (user == "1")
+            char user = Convert.ToChar(Console.ReadLine());
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("The manor is in a state of disrepair. Overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows.");
                 Console.ReadLine();
                 Courtyard();
             }
-            else if (user == "2")
+            else if (user == '2')
             {
                 Console.Clear();
                 Console.WriteLine("You take the steps up to the front door and enter the manor.");
                 Console.ReadLine();
                 //method to call whatever the first room is
             }
-            else if (user == "3")
+            else if (user == '3')
             {
                 Console.Clear();
                 Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
                 Console.ReadLine();
                 Street();
+            }
+            else if (user == '?')
+            {
+                Help();
+                Courtyard();
             }
         }
 
@@ -50,30 +55,41 @@ namespace studio_project
             Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
-            string user = (Console.ReadLine());
-
-            if (user == "1")
+            char user = Convert.ToChar(Console.ReadLine());
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
                 Console.ReadLine();
                 Street();
             }
-            else if (user == "2")
+            else if (user == '2')
             {
                 Dairy();
             }
-            else if (user == "3")
+            else if (user == '3')
             {
                 Console.Clear();
                 Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
                 Console.ReadLine();
                 Courtyard();
             }
+            else if (user == '?')
+            {
+                Help();
+                Street();
+            }
         }
 
 
-
+        static void Help()
+        {
+            Console.Clear();
+            Console.WriteLine("Gameplay: You will be provided with a list of options at every stage, just type and enter the corresponding number to pursue that action.");
+            Console.WriteLine("Items: Items will be added to your inventory and can be used to enter previously unaccesible areas or acquire jack-o'lanters.");
+            Console.WriteLine("Puzzles: Puzzles are all self contained and instructions will be within the puzzles themselves.");
+            Console.ReadLine();
+        }
 
 
 
