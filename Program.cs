@@ -535,13 +535,18 @@ namespace studio_project
             int room = 0;
             string[] rooms =
             {
-              "You step into a dark, forgotten forest. Twisted trees reach "
-              + "towards the sky while cold wind whispers through the branches.",
+             "You step into a dark, forgotten forest. Twisted trees reach " +
+              "towards the sky while cold wind whispers through the branches.",
 
-              "Thick silver fog covers the path. You hear strange footsteps.",
-              "Thorny vines cover the ground. Something moves beneath them.",
-              "Dead trees surround you. Strange symbols cover their bark."
-    };
+             "Thick silver fog covers the path. Strange footsteps follow " +
+              "you, but nobody is there.",
+
+             "Thorny vines cover the ground. Something beneath the leaves " +
+             "scratches and moves in the darkness.",
+  
+             "Dead trees surround an abandoned grove. Strange symbols glow " +
+              "on their bark, and a witch's laughter echoes nearby."
+            };
             while (true)
             {
                 Console.Clear();
