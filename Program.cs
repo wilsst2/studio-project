@@ -474,75 +474,62 @@ namespace studio_project
 
 
         //David
-        // ==========================================
-        // David's Haunted Forest Game Loop Method
-        // ==========================================
-        //static void ExploreForest()
-        //{
-        //    while (forestRoom != "exit")
-        //    {
-        //        Console.Clear();
-
-        //        // 1. BLAKE-STYLE ROOM DESCRIPTIONS & OPTIONS
-        //        if (forestRoom == "clearing")
-        //        {
-        //            Console.WriteLine("--- THE FOREST CLEARING ---\nMist clings to the trees. The wind howls.");
-        //            Console.WriteLine("\nWhat do you want to do?\n1. Look around\n2. Go to Foggy Path (West)\n3. Go to Briar Patch (East)\n4. Go to Witch's Grove (South)\n5. Return to street");
-        //        }
-        //        else if (forestRoom == "foggy_path")
-        //        {
-        //            Console.WriteLine("--- THE FOGGY PATH ---");
-        //            Console.WriteLine(hasForestLantern ? "The stump is empty." : "🎃 A Jack-o'-Lantern glows on a stump!");
-        //            Console.WriteLine("\nWhat do you want to do?\n1. Look around\n2. " + (hasForestLantern ? "Turn back" : "Grab Lantern") + "\n3. Turn back");
-        //        }
-        //        else if (forestRoom == "briar_patch")
-        //        {
-        //            Console.WriteLine("--- THE BRIAR PATCH ---\nOuch! You stumbled into sharp thorns.");
-        //            Console.WriteLine("\nWhat do you want to do?\n1. Look around\n2. Back away to clearing");
-        //        }
-        //        else if (forestRoom == "witch_grove")
-        //        {
-        //            Console.WriteLine("--- THE WITCH'S GROVE ---\nA quiet grove with an old stone altar.");
-        //            Console.WriteLine("\nWhat do you want to do?\n1. Look at altar\n2. Back away to clearing");
-        //        }
-
-        //        // 2. GET USER INPUT (MATCHING BLAKE'S VARIABLE NAME)
-        //        string user = Console.ReadLine();
-
-        //        // 3. SHORT MOVEMENT LOGIC
-        //        if (forestRoom == "clearing")
-        //        {
-        //            if (user == "1") { Console.Clear(); Console.WriteLine("The forest is thick and spooky."); Console.ReadLine(); }
-        //            else if (user == "2") forestRoom = "foggy_path";
-        //            else if (user == "3") forestRoom = "briar_patch";
-        //            else if (user == "4") forestRoom = "witch_grove";
-        //            else if (user == "5") forestRoom = "exit";
-        //        }
-        //        else if (forestRoom == "foggy_path")
-        //        {
-        //            if (user == "1") { Console.Clear(); Console.WriteLine("The fog shifts like shadows."); Console.ReadLine(); }
-        //            else if (user == "2" && !hasForestLantern) { Console.Clear(); hasForestLantern = true; Console.WriteLine("🎉 Grabbed the Jack-o'-Lantern!"); Console.ReadLine(); }
-        //            else if (user == "3" || (user == "2" && hasForestLantern)) forestRoom = "clearing";
-        //        }
-        //        else if (forestRoom == "briar_patch")
-        //        {
-        //            if (user == "1") { Console.Clear(); Console.WriteLine("Thorns catch your clothes."); Console.ReadLine(); }
-        //            else if (user == "2") forestRoom = "clearing";
-        //        }
-        //        else if (forestRoom == "witch_grove")
-        //        {
-        //            if (user == "1") { Console.Clear(); Console.WriteLine("The altar is covered in runes."); Console.ReadLine(); }
-        //            else if (user == "2") forestRoom = "clearing";
-        //        }
-        //    }
-
-        //    // 4. HANDOFF BACK TO BLAKE'S STREET METHOD
-        //    forestRoom = "clearing"; // Reset location for next time they enter
-        //    Console.Clear();
-        //    Console.WriteLine("You follow the path back out to the open road.");
-        //    Console.ReadLine();
-        //    Street();
-        //}
+        static void ExploreForest(bool[] lanterns, bool[] inv)
+        {
+            int room = 0;
+            string[] rooms =
+            {
+              "You enter a dark forest. Twisted trees surround you.",
+              "Thick silver fog covers the path. You hear strange footsteps.",
+              "Thorny vines cover the ground. Something moves beneath them.",
+              "Dead trees surround you. Strange symbols cover their bark."
+    };
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine(rooms[room]);
+                if (room == 0 && lanterns[2] == false)
+                    Console.WriteLine("A glowing jack-o'-lantern rests beside a tree.");
+                Console.WriteLine("\n1. Clearing\n2. Foggy path\n3. Briar patch\n4. Witch's grove");
+                if (room == 0 && lanterns[2] == false)
+                    Console.WriteLine("5. Pick up jack-o'-lantern");
+                Console.WriteLine("6. Leave forest\n?. Help");
+                string choice = Console.ReadLine();
+                switch (choice)
+                {
+                    case "1": room = 0; break;
+                    case "2": room = 1; break;
+                    case "3": room = 2; break;
+                    case "4": room = 3; break;
+                    case "5":
+                        if (room == 0 && lanterns[2] == false)
+                        {
+                            lanterns[2] = true;
+                            Console.WriteLine("You collected the jack-o'-lantern!");
+                            Console.ReadLine();
+                        }
+                        else
+                        {
+                            ShowInvalidChoice();
+                        }
+                        break;
+                    case "6":
+                        Street(lanterns, inv);
+                        return;
+                    case "?":
+                        Help();
+                        break;
+                    default:
+                        ShowInvalidChoice();
+                        break;
+                }
+            }
+        }
+        static void ShowInvalidChoice()
+        {
+            Console.WriteLine("Invalid choice. Press ENTER to continue.");
+            Console.ReadLine();
+        }
 
 
 
