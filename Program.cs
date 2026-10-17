@@ -597,7 +597,9 @@ namespace studio_project
         }
         static void ShowInvalidChoice()
         {
-            Console.WriteLine("Invalid choice. Press ENTER to continue.");
+            Console.WriteLine("\nThat is not a valid choice!");
+            Console.WriteLine("Please enter 1, 2, 3, 4, 5, 6, or ? for help.");
+            Console.WriteLine("Press ENTER to try again.");
             Console.ReadLine();
         }
 
