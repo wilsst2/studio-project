@@ -528,7 +528,8 @@ namespace studio_project
 
 
 
-        //David
+        //David Haunted Forest
+
         static void ExploreForest(bool[] lanterns, bool[] inv)
         {
             int room = 0;
