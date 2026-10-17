@@ -9,14 +9,14 @@ namespace studio_project
 
         static void Main()
         {
-            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial");
+            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[2];
             lanterns[0] = false; lanterns[1] = false; // 0 = courtyard, 1 = kitchen
-            bool[] inv = new bool[2];
-            inv[0] = false; inv[1] = false; // 0 = sharp, 1 = coins
+            bool[] inv = new bool[3];
+            inv[0] = false; inv[1] = false; // 0 = coins, 1 = pruning knife
             Courtyard(lanterns, inv);
         }
         static void Courtyard(bool[] lanterns, bool[] inv)
@@ -70,16 +70,16 @@ namespace studio_project
             {
                 Console.Clear();
                 Console.Write("The jack-o'lantern is suspended within a net, which is attached to a rope keeping it firmly in the sky.");
-                if (inv[0] == true)
+                if (inv[1] == true)
                 {
-                    Console.WriteLine(" You cut the rope and the net falls to the ground. You are able to claim your jack-o'-lantern.");
+                    Console.WriteLine(" You use your pruning knife to cut the rope and the net falls to the ground. You are able to claim your jack-o'-lantern.");
                     lanterns[0] = true;
                     Console.ReadLine();
                     Courtyard(lanterns, inv);
                 }
                 else
                 {
-                    Console.WriteLine("You might be able to cut it down if you find a sharp object.");
+                    Console.WriteLine(" You might be able to cut it down if you find a sharp object.");
                     Console.ReadLine();
                     Courtyard(lanterns, inv);
                 }
@@ -99,7 +99,7 @@ namespace studio_project
         static void Backyard(bool[] lanterns, bool[] inv)
         {
             bool coins;
-            if (inv[1] == true)
+            if (inv[0] == true)
             {
                 coins = true;
             }
@@ -135,14 +135,19 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("You trudge through the mud to enter the garden shed.");
                 Console.ReadLine();
-                Backyard(lanterns, inv); // garden shed method unfinished
+                GardenShed(lanterns, inv);
             }
             else if (user == '4' && coins == false)
             {
                 Console.Clear();
                 Console.WriteLine("You come closer to the fountain. The once marble structure is now slimey and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
-                inv[1] = true;
+                inv[0] = true;
                 Console.ReadLine();
+                Backyard(lanterns, inv);
+            }
+            else if (user == '?')
+            {
+                Help();
                 Backyard(lanterns, inv);
             }
             else
@@ -151,7 +156,57 @@ namespace studio_project
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-
+        }
+        static void GardenShed(bool[] lanterns, bool[] inv)
+        {
+            bool knife;
+            if (inv[1] == true)
+            {
+                knife = true;
+            }
+            else
+            {
+                knife = false;
+            }
+            Console.Clear();
+            Console.Write("You are in a dark and cramped space that smells of mold and something rotten. Your only light is from the moon shining through cracks in the roof.");
+            if (knife == false)
+            {
+                Console.WriteLine(" There's a pruning knife jutting out of the wall.");
+            }
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Leave");
+            if (knife == false)
+            {
+                Console.WriteLine("2. Grab pruning knife");
+            }
+            char user = Convert.ToChar(Console.ReadLine());
+            if (user == '1')
+            {
+                Console.Clear();
+                Console.WriteLine("You leave the garden shed and return to the backyard.");
+                Console.ReadLine();
+                Backyard(lanterns, inv);
+            }
+            else if (user == '2' && knife == false)
+            {
+                Console.Clear();
+                Console.WriteLine("You grab the pruning knife");
+                inv[1] = true;
+                Console.ReadLine();
+                GardenShed(lanterns, inv);
+            }
+            else if (user == '?')
+            {
+                Help();
+                Backyard(lanterns, inv);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid input");
+                Backyard(lanterns, inv);
+            }
         }
         static void Street(bool[] lanterns, bool[] inv)
         {
