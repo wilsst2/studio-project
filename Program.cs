@@ -583,12 +583,31 @@ namespace studio_project
                             ShowInvalidChoice();
                         }
                         break;
+
                     case "6":
-                        Street(lanterns, inv);
-                        return;
+                        Console.WriteLine("\nAre you sure you want to leave the forest? (Y/N)");
+                        string confirm = Console.ReadLine().ToUpper();
+
+                        if (confirm == "Y")
+                        {
+                            Street(lanterns, inv);
+                            return;
+                        }
+                        else if (confirm == "N")
+                        {
+                            Console.WriteLine("You decide to remain in the forest.");
+                            Console.ReadLine();
+                        }
+                        else
+                        {
+                            ShowInvalidChoice();
+                        }
+                        break;
+
                     case "?":
                         Help();
                         break;
+
                     default:
                         ShowInvalidChoice();
                         break;
