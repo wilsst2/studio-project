@@ -551,13 +551,17 @@ namespace studio_project
             {
                 Console.Clear();
                 Console.WriteLine(rooms[room]);
+
                 if (room == 0 && lanterns[2] == false)
                     Console.WriteLine("A glowing jack-o'-lantern rests beside a tree.");
                 Console.WriteLine("\n1. Clearing\n2. Foggy path\n3. Briar patch\n4. Witch's grove");
+                
                 if (room == 0 && lanterns[2] == false)
                     Console.WriteLine("5. Pick up jack-o'-lantern");
                 Console.WriteLine("6. Leave forest\n?. Help");
+                
                 string choice = Console.ReadLine();
+                
                 switch (choice)
                 {
                     case "1": room = 0; break;
@@ -568,7 +572,10 @@ namespace studio_project
                         if (room == 0 && lanterns[2] == false)
                         {
                             lanterns[2] = true;
-                            Console.WriteLine("You collected the jack-o'-lantern!");
+                            Console.WriteLine("\nYou pick up the glowing jack-o'-lantern.");
+                            Console.WriteLine("Its warm light cuts through the darkness.");
+                            Console.WriteLine("You have collected a lantern!");
+                            Console.WriteLine("\nPress ENTER to continue.");
                             Console.ReadLine();
                         }
                         else
