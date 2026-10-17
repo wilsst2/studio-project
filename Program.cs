@@ -13,8 +13,8 @@ namespace studio_project
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
-            bool[] lanterns = new bool[2];
-            lanterns[0] = false; lanterns[1] = false; // 0 = courtyard, 1 = kitchen
+            bool[] lanterns = new bool[3];
+            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; // 0 = courtyard, 1 = kitchen, 2 = forest
             bool[] inv = new bool[3];
             inv[0] = false; inv[1] = false; // 0 = coins, 1 = pruning knife
             Courtyard(lanterns, inv);
@@ -45,28 +45,28 @@ namespace studio_project
             {
                 Console.WriteLine("1. Enter manor\n2. Backyard\n3. Leave");
             }
-            char user = Convert.ToChar(Console.ReadLine());
-            if (user == '1')
+            string user = Console.ReadLine();
+            if (user == "1")
             {
                 Console.Clear();
                 Console.WriteLine("You take the steps up to the front door and enter the manor.");
                 Console.ReadLine();
                 Hallway();
             }
-            else if (user == '2')
+            else if (user == "2")
             {
                 Console.Clear();
                 Console.WriteLine("You move around the manor to the backyard.");
                 Backyard(lanterns, inv);
             }
-            else if (user == '3')
+            else if (user == "3")
             {
                 Console.Clear();
                 Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
                 Console.ReadLine();
                 Street(lanterns, inv);
             }
-            else if (user == '4' && jack == false)
+            else if (user == "4" && jack == false)
             {
                 Console.Clear();
                 Console.Write("The jack-o'lantern is suspended within a net, which is attached to a rope keeping it firmly in the sky.");
@@ -84,7 +84,7 @@ namespace studio_project
                     Courtyard(lanterns, inv);
                 }
             }
-            else if (user == '?')
+            else if (user == "?")
             {
                 Help();
                 Courtyard(lanterns, inv);
@@ -115,29 +115,29 @@ namespace studio_project
             {
                 Console.WriteLine("4. Investigate fountain");
             }
-            char user = Convert.ToChar(Console.ReadLine());
-            if (user == '1')
+            string user = Console.ReadLine();
+            if (user == "1")
             {
                 Console.Clear();
                 Console.WriteLine("You enter the manor through the backdoor.");
                 Console.ReadLine();
                 Backyard(lanterns, inv); // unsure what this room will be
             }
-            else if (user == '2')
+            else if (user == "2")
             {
                 Console.Clear();
                 Console.WriteLine("You move around the manor to the courtyard");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
-            else if (user == '3')
+            else if (user == "3")
             {
                 Console.Clear();
                 Console.WriteLine("You trudge through the mud to enter the garden shed.");
                 Console.ReadLine();
                 GardenShed(lanterns, inv);
             }
-            else if (user == '4' && coins == false)
+            else if (user == "4" && coins == false)
             {
                 Console.Clear();
                 Console.WriteLine("You come closer to the fountain. The once marble structure is now slimey and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
@@ -145,7 +145,7 @@ namespace studio_project
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-            else if (user == '?')
+            else if (user == "?")
             {
                 Help();
                 Backyard(lanterns, inv);
@@ -180,15 +180,15 @@ namespace studio_project
             {
                 Console.WriteLine("2. Grab pruning knife");
             }
-            char user = Convert.ToChar(Console.ReadLine());
-            if (user == '1')
+            string user = Console.ReadLine();
+            if (user == "1")
             {
                 Console.Clear();
                 Console.WriteLine("You leave the garden shed and return to the backyard.");
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-            else if (user == '2' && knife == false)
+            else if (user == "2" && knife == false)
             {
                 Console.Clear();
                 Console.WriteLine("You grab the pruning knife");
@@ -196,7 +196,7 @@ namespace studio_project
                 Console.ReadLine();
                 GardenShed(lanterns, inv);
             }
-            else if (user == '?')
+            else if (user == "?")
             {
                 Help();
                 Backyard(lanterns, inv);
@@ -214,26 +214,26 @@ namespace studio_project
             Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
-            char user = Convert.ToChar(Console.ReadLine());
-            if (user == '1')
+            string user = Console.ReadLine();
+            if (user == "1")
             {
                 Console.Clear();
                 Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
                 Console.ReadLine();
                 Street(lanterns, inv);
             }
-            else if (user == '2')
+            else if (user == "2")
             {
                 Dairy();
             }
-            else if (user == '3')
+            else if (user == "3")
             {
                 Console.Clear();
                 Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
-            else if (user == '?')
+            else if (user == "?")
             {
                 Help();
                 Street(lanterns, inv);
