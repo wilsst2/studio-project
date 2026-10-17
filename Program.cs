@@ -5,35 +5,45 @@ namespace studio_project
 {
     internal class Program
     {
+        //Blake
+
         static void Main()
         {
-            //Blake
             Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial");
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             Courtyard();
         }
-
         static void Courtyard()
         {
+            bool jack = false;
+            bool sharpInv = true;
             Console.Clear();
-            Console.WriteLine("You stand in front of an old manor. The building looms over you, trapping you between itself and the moon-shadows of the trees. The front doors are open wide and welcoming.");
+            Console.Write("You stand in front of an old, dilapidated manor, it's doors wide open and welcoming. The courtyard is in a state of disrepair, overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows. The moon-shadows of the dead trees surround you.");
+            if (jack == false)
+            {
+                Console.WriteLine(" A jack-o'-lantern hangs in one of them.");
+            }
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Look around\n2. Enter manor\n3. Leave");
+            if (jack == false)
+            {
+                Console.WriteLine("1. Enter manor\n2. Backyard\n3. Leave\n4. Approach jack-o'-lantern");
+            }
+            else
+            {
+                Console.WriteLine("1. Enter manor\n2. Backyard\n3. Leave");
+            }
             char user = Convert.ToChar(Console.ReadLine());
             if (user == '1')
             {
                 Console.Clear();
-                Console.WriteLine("The manor is in a state of disrepair. Overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows.");
+                Console.WriteLine("You take the steps up to the front door and enter the manor.");
                 Console.ReadLine();
-                Courtyard();
+                Hallway();
             }
             else if (user == '2')
             {
-                Console.Clear();
-                Console.WriteLine("You take the steps up to the front door and enter the manor.");
-                Console.ReadLine();
-                //method to call whatever the first room is
+                Courtyard(); //will eventually be backyard
             }
             else if (user == '3')
             {
@@ -42,13 +52,36 @@ namespace studio_project
                 Console.ReadLine();
                 Street();
             }
+            else if (user == '4' && jack == false)
+            {
+                Console.Clear();
+                Console.Write("The jack-o'lantern is suspended within a net, which is attached to a rope keeping it firmly in the sky.");
+                if (sharpInv == true)
+                {
+                    Console.WriteLine(" You cut the rope and the net falls to the ground. You are able to claim your jack-o'-lantern.");
+                    jack = true;
+                    Console.ReadLine();
+                    Courtyard();
+                }
+                else
+                {
+                    Console.WriteLine("You might be able to cut it down if you find a sharp object.");
+                    Console.ReadLine();
+                    Courtyard();
+                }
+            }
             else if (user == '?')
             {
                 Help();
                 Courtyard();
             }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+                Courtyard();
+            }
         }
-
         static void Street()
         {
             Console.Clear();
