@@ -535,7 +535,9 @@ namespace studio_project
             int room = 0;
             string[] rooms =
             {
-              "You enter a dark forest. Twisted trees surround you.",
+              "You step into a dark, forgotten forest. Twisted trees reach "
+              + "towards the sky while cold wind whispers through the branches.",
+
               "Thick silver fog covers the path. You hear strange footsteps.",
               "Thorny vines cover the ground. Something moves beneath them.",
               "Dead trees surround you. Strange symbols cover their bark."
