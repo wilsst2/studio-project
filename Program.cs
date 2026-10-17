@@ -12,15 +12,15 @@ namespace studio_project
             Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial");
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
+            // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[2];
-            bool[] inv = new bool[1];
             lanterns[0] = false; lanterns[1] = false; // 0 = courtyard, 1 = kitchen
-            inv[0] = false; // 0 = sharp
+            bool[] inv = new bool[2];
+            inv[0] = false; inv[1] = false; // 0 = sharp, 1 = coins
             Courtyard(lanterns, inv);
         }
         static void Courtyard(bool[] lanterns, bool[] inv)
         {
-            inv[0] = true;
             bool jack;
             if (lanterns[0] == true)
             {
@@ -39,7 +39,7 @@ namespace studio_project
             Console.WriteLine("\nWhat do you want to do?");
             if (jack == false)
             {
-                Console.WriteLine("1. Enter manor\n2. Backyard\n3. Leave\n4. Approach jack-o'-lantern");
+                Console.WriteLine("1. Enter manor\n2. Move to backyard\n3. Leave\n4. Approach jack-o'-lantern");
             }
             else
             {
@@ -55,7 +55,9 @@ namespace studio_project
             }
             else if (user == '2')
             {
-                Courtyard(lanterns, inv); //will eventually be backyard
+                Console.Clear();
+                Console.WriteLine("You move around the manor to the backyard.");
+                Backyard(lanterns, inv);
             }
             else if (user == '3')
             {
@@ -93,6 +95,63 @@ namespace studio_project
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
+        }
+        static void Backyard(bool[] lanterns, bool[] inv)
+        {
+            bool coins;
+            if (inv[1] == true)
+            {
+                coins = true;
+            }
+            else
+            {
+                coins = false;
+            }
+            Console.Clear();
+            Console.WriteLine("The area is even more overgrown than the courtyard. There is a no longer running fountain and a dingy garden shed tucked away in the far corner.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Enter manor\n2. Move to courtyard\n3. Enter garden shed");
+            if (coins == false)
+            {
+                Console.WriteLine("4. Investigate fountain");
+            }
+            char user = Convert.ToChar(Console.ReadLine());
+            if (user == '1')
+            {
+                Console.Clear();
+                Console.WriteLine("You enter the manor through the backdoor.");
+                Console.ReadLine();
+                Backyard(lanterns, inv); // unsure what this room will be
+            }
+            else if (user == '2')
+            {
+                Console.Clear();
+                Console.WriteLine("You move around the manor to the courtyard");
+                Console.ReadLine();
+                Courtyard(lanterns, inv);
+            }
+            else if (user == '3')
+            {
+                Console.Clear();
+                Console.WriteLine("You trudge through the mud to enter the garden shed.");
+                Console.ReadLine();
+                Backyard(lanterns, inv); // garden shed method unfinished
+            }
+            else if (user == '4' && coins == false)
+            {
+                Console.Clear();
+                Console.WriteLine("You come closer to the fountain. The once marble structure is now slimey and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
+                inv[1] = true;
+                Console.ReadLine();
+                Backyard(lanterns, inv);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+                Backyard(lanterns, inv);
+            }
+
         }
         static void Street(bool[] lanterns, bool[] inv)
         {
