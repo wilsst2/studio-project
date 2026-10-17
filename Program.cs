@@ -12,12 +12,24 @@ namespace studio_project
             Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial");
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
-            Courtyard();
+            bool[] lanterns = new bool[2];
+            bool[] inv = new bool[1];
+            lanterns[0] = false; lanterns[1] = false; // 0 = courtyard, 1 = kitchen
+            inv[0] = false; // 0 = sharp
+            Courtyard(lanterns, inv);
         }
-        static void Courtyard()
+        static void Courtyard(bool[] lanterns, bool[] inv)
         {
-            bool jack = false;
-            bool sharpInv = true;
+            inv[0] = true;
+            bool jack;
+            if (lanterns[0] == true)
+            {
+                jack = true;
+            }
+            else
+            {
+                jack = false;
+            }
             Console.Clear();
             Console.Write("You stand in front of an old, dilapidated manor, it's doors wide open and welcoming. The courtyard is in a state of disrepair, overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows. The moon-shadows of the dead trees surround you.");
             if (jack == false)
@@ -43,46 +55,46 @@ namespace studio_project
             }
             else if (user == '2')
             {
-                Courtyard(); //will eventually be backyard
+                Courtyard(lanterns, inv); //will eventually be backyard
             }
             else if (user == '3')
             {
                 Console.Clear();
                 Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
                 Console.ReadLine();
-                Street();
+                Street(lanterns, inv);
             }
             else if (user == '4' && jack == false)
             {
                 Console.Clear();
                 Console.Write("The jack-o'lantern is suspended within a net, which is attached to a rope keeping it firmly in the sky.");
-                if (sharpInv == true)
+                if (inv[0] == true)
                 {
                     Console.WriteLine(" You cut the rope and the net falls to the ground. You are able to claim your jack-o'-lantern.");
-                    jack = true;
+                    lanterns[0] = true;
                     Console.ReadLine();
-                    Courtyard();
+                    Courtyard(lanterns, inv);
                 }
                 else
                 {
                     Console.WriteLine("You might be able to cut it down if you find a sharp object.");
                     Console.ReadLine();
-                    Courtyard();
+                    Courtyard(lanterns, inv);
                 }
             }
             else if (user == '?')
             {
                 Help();
-                Courtyard();
+                Courtyard(lanterns, inv);
             }
             else
             {
                 Console.WriteLine("Invalid input");
                 Console.ReadLine();
-                Courtyard();
+                Courtyard(lanterns, inv);
             }
         }
-        static void Street()
+        static void Street(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
@@ -94,7 +106,7 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
                 Console.ReadLine();
-                Street();
+                Street(lanterns, inv);
             }
             else if (user == '2')
             {
@@ -105,12 +117,12 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
                 Console.ReadLine();
-                Courtyard();
+                Courtyard(lanterns, inv);
             }
             else if (user == '?')
             {
                 Help();
-                Street();
+                Street(lanterns, inv);
             }
         }
 
