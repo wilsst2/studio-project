@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections;
+using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
 
@@ -426,7 +427,7 @@ namespace studio_project
         static void Hallway()
         {
             Console.Clear();
-            Console.WriteLine("You are in the hallway of the haunted manor.");
+            Console.WriteLine("You are in the hallway of the HAUNTED HOUSE.");
             Console.WriteLine("The hallway is dark, and the floorboards creak beneath your feet.");
             Console.WriteLine("There are two doors in front of you.");
 
@@ -471,6 +472,7 @@ namespace studio_project
         }
 
         //living room description and options to explore the kitchen or return to the hallway
+        // attempt Puzzle 1
         static void LivingRoom()
         {
             Console.Clear();
@@ -486,12 +488,14 @@ namespace studio_project
 
             if (user == "1")
             {
-                    Kitchen();
+                Kitchen();
             }
             else if (user == "2")
             {
                 Hallway();
             }
+
+            //Case 1 Puzzle
             else if (user == "3")
             {
                 Puzzle1();
@@ -505,7 +509,8 @@ namespace studio_project
             
         }
 
-        // kitchen that include an option to go back to the living rooom
+        // kitchen where the player can return to the living room 
+        // attemp Puzzle 2
         static void Kitchen()
         {
             Console.Clear();
@@ -522,11 +527,13 @@ namespace studio_project
             {
                 LivingRoom();
             }
+
+            // Case 2 Puzzle
             else if (user == "2")
             {
                 Puzzle2();
                 Console.WriteLine();
-                Console.WriteLine("Thank you for playing our haunted house demo!");
+                Console.WriteLine("Thank you for playing our haunted house demo!");    // Game Finished
                 Console.ReadLine();
             }
             else
