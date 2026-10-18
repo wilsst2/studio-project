@@ -522,6 +522,16 @@ namespace studio_project
             {
                 LivingRoom();
             }
+            else if (user == "2")
+            {
+                Puzzle2();
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice. Please try again.");
+            }
+            Console.ReadKey();
+            Kitchen();
         }
 
 
