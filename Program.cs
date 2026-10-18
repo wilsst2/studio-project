@@ -1,4 +1,5 @@
-﻿using System.Net.NetworkInformation;
+﻿using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
 
 namespace studio_project
@@ -485,17 +486,23 @@ namespace studio_project
 
             if (user == "1")
             {
-                Kitchen();
+                    Kitchen();
             }
             else if (user == "2")
             {
                 Hallway();
             }
-            else if ( user == "3")
+            else if (user == "3")
             {
                 Puzzle1();
             }
-
+            else
+            {
+                Console.WriteLine("Invalid choice. Please try again.");
+                Console.ReadKey();
+                LivingRoom();
+            }
+            
         }
 
         // kitchen that include an option to go back to the living rooom
