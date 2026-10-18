@@ -5,59 +5,222 @@ namespace studio_project
 {
     internal class Program
     {
+        //Blake
+
         static void Main()
         {
-            //Blake
-            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type 'help' and you will recieve a more in depth tutorial (this is not finished yet so you actually won't - it will instead break the game)");
+            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
-            Courtyard();
+            // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
+            bool[] lanterns = new bool[3];
+            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; // 0 = courtyard, 1 = kitchen, 2 = forest
+            bool[] inv = new bool[3];
+            inv[0] = false; inv[1] = false; // 0 = coins, 1 = pruning knife
+            Courtyard(lanterns, inv);
         }
-
-        static void Courtyard()
+        static void Courtyard(bool[] lanterns, bool[] inv)
         {
+            bool jack;
+            if (lanterns[0] == true)
+            {
+                jack = true;
+            }
+            else
+            {
+                jack = false;
+            }
             Console.Clear();
-            Console.WriteLine("You stand in front of an old manor. The building looms over you, trapping you between itself and the moon-shadows of the trees. The front doors are open wide and welcoming.");
+            Console.Write("You stand in front of an old, dilapidated manor, it's doors wide open and welcoming. The courtyard is in a state of disrepair, overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows. The moon-shadows of the dead trees surround you.");
+            if (jack == false)
+            {
+                Console.WriteLine(" A jack-o'-lantern hangs in one of them.");
+            }
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Look around\n2. Enter manor\n3. Leave");
+            if (jack == false)
+            {
+                Console.WriteLine("1. Enter manor\n2. Move to backyard\n3. Leave\n4. Approach jack-o'-lantern");
+            }
+            else
+            {
+                Console.WriteLine("1. Enter manor\n2. Backyard\n3. Leave");
+            }
             string user = Console.ReadLine();
             if (user == "1")
             {
                 Console.Clear();
-                Console.WriteLine("The manor is in a state of disrepair. Overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows.");
+                Console.WriteLine("You take the steps up to the front door and enter the manor.");
                 Console.ReadLine();
-                Courtyard();
+                Hallway();
             }
             else if (user == "2")
             {
                 Console.Clear();
-                Console.WriteLine("You take the steps up to the front door and enter the manor.");
-                Console.ReadLine();
-                //method to call whatever the first room is
+                Console.WriteLine("You move around the manor to the backyard.");
+                Backyard(lanterns, inv);
             }
             else if (user == "3")
             {
                 Console.Clear();
                 Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
                 Console.ReadLine();
-                Street();
+                Street(lanterns, inv);
+            }
+            else if (user == "4" && jack == false)
+            {
+                Console.Clear();
+                Console.Write("The jack-o'lantern is suspended within a net, which is attached to a rope keeping it firmly in the sky.");
+                if (inv[1] == true)
+                {
+                    Console.WriteLine(" You use your pruning knife to cut the rope and the net falls to the ground. You are able to claim your jack-o'-lantern.");
+                    lanterns[0] = true;
+                    Console.ReadLine();
+                    Courtyard(lanterns, inv);
+                }
+                else
+                {
+                    Console.WriteLine(" You might be able to cut it down if you find a sharp object.");
+                    Console.ReadLine();
+                    Courtyard(lanterns, inv);
+                }
+            }
+            else if (user == "?")
+            {
+                Help();
+                Courtyard(lanterns, inv);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+                Courtyard(lanterns, inv);
             }
         }
-
-        static void Street()
+        static void Backyard(bool[] lanterns, bool[] inv)
+        {
+            bool coins;
+            if (inv[0] == true)
+            {
+                coins = true;
+            }
+            else
+            {
+                coins = false;
+            }
+            Console.Clear();
+            Console.WriteLine("The area is even more overgrown than the courtyard. There is a no longer running fountain and a dingy garden shed tucked away in the far corner.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Enter manor\n2. Move to courtyard\n3. Enter garden shed");
+            if (coins == false)
+            {
+                Console.WriteLine("4. Investigate fountain");
+            }
+            string user = Console.ReadLine();
+            if (user == "1")
+            {
+                Console.Clear();
+                Console.WriteLine("You enter the manor through the backdoor.");
+                Console.ReadLine();
+                Backyard(lanterns, inv); // unsure what this room will be
+            }
+            else if (user == "2")
+            {
+                Console.Clear();
+                Console.WriteLine("You move around the manor to the courtyard");
+                Console.ReadLine();
+                Courtyard(lanterns, inv);
+            }
+            else if (user == "3")
+            {
+                Console.Clear();
+                Console.WriteLine("You trudge through the mud to enter the garden shed.");
+                Console.ReadLine();
+                GardenShed(lanterns, inv);
+            }
+            else if (user == "4" && coins == false)
+            {
+                Console.Clear();
+                Console.WriteLine("You come closer to the fountain. The once marble structure is now slimey and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
+                inv[0] = true;
+                Console.ReadLine();
+                Backyard(lanterns, inv);
+            }
+            else if (user == "?")
+            {
+                Help();
+                Backyard(lanterns, inv);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+                Backyard(lanterns, inv);
+            }
+        }
+        static void GardenShed(bool[] lanterns, bool[] inv)
+        {
+            bool knife;
+            if (inv[1] == true)
+            {
+                knife = true;
+            }
+            else
+            {
+                knife = false;
+            }
+            Console.Clear();
+            Console.Write("You are in a dark and cramped space that smells of mold and something rotten. Your only light is from the moon shining through cracks in the roof.");
+            if (knife == false)
+            {
+                Console.WriteLine(" There's a pruning knife jutting out of the wall.");
+            }
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Leave");
+            if (knife == false)
+            {
+                Console.WriteLine("2. Grab pruning knife");
+            }
+            string user = Console.ReadLine();
+            if (user == "1")
+            {
+                Console.Clear();
+                Console.WriteLine("You leave the garden shed and return to the backyard.");
+                Console.ReadLine();
+                Backyard(lanterns, inv);
+            }
+            else if (user == "2" && knife == false)
+            {
+                Console.Clear();
+                Console.WriteLine("You grab the pruning knife");
+                inv[1] = true;
+                Console.ReadLine();
+                GardenShed(lanterns, inv);
+            }
+            else if (user == "?")
+            {
+                Help();
+                Backyard(lanterns, inv);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid input");
+                Backyard(lanterns, inv);
+            }
+        }
+        static void Street(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
-            string user = (Console.ReadLine());
-
+            string user = Console.ReadLine();
             if (user == "1")
             {
                 Console.Clear();
                 Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
                 Console.ReadLine();
-                Street();
+                Street(lanterns, inv);
             }
             else if (user == "2")
             {
@@ -68,12 +231,24 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
                 Console.ReadLine();
-                Courtyard();
+                Courtyard(lanterns, inv);
+            }
+            else if (user == "?")
+            {
+                Help();
+                Street(lanterns, inv);
             }
         }
 
 
-
+        static void Help()
+        {
+            Console.Clear();
+            Console.WriteLine("Gameplay: You will be provided with a list of options at every stage, just type and enter the corresponding number to pursue that action.");
+            Console.WriteLine("Items: Items will be added to your inventory and can be used to enter previously unaccesible areas or acquire jack-o'lanters.");
+            Console.WriteLine("Puzzles: Puzzles are all self contained and instructions will be within the puzzles themselves.");
+            Console.ReadLine();
+        }
 
 
 
@@ -91,7 +266,7 @@ namespace studio_project
             string[] puzzle = { "sinister", "october", "apparition", "halloween", };
             string chosen = puzzle[rand.Next(puzzle.Length)]; //Chooses a random word from the puzzle array
             string input;
-            string choice = "Y";
+            string choice = "Y";        //Set to Y as default for checks later
             char[] letters = chosen.ToCharArray(); //Convert chosen string to array of characters                    
             for (int i = 0; i < letters.Length; i++) //Repeat for every letter in the array
             {
@@ -100,27 +275,28 @@ namespace studio_project
                 letters[i] = letters[randomIndex];              //Changes the stored letter that was just stored to the chosen random char
                 letters[randomIndex] = temp;                    //Stores the used word in temp
             }
-            string jumble = new string(letters);                //Creates a string with the new jumbled word
+            string jumble = new string(letters);                //Creates a string storing the new jumbled word
             Console.WriteLine("There's a strange set of letters carved into the case:");
             Console.WriteLine();
             Console.WriteLine(jumble);
             Console.WriteLine();
             Console.WriteLine("Maybe unscrambling this jumbled word will open it?");
+            Console.WriteLine();
             do
             {
                 Console.Write("Attempt to unscramble: ");
-                input = Console.ReadLine().ToLower();
+                input = Console.ReadLine().ToLower();           //Gets the user's choice and converts it to lowercase
                 if (input != chosen)                            //Get user's attempt to unscramble word
                 {
                     Console.Write("Nothing happened, try again? (Y/N): ");
-                    choice = Console.ReadLine().ToUpper();      //Get user's choice on if they want to replay or leave
+                    choice = Console.ReadLine().ToUpper();      //Get user's choice on if they want to replay or leave, capitalized
                 }
-            } while (input != chosen && choice == "Y");         //Check: User hasn't gotten the puzzle correct and insists on retrying
-            if (choice != "Y")
+            } while (input != chosen && choice == "Y");         //Check: User hasn't gotten the puzzle correct and their choice is "Y"
+            if (choice != "Y")                              //Check: User doesn't want to retry
             {
                 Console.WriteLine("You give up and leave the case.");
             }
-            if (input == chosen)
+            else if (input == chosen)
             {
                 Console.WriteLine("You open the case successfully. Inside is a key radiating an sinister aura...");
                 Console.WriteLine("You've won, thank you for playtesting our demo! We hope you enjoyed.");
@@ -129,7 +305,35 @@ namespace studio_project
         }
         static void Puzzle2()
         {
-
+            string choice = "Y";
+            string entry;
+            Console.WriteLine("Upon entering, you encounter a series of raw binary...");
+            Console.WriteLine();
+            Console.WriteLine("1010011010");            //This is equal to 666 in decimal
+            Console.WriteLine();
+            Console.WriteLine("You must convert this to decimal to pass...");
+            Console.WriteLine();
+            do
+            {
+                Console.Write("Attempt to translate: ");
+                entry = Console.ReadLine();
+                if (entry != "666")
+                {
+                    Console.WriteLine("Incorrect, try again? (Y/N): ");
+                    choice = Console.ReadLine().ToUpper();
+                }
+            } while (entry != "666" && choice == "Y");
+            if (choice!="Y")
+            {
+                Console.WriteLine("You gave up and left.");
+            }
+            else if (entry == "666")
+            {
+                Console.WriteLine("You successfully convert the binary to decimal.");
+                Console.WriteLine();
+                Console.Write("Press ENTER to continue");
+                Console.ReadLine();
+            }
         }
         static void TextEvent()
         {
@@ -358,76 +562,99 @@ namespace studio_project
 
 
 
-        //David
-        // ==========================================
-        // David's Haunted Forest Game Loop Method
-        // ==========================================
-        //static void ExploreForest()
-        //{
-        //    while (forestRoom != "exit")
-        //    {
-        //        Console.Clear();
+        //David Haunted Forest
 
-        //        // 1. BLAKE-STYLE ROOM DESCRIPTIONS & OPTIONS
-        //        if (forestRoom == "clearing")
-        //        {
-        //            Console.WriteLine("--- THE FOREST CLEARING ---\nMist clings to the trees. The wind howls.");
-        //            Console.WriteLine("\nWhat do you want to do?\n1. Look around\n2. Go to Foggy Path (West)\n3. Go to Briar Patch (East)\n4. Go to Witch's Grove (South)\n5. Return to street");
-        //        }
-        //        else if (forestRoom == "foggy_path")
-        //        {
-        //            Console.WriteLine("--- THE FOGGY PATH ---");
-        //            Console.WriteLine(hasForestLantern ? "The stump is empty." : "🎃 A Jack-o'-Lantern glows on a stump!");
-        //            Console.WriteLine("\nWhat do you want to do?\n1. Look around\n2. " + (hasForestLantern ? "Turn back" : "Grab Lantern") + "\n3. Turn back");
-        //        }
-        //        else if (forestRoom == "briar_patch")
-        //        {
-        //            Console.WriteLine("--- THE BRIAR PATCH ---\nOuch! You stumbled into sharp thorns.");
-        //            Console.WriteLine("\nWhat do you want to do?\n1. Look around\n2. Back away to clearing");
-        //        }
-        //        else if (forestRoom == "witch_grove")
-        //        {
-        //            Console.WriteLine("--- THE WITCH'S GROVE ---\nA quiet grove with an old stone altar.");
-        //            Console.WriteLine("\nWhat do you want to do?\n1. Look at altar\n2. Back away to clearing");
-        //        }
+        static void ExploreForest(bool[] lanterns, bool[] inv)
+        {
+            int room = 0;
+            string[] rooms =
+            {
+             "You step into a dark, forgotten forest. Twisted trees reach " +
+              "towards the sky while cold wind whispers through the branches.",
 
-        //        // 2. GET USER INPUT (MATCHING BLAKE'S VARIABLE NAME)
-        //        string user = Console.ReadLine();
+             "Thick silver fog covers the path. Strange footsteps follow " +
+              "you, but nobody is there.",
 
-        //        // 3. SHORT MOVEMENT LOGIC
-        //        if (forestRoom == "clearing")
-        //        {
-        //            if (user == "1") { Console.Clear(); Console.WriteLine("The forest is thick and spooky."); Console.ReadLine(); }
-        //            else if (user == "2") forestRoom = "foggy_path";
-        //            else if (user == "3") forestRoom = "briar_patch";
-        //            else if (user == "4") forestRoom = "witch_grove";
-        //            else if (user == "5") forestRoom = "exit";
-        //        }
-        //        else if (forestRoom == "foggy_path")
-        //        {
-        //            if (user == "1") { Console.Clear(); Console.WriteLine("The fog shifts like shadows."); Console.ReadLine(); }
-        //            else if (user == "2" && !hasForestLantern) { Console.Clear(); hasForestLantern = true; Console.WriteLine("🎉 Grabbed the Jack-o'-Lantern!"); Console.ReadLine(); }
-        //            else if (user == "3" || (user == "2" && hasForestLantern)) forestRoom = "clearing";
-        //        }
-        //        else if (forestRoom == "briar_patch")
-        //        {
-        //            if (user == "1") { Console.Clear(); Console.WriteLine("Thorns catch your clothes."); Console.ReadLine(); }
-        //            else if (user == "2") forestRoom = "clearing";
-        //        }
-        //        else if (forestRoom == "witch_grove")
-        //        {
-        //            if (user == "1") { Console.Clear(); Console.WriteLine("The altar is covered in runes."); Console.ReadLine(); }
-        //            else if (user == "2") forestRoom = "clearing";
-        //        }
-        //    }
+             "Thorny vines cover the ground. Something beneath the leaves " +
+             "scratches and moves in the darkness.",
+  
+             "Dead trees surround an abandoned grove. Strange symbols glow " +
+              "on their bark, and a witch's laughter echoes nearby."
+            };
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine(rooms[room]);
 
-        //    // 4. HANDOFF BACK TO BLAKE'S STREET METHOD
-        //    forestRoom = "clearing"; // Reset location for next time they enter
-        //    Console.Clear();
-        //    Console.WriteLine("You follow the path back out to the open road.");
-        //    Console.ReadLine();
-        //    Street();
-        //}
+                if (room == 0 && lanterns[2] == false)
+                    Console.WriteLine("A glowing jack-o'-lantern rests beside a tree.");
+                Console.WriteLine("\n1. Clearing\n2. Foggy path\n3. Briar patch\n4. Witch's grove");
+                
+                if (room == 0 && lanterns[2] == false)
+                    Console.WriteLine("5. Pick up jack-o'-lantern");
+                Console.WriteLine("6. Leave forest\n?. Help");
+                
+                string choice = Console.ReadLine();
+                
+                switch (choice)
+                {
+                    case "1": room = 0; break;
+                    case "2": room = 1; break;
+                    case "3": room = 2; break;
+                    case "4": room = 3; break;
+                    case "5":
+                        if (room == 0 && lanterns[2] == false)
+                        {
+                            lanterns[2] = true;
+                            Console.WriteLine("\nYou pick up the glowing jack-o'-lantern.");
+                            Console.WriteLine("Its warm light cuts through the darkness.");
+                            Console.WriteLine("You have collected a lantern!");
+                            Console.WriteLine("\nPress ENTER to continue.");
+                            Console.ReadLine();
+                        }
+                        else
+                        {
+                            ShowInvalidChoice();
+                        }
+                        break;
+
+                    case "6":
+                        Console.WriteLine("\nAre you sure you want to leave the forest? (Y/N)");
+                        string confirm = Console.ReadLine().ToUpper();
+
+                        if (confirm == "Y")
+                        {
+                            Street(lanterns, inv);
+                            return;
+                        }
+                        else if (confirm == "N")
+                        {
+                            Console.WriteLine("You decide to remain in the forest.");
+                            Console.ReadLine();
+                        }
+                        else
+                        {
+                            ShowInvalidChoice();
+                        }
+                        break;
+
+                    case "?":
+                        Help();
+                        break;
+
+                    default:
+                        ShowInvalidChoice();
+                        break;
+                }
+            }
+        }
+        static void ShowInvalidChoice()
+        {
+            Console.WriteLine("\nThat is not a valid choice!");
+            Console.WriteLine("Please enter 1, 2, 3, 4, 5, 6, or ? for help.");
+            Console.WriteLine("Press ENTER to try again.");
+            Console.ReadLine();
+        }
 
 
 
