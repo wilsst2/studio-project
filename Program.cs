@@ -525,6 +525,9 @@ namespace studio_project
             else if (user == "2")
             {
                 Puzzle2();
+                Console.WriteLine();
+                Console.WriteLine("Thank you for playing our haunted house demo!");
+                Console.ReadLine();
             }
             else
             {
