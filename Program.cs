@@ -128,29 +128,29 @@ namespace studio_project
             {
                 Console.WriteLine("4. Investigate fountain");
             }
-            char user = CharCheck();
-            if (user == '1')
+            string user = Console.ReadLine();
+            if (user == "1")
             {
                 Console.Clear();
                 Console.WriteLine("You enter the manor through the backdoor.");
                 Console.ReadLine();
                 Backyard(lanterns, inv); // unsure what this room will be
             }
-            else if (user == '2')
+            else if (user == "2")
             {
                 Console.Clear();
                 Console.WriteLine("You move around the manor to the courtyard");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
-            else if (user == '3')
+            else if (user == "3")
             {
                 Console.Clear();
                 Console.WriteLine("You trudge through the mud to enter the garden shed.");
                 Console.ReadLine();
                 GardenShed(lanterns, inv);
             }
-            else if (user == '4' && coins == false)
+            else if (user == "4" && coins == false)
             {
                 Console.Clear();
                 Console.WriteLine("You come closer to the fountain. The once marble structure is now slimey and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
@@ -158,7 +158,7 @@ namespace studio_project
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-            else if (user == '?')
+            else if (user == "?")
             {
                 Help();
                 Backyard(lanterns, inv);
@@ -193,15 +193,15 @@ namespace studio_project
             {
                 Console.WriteLine("2. Grab pruning knife");
             }
-            char user = CharCheck();
-            if (user == '1')
+            string user = Console.ReadLine();
+            if (user == "1")
             {
                 Console.Clear();
                 Console.WriteLine("You leave the garden shed and return to the backyard.");
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-            else if (user == '2' && knife == false)
+            else if (user == "2" && knife == false)
             {
                 Console.Clear();
                 Console.WriteLine("You grab the pruning knife");
@@ -209,7 +209,7 @@ namespace studio_project
                 Console.ReadLine();
                 GardenShed(lanterns, inv);
             }
-            else if (user == '?')
+            else if (user == "?")
             {
                 Help();
                 Backyard(lanterns, inv);
@@ -227,26 +227,26 @@ namespace studio_project
             Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
-            char user = CharCheck();
-            if (user == '1')
+            string user = Console.ReadLine();
+            if (user == "1")
             {
                 Console.Clear();
                 Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
                 Console.ReadLine();
                 Street(lanterns, inv);
             }
-            else if (user == '2')
+            else if (user == "2")
             {
                 Dairy();
             }
-            else if (user == '3')
+            else if (user == "3")
             {
                 Console.Clear();
                 Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
-            else if (user == '?')
+            else if (user == "?")
             {
                 Help();
                 Street(lanterns, inv);
@@ -513,40 +513,29 @@ namespace studio_project
         // attempt Puzzle 1
         static void LivingRoom()
         {
+       
             Console.Clear();
             Console.WriteLine("You enter the living room.");
             Console.WriteLine("Dusty furniture fills the room, and an old fireplace stands against the wall.");
             Console.WriteLine("There is one door leading into the kitchen.");
 
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Enter kitchen");
             Console.WriteLine("2. Return to hallway");
             Console.WriteLine("3. Solve mysterious case file 1");
-          
 
             string user = Console.ReadLine();
-
-            if (user == "1")
+            bool Puzzle1 = false;
+            if (Puzzle1)
             {
-                Kitchen();
-            }
-            else if (user == "2")
-            {
-                Hallway();
-            }
-
-            //Case 1 Puzzle
-            else if (user == "3")
-            {
-                Puzzle1();
+                Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("Invalid choice. Please try again.");
-                Console.ReadKey();
-                LivingRoom();
+                Puzzle1 = false;
             }
-            
+
+              //Case 1 Puzzle
+       
         }
 
         // kitchen where the player can return to the living room 
