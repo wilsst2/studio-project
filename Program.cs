@@ -304,7 +304,7 @@ namespace studio_project
                 Console.ReadLine();
                 return false;
             }
-            else if (input == chosen)
+            else
             {
                 Console.Clear();
                 Console.WriteLine("You open the case successfully. Inside is a key radiating an sinister aura...");
@@ -349,6 +349,20 @@ namespace studio_project
                 Console.ReadLine();
                 return true;
             }
+        }
+        static void Encouter1(bool[] inv)
+        {
+            Random rand = new Random();
+            Console.Clear();
+            Console.WriteLine("Upon wandering through the forest, you encounter a figure in a dark robe...");
+            Console.WriteLine();
+            Console.WriteLine("What will you do?");
+            Console.WriteLine();
+            if (inv[1] = true)
+            {
+
+            }
+            Console.WriteLine("1. ");
         }
         static void TextEvent()
         {
