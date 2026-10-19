@@ -508,6 +508,7 @@ namespace studio_project
             Console.WriteLine("1. Enter kitchen");
             Console.WriteLine("2. Return to hallway");
             Console.WriteLine("3. Solve mysterious case file 1");
+          
 
             string user = Console.ReadLine();
 
@@ -535,7 +536,7 @@ namespace studio_project
         }
 
         // kitchen where the player can return to the living room 
-        // attemp Puzzle 2
+        // attempt Puzzle 2
         static void Kitchen()
         {
             Console.Clear();
@@ -546,6 +547,7 @@ namespace studio_project
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Return to living room");
             Console.WriteLine("2. Solve mysterious case file 2");
+
 
             string user = Console.ReadLine();
 
@@ -559,7 +561,7 @@ namespace studio_project
             {
                 Puzzle2();
                 Console.WriteLine();
-                Console.WriteLine("Thank you for playing our haunted manor demo!");    // Game Finished
+                Console.WriteLine("Thank you for playing our haunted house demo!");    // Game Finished
                 Console.ReadLine();
             }
             else
