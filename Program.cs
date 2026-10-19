@@ -262,7 +262,7 @@ namespace studio_project
 
 
         //Dominik
-        static void Puzzle1()
+        static bool Puzzle1()
         {
             Random rand = new Random();
             string[] puzzle = { "sinister", "october", "apparition", "halloween", };
@@ -278,63 +278,76 @@ namespace studio_project
                 letters[randomIndex] = temp;                    //Stores the used word in temp
             }
             string jumble = new string(letters);                //Creates a string storing the new jumbled word
+            Console.Clear();
             Console.WriteLine("There's a strange set of letters carved into the case:");
-            Console.WriteLine();
-            Console.WriteLine(jumble);
             Console.WriteLine();
             Console.WriteLine("Maybe unscrambling this jumbled word will open it?");
             Console.WriteLine();
             do
             {
+                Console.WriteLine(jumble);
+                Console.WriteLine();
                 Console.Write("Attempt to unscramble: ");
                 input = Console.ReadLine().ToLower();           //Gets the user's choice and converts it to lowercase
                 if (input != chosen)                            //Get user's attempt to unscramble word
                 {
+                    Console.Clear();
                     Console.Write("Nothing happened, try again? (Y/N): ");
                     choice = Console.ReadLine().ToUpper();      //Get user's choice on if they want to replay or leave, capitalized
+                    Console.Clear();
                 }
             } while (input != chosen && choice == "Y");         //Check: User hasn't gotten the puzzle correct and their choice is "Y"
             if (choice != "Y")                              //Check: User doesn't want to retry
             {
+                Console.Clear();
                 Console.WriteLine("You give up and leave the case.");
+                Console.ReadLine();
+                return false;
             }
             else if (input == chosen)
             {
+                Console.Clear();
                 Console.WriteLine("You open the case successfully. Inside is a key radiating an sinister aura...");
-                Console.WriteLine("You've won, thank you for playtesting our demo! We hope you enjoyed.");
                 Console.ReadLine();
+                return true;
             }
         }
-        static void Puzzle2()
+        static bool Puzzle2()
         {
             string choice = "Y";
             string entry;
-            Console.WriteLine("Upon entering, you encounter a series of raw binary...");
+            Console.Clear();
+            Console.WriteLine("Upon approaching the door, there's lock with a series of raw binary on it.");
             Console.WriteLine();
-            Console.WriteLine("1010011010");            //This is equal to 666 in decimal
-            Console.WriteLine();
-            Console.WriteLine("You must convert this to decimal to pass...");
+            Console.WriteLine("You must convert this to decimal to enter...");
             Console.WriteLine();
             do
             {
+                Console.WriteLine("1010011010");            //This is equal to 666 in decimal
+                Console.WriteLine();
                 Console.Write("Attempt to translate: ");
                 entry = Console.ReadLine();
                 if (entry != "666")
                 {
-                    Console.WriteLine("Incorrect, try again? (Y/N): ");
+                    Console.Clear();
+                    Console.Write("Incorrect, try again? (Y/N): ");
                     choice = Console.ReadLine().ToUpper();
+                    Console.Clear();
                 }
             } while (entry != "666" && choice == "Y");
-            if (choice!="Y")
+            if (choice != "Y")
             {
+                Console.Clear();
                 Console.WriteLine("You gave up and left.");
-            }
-            else if (entry == "666")
-            {
-                Console.WriteLine("You successfully convert the binary to decimal.");
-                Console.WriteLine();
-                Console.Write("Press ENTER to continue");
                 Console.ReadLine();
+                return false;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("You successfully converted the binary to decimal.");
+                Console.ReadLine();
+                return true;
             }
         }
         static void TextEvent()
