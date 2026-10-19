@@ -306,7 +306,9 @@ namespace studio_project
             }
             else if (input == chosen)
             {
+                Console.Clear();
                 Console.WriteLine("You open the case successfully. Inside is a key radiating an sinister aura...");
+                Console.ReadLine();
                 return true;
             }
         }
@@ -335,12 +337,16 @@ namespace studio_project
             } while (entry != "666" && choice == "Y");
             if (choice != "Y")
             {
+                Console.Clear();
                 Console.WriteLine("You gave up and left.");
+                Console.ReadLine();
                 return false;
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("You successfully converted the binary to decimal.");
+                Console.ReadLine();
                 return true;
             }
         }
