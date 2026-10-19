@@ -21,25 +21,36 @@ namespace studio_project
             inv[0] = false; inv[1] = false; // 0 = coins, 1 = pruning knife
             Courtyard(lanterns, inv);
         }
+        
+        static char CharCheck()
+        {
+            char user = '0';
+            bool check = false;
+            do
+            {
+                try
+                {
+                    user = Convert.ToChar(Console.ReadLine());
+                    check = true;
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input");
+                }
+            } while (check == false);
+            return user;
+        }
+
         static void Courtyard(bool[] lanterns, bool[] inv)
         {
-            bool jack;
-            if (lanterns[0] == true)
-            {
-                jack = true;
-            }
-            else
-            {
-                jack = false;
-            }
             Console.Clear();
             Console.Write("You stand in front of an old, dilapidated manor, it's doors wide open and welcoming. The courtyard is in a state of disrepair, overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows. The moon-shadows of the dead trees surround you.");
-            if (jack == false)
+            if (lanterns[0] == false)
             {
                 Console.WriteLine(" A jack-o'-lantern hangs in one of them.");
             }
             Console.WriteLine("\nWhat do you want to do?");
-            if (jack == false)
+            if (lanterns[0] == false)
             {
                 Console.WriteLine("1. Enter manor\n2. Move to backyard\n3. Leave\n4. Approach jack-o'-lantern");
             }
@@ -47,28 +58,28 @@ namespace studio_project
             {
                 Console.WriteLine("1. Enter manor\n2. Backyard\n3. Leave");
             }
-            string user = Console.ReadLine();
-            if (user == "1")
+            char user = CharCheck();
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("You take the steps up to the front door and enter the manor.");
                 Console.ReadLine();
                 Hallway();
             }
-            else if (user == "2")
+            else if (user == '2')
             {
                 Console.Clear();
                 Console.WriteLine("You move around the manor to the backyard.");
                 Backyard(lanterns, inv);
             }
-            else if (user == "3")
+            else if (user == '3')
             {
                 Console.Clear();
-                Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
+                Console.WriteLine("The heavy gates of the courtyard clang shut behind you as you leave. Thick midnight fog prevents you from properly surveying your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
                 Console.ReadLine();
                 Street(lanterns, inv);
             }
-            else if (user == "4" && jack == false)
+            else if (user == '4' && lanterns[0] == false)
             {
                 Console.Clear();
                 Console.Write("The jack-o'lantern is suspended within a net, which is attached to a rope keeping it firmly in the sky.");
@@ -86,7 +97,7 @@ namespace studio_project
                     Courtyard(lanterns, inv);
                 }
             }
-            else if (user == "?")
+            else if (user == '?')
             {
                 Help();
                 Courtyard(lanterns, inv);
