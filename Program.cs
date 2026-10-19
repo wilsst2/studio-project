@@ -363,17 +363,63 @@ namespace studio_project
         }
         static void Encouter1(bool[] inv)
         {
-            Random rand = new Random();
+            string choice;
             Console.Clear();
-            Console.WriteLine("Upon wandering through the forest, you encounter a figure in a dark robe...");
+            Console.WriteLine("Upon wandering through the forest, you encounter a figure in a dark robe blocking the path...");
             Console.WriteLine();
             Console.WriteLine("What will you do?");
             Console.WriteLine();
-            if (inv[1] = true)
+            Console.WriteLine("1. Cower in fear from his aura");
+            if (inv[1] == true)
             {
-
+                Console.WriteLine("2. Attempt to fight the figure");
             }
-            Console.WriteLine("1. ");
+            choice = Console.ReadLine();
+            if (choice == "1")
+            {
+                //Let me know which part of the map this should send you back to.
+            }
+            else if (choice == "2" && inv[1] == true)
+            {
+                Fight1();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid input.");
+                Console.ReadLine();
+                Encouter1(inv);
+            }
+        }
+        static void Fight1()
+        {
+            int turn = 1;
+            string options;
+            int usernrg = 50;
+            int userhp = 100;
+            int enemyhp = 100;
+            Random rand = new Random();
+            Console.Clear();
+            Console.WriteLine("You equip your pruning knife, preparing yourself to fight.");
+            Console.WriteLine();
+            Thread.Sleep(1000);
+            Console.WriteLine("Get ready!");
+            Thread.Sleep(1000);
+            do
+            {
+                if (turn == 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"It's your turn!");
+                    Console.WriteLine();
+                    Console.WriteLine($"HP: {userhp}");
+                    Console.WriteLine($"STAM: {usernrg}");
+                    Console.WriteLine();
+                    Console.WriteLine("1. Attack\n2. Guard\n3. Action\n4. Flee");
+                    options = Console.ReadLine();
+                }
+            } while (userhp == 100 || enemyhp == 100);
+
         }
         static void TextEvent()
         {
