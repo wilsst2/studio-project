@@ -722,13 +722,15 @@ namespace studio_project
 
 
 
-        //John
+
+        //// Displays the abandoned dairy and handles the player's choices.
         static void Dairy()
         {
             Console.Clear();
 
-            Console.WriteLine("Welcome to the Abandoned Dairy!");
+            Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
             Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
+            Console.WriteLine("Moonlight slips through the dusty windows.");
             Console.WriteLine("You feel that something mysterious is nearby.");
             Console.WriteLine();
 
@@ -739,36 +741,42 @@ namespace studio_project
             Console.WriteLine("4. Leave the dairy");
             Console.Write("Enter your choice: ");
 
-            string choice = Console.ReadLine();
+            string choice = Console.ReadLine()?.Trim() ?? "";
 
             if (choice == "1")
             {
                 Console.WriteLine("You search the dusty counter.");
                 Console.WriteLine("You find an old rusty key!");
+                Console.WriteLine("The key feels strangely cold in your hand.");
             }
             else if (choice == "2")
             {
                 Console.WriteLine("You look behind the dairy.");
                 Console.WriteLine("You hear a strange noise in the darkness.");
+                Console.WriteLine("You notice fresh footprints in the dirt.");
             }
             else if (choice == "3")
             {
                 Console.WriteLine("You inspect the shelves.");
                 Console.WriteLine("You find an old note with a strange symbol.");
+                Console.WriteLine("The symbol looks like a warning.");
             }
             else if (choice == "4")
             {
                 Console.WriteLine("You leave the dairy and return to the path.");
+                Console.WriteLine("You wonder what other secrets the dairy holds.");
             }
             else
             {
-                Console.WriteLine("Invalid choice. Please try again.");
+                Console.WriteLine("Invalid choice!");
+                Console.WriteLine("Please enter a number from 1 to 4.");
             }
 
             Console.WriteLine();
-            Console.WriteLine("Press Enter to continue...");
+            Console.WriteLine("Press Enter to return to your adventure...");
             Console.ReadLine();
         }
+
 
 
 
