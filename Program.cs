@@ -851,6 +851,18 @@ else
             {
                 Console.WriteLine("You leave the dairy and return to the path.");
                 Console.WriteLine("You wonder what other secrets the dairy holds.");
+            else if (choice == "5")
+{
+    if (hasRustyKey)
+    {
+        Console.WriteLine("The rusty key unlocks the door!");
+        Console.WriteLine("Inside, you discover a dusty old journal.");
+    }
+    else
+    {
+        Console.WriteLine("The door is locked. Find the rusty key first.");
+    }
+}
             }
             else
             {
