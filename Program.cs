@@ -815,6 +815,7 @@ namespace studio_project
             Console.WriteLine("2. Look behind the dairy");
             Console.WriteLine("3. Inspect the shelves");
             Console.WriteLine("4. Leave the dairy");
+            Console.WriteLine("5. Try the mysterious locked door");
             Console.Write("Enter your choice: ");
 
             string choice = Console.ReadLine()?.Trim() ?? "";
