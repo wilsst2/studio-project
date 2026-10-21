@@ -824,7 +824,8 @@ namespace studio_project
             {
                 Console.WriteLine("You search the dusty counter.");
 
-if (!hasRustyKey)
+if (!hasRustyKey),
+                // Give the player the key only once.
 {
     Console.WriteLine("You find an old rusty key!");
     Console.WriteLine("The key feels strangely cold in your hand.");
