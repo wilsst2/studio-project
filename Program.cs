@@ -842,6 +842,7 @@ else
                 Console.WriteLine("You notice fresh footprints in the dirt.");
             }
             else if (choice == "3")
+                Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
             {
                 Console.WriteLine("You inspect the shelves.");
                 Console.WriteLine("You find an old note with a strange symbol.");
