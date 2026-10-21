@@ -7,6 +7,7 @@ namespace studio_project
 {
     internal class Program
     {
+        static bool hasRustyKey = false;
         //Blake
 
         static void Main()
