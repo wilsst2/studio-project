@@ -822,8 +822,17 @@ namespace studio_project
             if (choice == "1")
             {
                 Console.WriteLine("You search the dusty counter.");
-                Console.WriteLine("You find an old rusty key!");
-                Console.WriteLine("The key feels strangely cold in your hand.");
+
+if (!hasRustyKey)
+{
+    Console.WriteLine("You find an old rusty key!");
+    Console.WriteLine("The key feels strangely cold in your hand.");
+    hasRustyKey = true;
+}
+else
+{
+    Console.WriteLine("You already collected the rusty key.");
+}
             }
             else if (choice == "2")
             {
