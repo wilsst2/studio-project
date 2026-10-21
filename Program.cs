@@ -867,7 +867,7 @@ else
             else
             {
                 Console.WriteLine("Invalid choice!");
-                Console.WriteLine("Please enter a number from 1 to 4.");
+                Console.WriteLine("Please enter a number from 1 to 5.");
             }
 
             Console.WriteLine();
