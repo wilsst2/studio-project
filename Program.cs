@@ -803,7 +803,7 @@ namespace studio_project
         static void Dairy()
         {
             Console.Clear();
-
+            Console.WriteLine("A cold breeze moves through the empty building.");
             Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
             Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
             Console.WriteLine("Moonlight slips through the dusty windows.");
