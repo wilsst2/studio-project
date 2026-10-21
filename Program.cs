@@ -850,6 +850,7 @@ else
             }
             else if (choice == "4")
             {
+                Console.WriteLine("You hear the door creak shut behind you.");
                 Console.WriteLine("You leave the dairy and return to the path.");
                 Console.WriteLine("You wonder what other secrets the dairy holds.");
             else if (choice == "5")
