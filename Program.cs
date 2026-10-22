@@ -761,6 +761,12 @@ namespace studio_project
             Console.ReadLine();
         }
 
+        static void WaitForPlayer()
+        {
+            Console.WriteLine("\nPress ENTER to continue.");
+            Console.ReadLine();
+        }
+
 
 
 
