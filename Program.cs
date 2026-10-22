@@ -760,6 +760,7 @@ namespace studio_project
             Console.ReadLine();
         }
 
+        //Helper method for user
         static void WaitForPlayer()
         {
             Console.WriteLine("\nPress ENTER to continue.");
