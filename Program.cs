@@ -19,8 +19,9 @@ namespace studio_project
             bool[] lanterns = new bool[3];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; // 0 = courtyard, 1 = kitchen, 2 = forest
             bool[] inv = new bool[3];
-            inv[0] = false; inv[1] = false; inv[2] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key
-            Courtyard(lanterns, inv);
+            inv[0] = false; inv[1] = true; inv[2] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key
+            //Courtyard(lanterns, inv);
+            Encounter1(inv);
         }
         
         static char CharCheck()
@@ -361,7 +362,7 @@ namespace studio_project
                 return true;
             }
         }
-        static void Encouter1(bool[] inv)
+        static void Encounter1(bool[] inv)
         {
             string choice;
             Console.Clear();
@@ -388,7 +389,7 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("Invalid input.");
                 Console.ReadLine();
-                Encouter1(inv);
+                Encounter1(inv);
             }
         }
         static void Fight1()                    //Next time I will definitely break these up into smaller functions.
@@ -396,6 +397,7 @@ namespace studio_project
             int turn = 1;
             int enemyoption, enemyatk, dmgdealt, dmgtaken, rng;
             string useroption, useratk;
+            string target = "0";
             bool enemybleed = false;
             bool userbleed = false;
             bool userpoison = false;
@@ -410,8 +412,8 @@ namespace studio_project
             Random rand = new Random();
             Console.Clear();
             Console.WriteLine("You equip your pruning knife, preparing yourself to fight.");
-            Console.WriteLine();
             Thread.Sleep(1000);
+            Console.WriteLine();
             Console.WriteLine("Get ready!");
             Thread.Sleep(2000);
             do
@@ -420,40 +422,60 @@ namespace studio_project
                 {
                     if (userbleed == true)          //If user is bleeding
                     {
-                        bleedtimer = (bleedtimer++);        //+1 to bleed timer
+                        bleedtimer++;        //User will bleed or be poisoned for 3 turns before status effects wear off.
                         if (bleedtimer == 3)
                         {
                             Console.Clear();
                             Console.WriteLine("You're no longer bleeding!");
                             userbleed = false;
                             bleedtimer = 0;
-                            Thread.Sleep(5000);
+                            Thread.Sleep(3000);
                         }
                     }
                     if (userpoison == true)
                     {
-                        poisontimer = (poisontimer++);
+                        poisontimer++;
                         if (poisontimer == 3)
                         {
                             Console.Clear();
                             Console.WriteLine("You're no longer poisoned!");
                             userpoison = false;
                             poisontimer = 0;
-                            Thread.Sleep(5000);
+                            Thread.Sleep(3000);
                         }
                     }
                     guard = false;
+                    while (target != "1")
+                    {
+                        //Menu
+                        Console.Clear();
+                        Console.WriteLine($"HP: {userhp}");
+                        Console.WriteLine($"STAM: {usernrg}");
+                        Console.WriteLine();
+                        Console.WriteLine($"Select target!");
+                        Console.WriteLine();
+                        Console.WriteLine("1. Mysterious figure");
+                        target = Console.ReadLine();
+                        if (target != "1")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Invalid option!");
+                            Thread.Sleep(1500);
+                        }
+                    }
                     Console.Clear();
-                    Console.WriteLine($"It's your turn!");
-                    Console.WriteLine();
                     Console.WriteLine($"HP: {userhp}");
                     Console.WriteLine($"STAM: {usernrg}");
                     Console.WriteLine();
-                    Console.WriteLine("1. Attack\n2. Guard\n3. Action");
+                    Console.WriteLine("1. Attack\n2. Guard\n3. Action\n4. Back");
                     useroption = Console.ReadLine();
-                    if (useroption == "1")    //Attack
+                    if (useroption == "1")
+                        //Attack
                     {
                         Console.Clear();
+                        Console.WriteLine($"HP: {userhp}");
+                        Console.WriteLine($"STAM: {usernrg}");
+                        Console.WriteLine();
                         Console.WriteLine("1. Slash (25 STAM)\n2. Stab (50 STAM)\n3. Back");
                         useratk = Console.ReadLine();
                         if (useratk == "1" && usernrg < 25)
@@ -462,7 +484,8 @@ namespace studio_project
                             Console.WriteLine("Not enough stamina!");
                             Thread.Sleep(1500);
                         }
-                        if (useratk == "1" && usernrg >= 25)             //Slash
+                        if (useratk == "1" && usernrg >= 25)
+                            //Slash
                         {
                             if (enemyguard == true)
                             {
@@ -475,38 +498,44 @@ namespace studio_project
                             enemyhp = (enemyhp - dmgdealt);
                             Console.Clear();
                             Console.WriteLine($"You slash your target, dealing {dmgdealt} damage!");
-                            Console.WriteLine();
                             Thread.Sleep(1500);
                             rng = rand.Next(0, 5);
                             usernrg = (usernrg - 25);
-                            if (rng == 0 && enemybleed == false)
+                            if (rng == 0)
                             {
-                                enemybleed = true;
-                                Console.WriteLine($"You inflicted bleed!");
-                                Console.WriteLine();
-                                Thread.Sleep(1500);
+                                enemybleedtimer = 0;
+                                if (enemybleed == false)
+                                {
+                                    enemybleed = true;
+                                    Console.WriteLine();
+                                    Console.WriteLine($"You inflicted bleed!");
+                                    Thread.Sleep(1500);
+                                }
                             }
                             if (enemybleed == true)
                             {
                                 dmgdealt = rand.Next(3, 11);
                                 enemyhp = (enemyhp - dmgdealt);
+                                Console.WriteLine();
                                 Console.WriteLine($"Mysterious figure took {dmgdealt} bleed damage!");
+                                Thread.Sleep(1500);
                             }
-                            usernrg = (usernrg + 40);
+                            usernrg = (usernrg + 40);       //Give user stamina after turn
                             if (usernrg > 100)
                             {
                                 usernrg = 100;      //Make sure user doesn't have over 100 stamina
                             }
-                            Thread.Sleep(5000);
+                            Thread.Sleep(3000);
                             turn = 2;
                         }
-                        else if (useratk == "2" && usernrg < 50)
+                        else if (useratk == "2" && usernrg < 50)        //Make sure user has enough stamina for this move
                         {
                             Console.Clear();
                             Console.WriteLine("Not enough stamina!");
                             Thread.Sleep(1500);
                         }
-                        else if (useratk == "2" && usernrg >= 50)        //Stab
+                        else if (useratk == "2" && usernrg >= 50)
+                            //Stab
                         {
                             if (enemyguard == true)
                             {
@@ -520,27 +549,29 @@ namespace studio_project
                             Console.Clear();
                             Console.WriteLine($"You stab your target, dealing {dmgdealt} damage!");
                             Thread.Sleep(1500);
-                            Console.WriteLine();
                             usernrg = (usernrg - 50);
                             if (enemybleed == false)
                             {
                                 enemybleed = true;
-                                Console.WriteLine("You inflicted bleed!");
                                 Console.WriteLine();
+                                Console.WriteLine("You inflicted bleed!");
+                                enemybleedtimer = 0;
                                 Thread.Sleep(1500);
                             }
                             if (enemybleed == true)
                             {
                                 dmgdealt = rand.Next(3, 11);
                                 enemyhp = (enemyhp - dmgdealt);
+                                Console.WriteLine();
                                 Console.WriteLine($"Mysterious figure took {dmgdealt} bleed damage!");
+                                Thread.Sleep(1500);
                             }
                             usernrg = (usernrg + 40);
                             if (usernrg > 100)
                             {
                                 usernrg = 100;      //Make sure user doesn't have over 100 stamina
                             }
-                            Thread.Sleep(5000);
+                            Thread.Sleep(3000);
                             turn = 2;
                         }
                         else if (useratk == "3") { }
@@ -551,22 +582,35 @@ namespace studio_project
                             Thread.Sleep(1500);
                         }
                     }
-                    else if (useroption == "2")   //Block
+                    else if (useroption == "2")
+                        //Block
                     {
                         Console.Clear();
                         Console.WriteLine("You brace yourself!");
                         guard = true;
+                        if (enemybleed == true)
+                        {
+                            dmgdealt = rand.Next(3, 11);
+                            enemyhp = (enemyhp - dmgdealt);
+                            Console.WriteLine();
+                            Console.WriteLine($"Mysterious figure took {dmgdealt} bleed damage!");
+                            Thread.Sleep(1500);
+                        }
                         usernrg = (usernrg + 40);
                         if (usernrg > 100)
                         {
                             usernrg = 100;      //Make sure user doesn't have over 100 stamina
                         }
-                        Thread.Sleep(5000);
+                        Thread.Sleep(3000);
                         turn = 2;
                     }
                     else if (useroption == "3")
+                        //Action
                     {
                         Console.Clear();
+                        Console.WriteLine($"HP: {userhp}");
+                        Console.WriteLine($"STAM: {usernrg}");
+                        Console.WriteLine();
                         Console.WriteLine("1. Inspect enemy\n2. Back");
                         useratk = Console.ReadLine();
                         if (useratk == "1")
@@ -585,6 +629,7 @@ namespace studio_project
                             Thread.Sleep(1500);
                         }
                     }
+                    else if (useroption == "4") { target = "0"; }   //Go back
                     else
                     {
                         Console.Clear();
@@ -594,51 +639,84 @@ namespace studio_project
                 }
                 else if (turn == 2 && enemyhp > 0)      //Opponent's turn
                 {
-                    if (enemybleed == true)
+                    if (enemybleed == true)             //Enemy will bleed for 3 turns before status effects wear off.
                     {
-                        enemybleedtimer = (enemybleedtimer++);
+                        enemybleedtimer++;
                         if (enemybleedtimer == 3)
                         {
                             Console.Clear();
                             Console.WriteLine("Mysterious figure recovered from the bleeding!");
                             enemybleed = false;
                             enemybleedtimer = 0;
-                            Thread.Sleep(5000);
+                            Thread.Sleep(3000);
                         }
                     }
+                    target = "0";
                     enemyguard = false;
                     Console.Clear();
                     Console.WriteLine($"It's mysterious figure's turn!");
-                    Console.WriteLine();
                     enemyoption = rand.Next(0, 7);
-                    Thread.Sleep(2000);
-                    if (enemyoption == 0)       //Enemy guard
+                    Thread.Sleep(1500);
+                    Console.WriteLine();
+                    if (enemyoption == 0)
+                        //Enemy: Guard
                     {
                         Console.WriteLine($"Mysterious figure chose to guard!");
                         enemyguard = true;
-                        Thread.Sleep(5000);
+                        if (userpoison == true)
+                        {
+                            dmgtaken = rand.Next(1, 11);
+                            userhp = (userhp - dmgtaken);
+                            Console.WriteLine();
+                            Console.WriteLine($"You took {dmgtaken} poison damage!");
+                            Thread.Sleep(1500);
+                        }
+                        if (userbleed == true)
+                        {
+                            dmgtaken = rand.Next(1, 8);
+                            userhp = (userhp - dmgtaken);
+                            Console.WriteLine();
+                            Console.WriteLine($"You took {dmgtaken} bleed damage!");
+                            Thread.Sleep(1500);
+                        }
+                        Thread.Sleep(3000);
                         turn = 1;
                     }
-                    else if (enemyoption == 1 && enemyhp < 80)      //enemy heal
+                    else if (enemyoption == 1 && enemyhp < 80)
+                        //Enemy: Heal
                     {
                         Console.WriteLine($"Mysterious figure used a healing chant, healing 20 HP and sealing their wounds!");
                         enemyhp = (enemyhp + 20);
                         enemybleed = false;
                         enemybleedtimer = 0;
-                        Thread.Sleep(5000);
+                        if (userpoison == true)
+                        {
+                            dmgtaken = rand.Next(1, 11);
+                            userhp = (userhp - dmgtaken);
+                            Console.WriteLine();
+                            Console.WriteLine($"You took {dmgtaken} poison damage!");
+                            Thread.Sleep(1500);
+                        }
+                        if (userbleed == true)
+                        {
+                            dmgtaken = rand.Next(1, 8);
+                            userhp = (userhp - dmgtaken);
+                            Console.WriteLine();
+                            Console.WriteLine($"You took {dmgtaken} bleed damage!");
+                            Thread.Sleep(1500);
+                        }
+                        Thread.Sleep(3000);
                         turn = 1;
                     }
                     else
                     {
                         Console.WriteLine($"Mysterious figure chose to attack!");
-                        Console.WriteLine();
                         Thread.Sleep(1500);
+                        Console.WriteLine();
                         enemyatk = rand.Next(0, 5);
-                        if (enemyatk == 0)          //Poison plague
+                        if (enemyatk == 0)
+                            //Enemy: Ability 1
                         {
-                            Console.WriteLine($"Mysterious figure casts plague!");
-                            Console.WriteLine();
-                            Thread.Sleep(1500);
                             if (guard == true)
                             {
                                 dmgtaken = rand.Next(0, 6);
@@ -647,39 +725,39 @@ namespace studio_project
                             {
                                 dmgtaken = rand.Next(4, 18);
                             }
+                            Console.WriteLine($"Mysterious figure casts plague, dealing {dmgtaken} damage!");
+                            Thread.Sleep(1500);
+                            poisontimer = 0;
                             userhp = (userhp - dmgtaken);
                             if (userpoison == false)
                             {
-                                Console.WriteLine("You're poisoned!");
                                 Console.WriteLine();
+                                Console.WriteLine("You're poisoned!");
                                 Thread.Sleep(1500);
                                 userpoison = true;
                             }
-                            Console.WriteLine($"You took {dmgtaken} damage!");
-                            Console.WriteLine();
-                            Thread.Sleep(1500);
                             if (userpoison == true)
                             {
                                 dmgtaken = rand.Next(1, 11);
                                 userhp = (userhp - dmgtaken);
-                                Console.WriteLine($"You took {dmgtaken} poison damage!");
                                 Console.WriteLine();
+                                Console.WriteLine($"You took {dmgtaken} poison damage!");
                                 Thread.Sleep(1500);
                             }
                             if (userbleed == true)
                             {
                                 dmgtaken = rand.Next(1, 8);
                                 userhp = (userhp - dmgtaken);
+                                Console.WriteLine();
                                 Console.WriteLine($"You took {dmgtaken} bleed damage!");
+                                Thread.Sleep(1500);
                             }
-                            Thread.Sleep(5000);
+                            Thread.Sleep(3000);
                             turn = 1;
                         }
-                        else if (enemyatk == 1)         //Bleeding ritual
+                        else if (enemyatk == 1)
+                            //Enemy: Ability 2
                         {
-                            Console.WriteLine($"Mysterious figure used RITUAL!");
-                            Thread.Sleep(1500);
-                            Console.WriteLine();
                             if (guard == true)
                             {
                                 dmgtaken = rand.Next(0, 9);
@@ -688,39 +766,39 @@ namespace studio_project
                             {
                                 dmgtaken = rand.Next(6, 21);
                             }
+                            Console.WriteLine($"Mysterious figure used ritual, dealing {dmgtaken} damage!");
+                            Thread.Sleep(1500);
+                            bleedtimer = 0;
                             userhp = (userhp - dmgtaken);
                             if (userbleed == false)
                             {
-                                Console.WriteLine("You're bleeding!");
                                 Console.WriteLine();
+                                Console.WriteLine("You're bleeding!");
                                 Thread.Sleep(1500);
                                 userbleed = true;
                             }
-                            Console.WriteLine($"You took {dmgtaken} damage!");
-                            Console.WriteLine();
-                            Thread.Sleep(1500);
                             if (userpoison == true)
                             {
                                 dmgtaken = rand.Next(1, 11);
                                 userhp = (userhp - dmgtaken);
-                                Console.WriteLine($"You took {dmgtaken} poison damage!");
                                 Console.WriteLine();
+                                Console.WriteLine($"You took {dmgtaken} poison damage!");
                                 Thread.Sleep(1500);
                             }
                             if (userbleed == true)
                             {
                                 dmgtaken = rand.Next(1, 8);
                                 userhp = (userhp - dmgtaken);
+                                Console.WriteLine();
                                 Console.WriteLine($"You took {dmgtaken} bleed damage!");
+                                Thread.Sleep(1500);
                             }
-                            Thread.Sleep(5000);
+                            Thread.Sleep(3000);
                             turn = 1;
                         }
                         else
+                            //Enemy: Default attack
                         {
-                            Console.WriteLine($"Mysterious figure used STRIKE!");
-                            Thread.Sleep(1500);
-                            Console.WriteLine();
                             if (guard == true)
                             {
                                 dmgtaken = rand.Next(0, 8);
@@ -729,26 +807,26 @@ namespace studio_project
                             {
                                 dmgtaken = rand.Next(9, 27);
                             }
-                            userhp = (userhp - dmgtaken);
-                            Console.WriteLine($"You took {dmgtaken} damage!");
-                            Console.WriteLine();
+                            Console.WriteLine($"Mysterious figure used strike, dealing {dmgtaken} damage!");
                             Thread.Sleep(1500);
+                            userhp = (userhp - dmgtaken);
                             if (userpoison == true)
                             {
                                 dmgtaken = rand.Next(1, 11);
                                 userhp = (userhp - dmgtaken);
-                                Console.WriteLine($"You took {dmgtaken} poison damage!");
                                 Console.WriteLine();
+                                Console.WriteLine($"You took {dmgtaken} poison damage!");
                                 Thread.Sleep(1500);
                             }
                             if (userbleed == true)
                             {
                                 dmgtaken = rand.Next(1, 8);
                                 userhp = (userhp - dmgtaken);
+                                Console.WriteLine();
                                 Console.WriteLine($"You took {dmgtaken} bleed damage!");
                                 Thread.Sleep(1500);
                             }
-                            Thread.Sleep(5000);
+                            Thread.Sleep(3000);
                             turn = 1;
                         }
                     }
