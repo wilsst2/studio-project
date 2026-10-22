@@ -421,7 +421,7 @@ namespace studio_project
                     if (userbleed == true)          //If user is bleeding
                     {
                         bleedtimer = (bleedtimer++);        //+1 to bleed timer
-                        if (bleedtimer == 4)
+                        if (bleedtimer == 3)
                         {
                             Console.Clear();
                             Console.WriteLine("You're no longer bleeding!");
@@ -433,7 +433,7 @@ namespace studio_project
                     if (userpoison == true)
                     {
                         poisontimer = (poisontimer++);
-                        if (poisontimer == 4)
+                        if (poisontimer == 3)
                         {
                             Console.Clear();
                             Console.WriteLine("You're no longer poisoned!");
@@ -596,8 +596,8 @@ namespace studio_project
                 {
                     if (enemybleed == true)
                     {
-                        enemybleedtimer = (enemybleedtimer + 1);
-                        if (enemybleedtimer == 4)
+                        enemybleedtimer = (enemybleedtimer++);
+                        if (enemybleedtimer == 3)
                         {
                             Console.Clear();
                             Console.WriteLine("Mysterious figure recovered from the bleeding!");
@@ -612,14 +612,14 @@ namespace studio_project
                     Console.WriteLine();
                     enemyoption = rand.Next(0, 7);
                     Thread.Sleep(2000);
-                    if (enemyoption == 0)
+                    if (enemyoption == 0)       //Enemy guard
                     {
                         Console.WriteLine($"Mysterious figure chose to guard!");
                         enemyguard = true;
                         Thread.Sleep(5000);
                         turn = 1;
                     }
-                    else if (enemyoption == 1 && enemyhp < 80)
+                    else if (enemyoption == 1 && enemyhp < 80)      //enemy heal
                     {
                         Console.WriteLine($"Mysterious figure used a healing chant, healing 20 HP and sealing their wounds!");
                         enemyhp = (enemyhp + 20);
@@ -675,7 +675,7 @@ namespace studio_project
                             Thread.Sleep(5000);
                             turn = 1;
                         }
-                        else if (enemyatk == 1)
+                        else if (enemyatk == 1)         //Bleeding ritual
                         {
                             Console.WriteLine($"Mysterious figure used RITUAL!");
                             Thread.Sleep(1500);
