@@ -796,7 +796,7 @@ namespace studio_project
 
 
 
-
+    // john paul
 
         //// Displays the abandoned dairy and handles the player's choices.
         static void Dairy()
