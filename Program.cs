@@ -19,7 +19,7 @@ namespace studio_project
             bool[] lanterns = new bool[3];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; // 0 = courtyard, 1 = kitchen, 2 = forest
             bool[] inv = new bool[3];
-            inv[0] = false; inv[1] = false; // 0 = coins, 1 = pruning knife
+            inv[0] = false; inv[1] = false; inv[2] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key
             Courtyard(lanterns, inv);
         }
         
@@ -112,46 +112,45 @@ namespace studio_project
         }
         static void Backyard(bool[] lanterns, bool[] inv)
         {
-            bool coins;
-            if (inv[0] == true)
-            {
-                coins = true;
-            }
-            else
-            {
-                coins = false;
-            }
             Console.Clear();
             Console.WriteLine("The area is even more overgrown than the courtyard. There is a no longer running fountain and a dingy garden shed tucked away in the far corner.");
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Enter manor\n2. Move to courtyard\n3. Enter garden shed");
-            if (coins == false)
+            Console.WriteLine("1. Enter manor\n2. Move to courtyard\n3. Approach garden shed");
+            if (inv[0] == false)
             {
                 Console.WriteLine("4. Investigate fountain");
             }
-            string user = Console.ReadLine();
-            if (user == "1")
+            char user = CharCheck();
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("You enter the manor through the backdoor.");
                 Console.ReadLine();
                 Backyard(lanterns, inv); // unsure what this room will be
             }
-            else if (user == "2")
+            else if (user == '2')
             {
                 Console.Clear();
                 Console.WriteLine("You move around the manor to the courtyard");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
-            else if (user == "3")
+            else if (user == '3')
             {
                 Console.Clear();
-                Console.WriteLine("You trudge through the mud to enter the garden shed.");
-                Console.ReadLine();
-                GardenShed(lanterns, inv);
+                Console.Write("You trudge through the mud to reach the garden shed.");
+                if (inv[2] == false)
+                {
+                    Console.WriteLine("There's a rusty padlock keeping the door locked. It doesn't budge.");
+                }
+                else
+                {
+                    Console.WriteLine("You use your key to unlock the padlock and enter.");
+                    Console.ReadLine();
+                    GardenShed(lanterns, inv);
+                }
             }
-            else if (user == "4" && coins == false)
+            else if (user == '4' && inv[0] == false)
             {
                 Console.Clear();
                 Console.WriteLine("You come closer to the fountain. The once marble structure is now slimey and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
@@ -159,7 +158,7 @@ namespace studio_project
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-            else if (user == "?")
+            else if (user == '?')
             {
                 Help();
                 Backyard(lanterns, inv);
@@ -194,15 +193,15 @@ namespace studio_project
             {
                 Console.WriteLine("2. Grab pruning knife");
             }
-            string user = Console.ReadLine();
-            if (user == "1")
+            char user = CharCheck();
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("You leave the garden shed and return to the backyard.");
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-            else if (user == "2" && knife == false)
+            else if (user == '2' && knife == false)
             {
                 Console.Clear();
                 Console.WriteLine("You grab the pruning knife");
@@ -210,7 +209,7 @@ namespace studio_project
                 Console.ReadLine();
                 GardenShed(lanterns, inv);
             }
-            else if (user == "?")
+            else if (user == '?')
             {
                 Help();
                 Backyard(lanterns, inv);
@@ -228,26 +227,26 @@ namespace studio_project
             Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
-            string user = Console.ReadLine();
-            if (user == "1")
+            char user = CharCheck();
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
                 Console.ReadLine();
                 Street(lanterns, inv);
             }
-            else if (user == "2")
+            else if (user == '2')
             {
                 Dairy();
             }
-            else if (user == "3")
+            else if (user == '3')
             {
                 Console.Clear();
                 Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
-            else if (user == "?")
+            else if (user == '?')
             {
                 Help();
                 Street(lanterns, inv);
@@ -803,7 +802,7 @@ namespace studio_project
 
 
 
-
+    // john paul
 
         //// Displays the abandoned dairy and handles the player's choices.
         static void Dairy()
