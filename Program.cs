@@ -173,24 +173,15 @@ namespace studio_project
         }
         static void GardenShed(bool[] lanterns, bool[] inv)
         {
-            bool knife;
-            if (inv[1] == true)
-            {
-                knife = true;
-            }
-            else
-            {
-                knife = false;
-            }
             Console.Clear();
             Console.Write("You are in a dark and cramped space that smells of mold and something rotten. Your only light is from the moon shining through cracks in the roof.");
-            if (knife == false)
+            if (inv[1] == false)
             {
                 Console.WriteLine(" There's a pruning knife jutting out of the wall.");
             }
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Leave");
-            if (knife == false)
+            if (inv[1] == false)
             {
                 Console.WriteLine("2. Grab pruning knife");
             }
@@ -202,7 +193,7 @@ namespace studio_project
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-            else if (user == '2' && knife == false)
+            else if (user == '2' && inv[1] == false)
             {
                 Console.Clear();
                 Console.WriteLine("You grab the pruning knife");
@@ -220,6 +211,44 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("Invalid input");
                 Backyard(lanterns, inv);
+            }
+        }
+        static void Basement(bool[] lanterns, bool[] inv)
+        {
+            if (inv[4] == false)
+            {
+                Console.WriteLine("Without the light of the moon, it's impossible to make out your surroundings.");
+            }
+            else
+            {
+                Console.Write("You stand in a cold, damp concrete basement. Sweeping your torch across the room reveals a thick layer of dust covering your surroundings.");
+                if (inv[3] == false)
+                {
+                    Console.WriteLine("There's a key on a wall hanger.");
+                }
+            }
+            Console.WriteLine("/n What do you want to do?");
+            Console.WriteLine("1. Leave basement");
+            if (inv[3] == false && inv[4] == true)
+            {
+                Console.WriteLine("2. Take key");
+            }
+            char user = CharCheck();
+            if (user == '1')
+            {
+                Basement(lanterns, inv);
+                // method to return to whatever room takes you to the basement
+            }
+            else if (user == '2' && inv[3] == false && inv[4] == true)
+            {
+                Console.WriteLine("You take the key.");
+                inv[3] = true;
+                Basement(lanterns, inv);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
             }
         }
         static void Street(bool[] lanterns, bool[] inv)
