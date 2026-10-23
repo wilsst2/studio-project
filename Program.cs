@@ -8,8 +8,8 @@ namespace studio_project
     internal class Program
     {
         static bool hasRustyKey = false;
-        //Blake
 
+        //Blake
         static void Main()
         {
             Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
@@ -18,8 +18,8 @@ namespace studio_project
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[3];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; // 0 = courtyard, 1 = kitchen, 2 = forest
-            bool[] inv = new bool[3];
-            inv[0] = false; inv[1] = true; inv[2] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key
+            bool[] inv = new bool[5];
+            inv[0] = false; inv[1] = true; inv[2] = false; inv[3] = false; inv[4] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight
             //Courtyard(lanterns, inv);
             Encounter1(inv);
         }
@@ -236,7 +236,6 @@ namespace studio_project
             char user = CharCheck();
             if (user == '1')
             {
-                Basement(lanterns, inv);
                 // method to return to whatever room takes you to the basement
             }
             else if (user == '2' && inv[3] == false && inv[4] == true)
