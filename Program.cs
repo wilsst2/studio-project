@@ -18,9 +18,9 @@ namespace studio_project
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[3];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; // 0 = courtyard, 1 = kitchen, 2 = forest
-            bool[] inv = new bool[5];
-            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight
-            Courtyard(lanterns, inv);
+            bool[] inv = new bool[6];
+            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
+            UpHallway(lanterns, inv);
         }
         
         static char CharCheck()
@@ -249,6 +249,43 @@ namespace studio_project
             {
                 Console.WriteLine("Invalid input");
                 Console.ReadLine();
+            }
+        }
+
+        static void UpHallway(bool[]lanterns, bool[]inv)
+        {
+            Console.Clear();
+            Console.WriteLine("You stand in the creaky upstairs hallway. There's a latch on the roof and various paintings on the walls that appear to be from different eras with different styles.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Enter bedroom\n2. Enter bathroom\n3. Enter attic\n4. Examine paintings");
+            char user = CharCheck();
+            if (user == '1')
+            {
+                Console.Clear();
+                Console.WriteLine("You take the door to the bedroom");
+                UpHallway(lanterns, inv); // bedroom method
+            }
+            else if (user == '2')
+            {
+                Console.Clear();
+                Console.WriteLine("You take the door to the bathroom");
+                UpHallway(lanterns, inv); // upbathroom method
+            }
+            else if (user == '3' && inv[5] == false)
+            {
+                Console.Clear();
+                Console.WriteLine("You have nothing to pull the door down with");
+                UpHallway(lanterns, inv);
+            }
+            else if (user == '3' && inv[5] == true)
+            {
+                Console.Clear();
+                Console.WriteLine("You use your broom to pull the door down and ascend into the attic.");
+                UpHallway(lanterns, inv); // attic method
+            }
+            else if (user == '4')
+            {
+                UpHallway(lanterns, inv); // painting puzzle method
             }
         }
         static void Street(bool[] lanterns, bool[] inv)
