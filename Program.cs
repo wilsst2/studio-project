@@ -19,9 +19,8 @@ namespace studio_project
             bool[] lanterns = new bool[3];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; // 0 = courtyard, 1 = kitchen, 2 = forest
             bool[] inv = new bool[5];
-            inv[0] = false; inv[1] = true; inv[2] = false; inv[3] = false; inv[4] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight
-            //Courtyard(lanterns, inv);
-            Encounter1(inv);
+            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight
+            Courtyard(lanterns, inv);
         }
         
         static char CharCheck()
@@ -142,7 +141,9 @@ namespace studio_project
                 Console.Write("You trudge through the mud to reach the garden shed.");
                 if (inv[2] == false)
                 {
-                    Console.WriteLine("There's a rusty padlock keeping the door locked. It doesn't budge.");
+                    Console.WriteLine(" There's a rusty padlock keeping the door locked. It doesn't budge.");
+                    Console.ReadLine();
+                    Backyard(lanterns, inv);
                 }
                 else
                 {
@@ -224,7 +225,7 @@ namespace studio_project
                 Console.Write("You stand in a cold, damp concrete basement. Sweeping your torch across the room reveals a thick layer of dust covering your surroundings.");
                 if (inv[3] == false)
                 {
-                    Console.WriteLine("There's a key on a wall hanger.");
+                    Console.WriteLine(" The only thing not covered in dust is a key on a wall hanger.");
                 }
             }
             Console.WriteLine("/n What do you want to do?");
