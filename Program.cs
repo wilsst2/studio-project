@@ -1431,6 +1431,7 @@ namespace studio_project
                 }
             }
         }
+        //Invalid choice
         static void ShowInvalidChoice()
         {
             Console.WriteLine("\nThe forest does not recognise that choice.");
