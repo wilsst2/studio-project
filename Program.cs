@@ -1341,9 +1341,11 @@ namespace studio_project
                         if (room == 0 && lanterns[2] == false)
                         {
                             lanterns[2] = true;
-                            Console.WriteLine("\nYou pick up the glowing jack-o'-lantern.");
-                            Console.WriteLine("Its warm light cuts through the darkness.");
-                            Console.WriteLine("You have collected a lantern!");
+                            Console.WriteLine("\nYou carefully lift the glowing jack-o'-lantern.");
+                            Console.WriteLine("Its warm orange light pushes back the surrounding darkness.");
+                            Console.WriteLine("For a moment, the whispers in the trees fall silent.");
+                            Console.WriteLine("You have collected the forest jack-o'-lantern!");
+
                             Console.WriteLine("\nPress ENTER to continue.");
                             Console.ReadLine();
                         }
