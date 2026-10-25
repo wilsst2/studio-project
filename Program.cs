@@ -616,8 +616,9 @@ namespace studio_project
         }
         static void ShowInvalidChoice()
         {
-            Console.WriteLine("\nThat is not a valid choice!");
-            Console.WriteLine("Please enter 1, 2, 3, 4, 5, 6, or ? for help.");
+            Console.WriteLine("\nThe forest does not recognise that choice.");
+            Console.WriteLine("Please choose an option from the menu.");
+            Console.WriteLine("Enter 1, 2, 3, 4, 5, 6, or ? for help.");
             Console.WriteLine("Press ENTER to try again.");
             Console.ReadLine();
         }
