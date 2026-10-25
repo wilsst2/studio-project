@@ -1378,6 +1378,21 @@ namespace studio_project
                             ShowInvalidChoice();
                         }
                         break;
+
+                    case "?":
+                        Console.Clear();
+                        Console.WriteLine("=== HAUNTED FOREST HELP ===");
+                        Console.WriteLine("Choose a number to explore a forest area.");
+                        Console.WriteLine("1 - Explore the Clearing");
+                        Console.WriteLine("2 - Explore the Foggy Path");
+                        Console.WriteLine("3 - Explore the Briar Patch");
+                        Console.WriteLine("4 - Explore the Witch's Grove");
+                        Console.WriteLine("5 - Collect the lantern when available.");
+                        Console.WriteLine("6 - Leave the forest.");
+                        Console.WriteLine("? - Display these instructions.");
+                        Console.WriteLine("\nPress ENTER to return to the forest.");
+                        Console.ReadLine();
+                        break;
                 }
             }
         }
