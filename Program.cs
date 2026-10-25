@@ -1302,6 +1302,7 @@ namespace studio_project
         static void ExploreForest(bool[] lanterns, bool[] inv)
         {
             int room = 0;
+            bool[] visited = new bool[4];
             string[] rooms =
             {
              "You step into a dark, forgotten forest. Twisted trees reach " +
@@ -1320,6 +1321,16 @@ namespace studio_project
             {
                 Console.Clear();
                 Console.WriteLine(rooms[room]);
+
+                if (visited[room])
+                {
+                    Console.WriteLine("You recognise this place, but it still feels dangerous.");
+                }
+                else
+                {
+                    Console.WriteLine("You explore this area for the first time.");
+                    visited[room] = true;
+                }
 
                 if (room == 0 && lanterns[2] == false)
                     Console.WriteLine("A glowing jack-o'-lantern rests beside a tree.");
