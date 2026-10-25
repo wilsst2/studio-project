@@ -359,7 +359,7 @@ namespace studio_project
 
         static void Lockbox(bool[] lanterns)
         {
-            string code = "601";
+            string code = "106";
             string uCode = "0";
             bool con = true;
             do
