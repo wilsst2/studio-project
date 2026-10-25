@@ -16,8 +16,8 @@ namespace studio_project
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
-            bool[] lanterns = new bool[3];
-            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; // 0 = courtyard, 1 = kitchen, 2 = forest
+            bool[] lanterns = new bool[4];
+            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
             UpHallway(lanterns, inv);
@@ -305,14 +305,19 @@ namespace studio_project
             Console.Clear();
             Console.WriteLine("You're in the master bedroom. The room is sparesly decorated with only a bed, a sidetable, and a painting on the wall.");
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Look under the bed\n2. Search drawers\n3. Examine painting");
+            Console.WriteLine("1. Leave\n2. Search drawers\n3. Examine painting");
+            if (lanterns[3] == false)
+            {
+                Console.WriteLine("4. Look under bed");
+            }
             char user = CharCheck();
             if (user == '1')
             {
-                // lockbox
-                Bedroom(lanterns, inv);
+                Console.WriteLine("\nYou head back into the hallway.");
+                Console.ReadLine();
+                UpHallway(lanterns, inv);
             }
-            else if (user == '2' && inv[4] == true)
+            if (user == '2' && inv[4] == true)
             {
                 Console.WriteLine("\nThe drawers are completely empty.");
                 Console.ReadLine();
@@ -331,6 +336,60 @@ namespace studio_project
                 Console.ReadLine();
                 Bedroom(lanterns, inv);
             }
+            else if (user == '4' && lanterns[3] == false)
+            {
+                Console.Clear();
+                Console.WriteLine("You find a large lockbox underneath the bed. It has a combination lock for three numbers.");
+                Console.WriteLine("\nWhat do you want to do?");
+                Console.WriteLine("1. Open it\n2. Leave it");
+                user = CharCheck();
+                if (user == '1')
+                {
+                    Lockbox(lanterns);
+                    Bedroom(lanterns, inv);
+                }
+                else if (user == '2')
+                {
+                    Console.WriteLine("You put the lockbox back.");
+                    Console.ReadLine();
+                    Bedroom(lanterns, inv);
+                }
+            }
+        }
+
+        static void Lockbox(bool[] lanterns)
+        {
+            string code = "601";
+            string uCode = "0";
+            bool con = true;
+            do
+            {
+                Console.Clear();
+                Console.Write("Enter code: ");
+                uCode = Console.ReadLine();
+                if (uCode != code)
+                {
+                    Console.WriteLine("\nThe box doesn't open. Do you want to try again?");
+                    Console.WriteLine("\n1. Try again\n2. Leave");
+                    char user = CharCheck();
+                    if (user == '1')
+                    {
+                        con = true;
+                    }
+                    else if (user == '2')
+                    {
+                        con = false;
+                    }
+                }
+                else if (uCode == code)
+                {
+                    Console.WriteLine("\nThe box unlocks. Inside is a jack-o'-lantern!");
+                    lanterns[3] = true;
+                    con = false;
+                    Console.ReadLine();
+                }
+            } while (con == true);
+            Console.WriteLine("");
         }
         static void Paintings()
         {
