@@ -1,43 +1,57 @@
-﻿using System.Net.NetworkInformation;
+﻿using System.Collections;
+using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
 
 namespace studio_project
 {
     internal class Program
     {
-        //Blake
+        static bool hasRustyKey = false;
 
+        //Blake
         static void Main()
         {
             Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
-            bool[] lanterns = new bool[3];
-            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; // 0 = courtyard, 1 = kitchen, 2 = forest
-            bool[] inv = new bool[3];
-            inv[0] = false; inv[1] = false; // 0 = coins, 1 = pruning knife
-            Courtyard(lanterns, inv);
+            bool[] lanterns = new bool[4];
+            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom
+            bool[] inv = new bool[6];
+            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
+            UpHallway(lanterns, inv);
         }
+        
+        static char CharCheck()
+        {
+            char user = '0';
+            bool check = false;
+            do
+            {
+                try
+                {
+                    user = Convert.ToChar(Console.ReadLine());
+                    check = true;
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input");
+                }
+            } while (check == false);
+            return user;
+        }
+
         static void Courtyard(bool[] lanterns, bool[] inv)
         {
-            bool jack;
-            if (lanterns[0] == true)
-            {
-                jack = true;
-            }
-            else
-            {
-                jack = false;
-            }
             Console.Clear();
             Console.Write("You stand in front of an old, dilapidated manor, it's doors wide open and welcoming. The courtyard is in a state of disrepair, overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows. The moon-shadows of the dead trees surround you.");
-            if (jack == false)
+            if (lanterns[0] == false)
             {
                 Console.WriteLine(" A jack-o'-lantern hangs in one of them.");
             }
             Console.WriteLine("\nWhat do you want to do?");
-            if (jack == false)
+            if (lanterns[0] == false)
             {
                 Console.WriteLine("1. Enter manor\n2. Move to backyard\n3. Leave\n4. Approach jack-o'-lantern");
             }
@@ -45,28 +59,28 @@ namespace studio_project
             {
                 Console.WriteLine("1. Enter manor\n2. Backyard\n3. Leave");
             }
-            string user = Console.ReadLine();
-            if (user == "1")
+            char user = CharCheck();
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("You take the steps up to the front door and enter the manor.");
                 Console.ReadLine();
                 Hallway();
             }
-            else if (user == "2")
+            else if (user == '2')
             {
                 Console.Clear();
                 Console.WriteLine("You move around the manor to the backyard.");
                 Backyard(lanterns, inv);
             }
-            else if (user == "3")
+            else if (user == '3')
             {
                 Console.Clear();
-                Console.WriteLine("The heavy gates of the couryard clang shut behind you as you leave. Thick midnight fog prevents you from properly survering your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
+                Console.WriteLine("The heavy gates of the courtyard clang shut behind you as you leave. Thick midnight fog prevents you from properly surveying your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
                 Console.ReadLine();
                 Street(lanterns, inv);
             }
-            else if (user == "4" && jack == false)
+            else if (user == '4' && lanterns[0] == false)
             {
                 Console.Clear();
                 Console.Write("The jack-o'lantern is suspended within a net, which is attached to a rope keeping it firmly in the sky.");
@@ -84,7 +98,7 @@ namespace studio_project
                     Courtyard(lanterns, inv);
                 }
             }
-            else if (user == "?")
+            else if (user == '?')
             {
                 Help();
                 Courtyard(lanterns, inv);
@@ -98,46 +112,47 @@ namespace studio_project
         }
         static void Backyard(bool[] lanterns, bool[] inv)
         {
-            bool coins;
-            if (inv[0] == true)
-            {
-                coins = true;
-            }
-            else
-            {
-                coins = false;
-            }
             Console.Clear();
             Console.WriteLine("The area is even more overgrown than the courtyard. There is a no longer running fountain and a dingy garden shed tucked away in the far corner.");
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Enter manor\n2. Move to courtyard\n3. Enter garden shed");
-            if (coins == false)
+            Console.WriteLine("1. Enter manor\n2. Move to courtyard\n3. Approach garden shed");
+            if (inv[0] == false)
             {
                 Console.WriteLine("4. Investigate fountain");
             }
-            string user = Console.ReadLine();
-            if (user == "1")
+            char user = CharCheck();
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("You enter the manor through the backdoor.");
                 Console.ReadLine();
                 Backyard(lanterns, inv); // unsure what this room will be
             }
-            else if (user == "2")
+            else if (user == '2')
             {
                 Console.Clear();
                 Console.WriteLine("You move around the manor to the courtyard");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
-            else if (user == "3")
+            else if (user == '3')
             {
                 Console.Clear();
-                Console.WriteLine("You trudge through the mud to enter the garden shed.");
-                Console.ReadLine();
-                GardenShed(lanterns, inv);
+                Console.Write("You trudge through the mud to reach the garden shed.");
+                if (inv[2] == false)
+                {
+                    Console.WriteLine(" There's a rusty padlock keeping the door locked. It doesn't budge.");
+                    Console.ReadLine();
+                    Backyard(lanterns, inv);
+                }
+                else
+                {
+                    Console.WriteLine("You use your key to unlock the padlock and enter.");
+                    Console.ReadLine();
+                    GardenShed(lanterns, inv);
+                }
             }
-            else if (user == "4" && coins == false)
+            else if (user == '4' && inv[0] == false)
             {
                 Console.Clear();
                 Console.WriteLine("You come closer to the fountain. The once marble structure is now slimey and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
@@ -145,7 +160,7 @@ namespace studio_project
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-            else if (user == "?")
+            else if (user == '?')
             {
                 Help();
                 Backyard(lanterns, inv);
@@ -159,36 +174,27 @@ namespace studio_project
         }
         static void GardenShed(bool[] lanterns, bool[] inv)
         {
-            bool knife;
-            if (inv[1] == true)
-            {
-                knife = true;
-            }
-            else
-            {
-                knife = false;
-            }
             Console.Clear();
             Console.Write("You are in a dark and cramped space that smells of mold and something rotten. Your only light is from the moon shining through cracks in the roof.");
-            if (knife == false)
+            if (inv[1] == false)
             {
                 Console.WriteLine(" There's a pruning knife jutting out of the wall.");
             }
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Leave");
-            if (knife == false)
+            if (inv[1] == false)
             {
                 Console.WriteLine("2. Grab pruning knife");
             }
-            string user = Console.ReadLine();
-            if (user == "1")
+            char user = CharCheck();
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("You leave the garden shed and return to the backyard.");
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
-            else if (user == "2" && knife == false)
+            else if (user == '2' && inv[1] == false)
             {
                 Console.Clear();
                 Console.WriteLine("You grab the pruning knife");
@@ -196,7 +202,7 @@ namespace studio_project
                 Console.ReadLine();
                 GardenShed(lanterns, inv);
             }
-            else if (user == "?")
+            else if (user == '?')
             {
                 Help();
                 Backyard(lanterns, inv);
@@ -208,32 +214,247 @@ namespace studio_project
                 Backyard(lanterns, inv);
             }
         }
+        static void Basement(bool[] lanterns, bool[] inv)
+        {
+            if (inv[4] == false)
+            {
+                Console.WriteLine("Without the light of the moon, it's impossible to make out your surroundings.");
+            }
+            else
+            {
+                Console.Write("You stand in a cold, damp concrete basement. Sweeping your torch across the room reveals a thick layer of dust covering your surroundings.");
+                if (inv[3] == false)
+                {
+                    Console.WriteLine(" The only thing not covered in dust is a key on a wall hanger.");
+                }
+            }
+            Console.WriteLine("/n What do you want to do?");
+            Console.WriteLine("1. Leave basement");
+            if (inv[3] == false && inv[4] == true)
+            {
+                Console.WriteLine("2. Take key");
+            }
+            char user = CharCheck();
+            if (user == '1')
+            {
+                // method to return to whatever room takes you to the basement
+            }
+            else if (user == '2' && inv[3] == false && inv[4] == true)
+            {
+                Console.WriteLine("You take the key.");
+                inv[3] = true;
+                Basement(lanterns, inv);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+            }
+        }
+
+        static void UpHallway(bool[]lanterns, bool[]inv)
+        {
+            Console.Clear();
+            Console.WriteLine("You stand in the creaky upstairs hallway. There's a latch on the roof and various paintings on the walls that appear to be from different eras with different styles.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Enter bedroom\n2. Enter bathroom\n3. Enter attic\n4. Examine paintings");
+            char user = CharCheck();
+            if (user == '1')
+            {
+                Console.Clear();
+                Console.WriteLine("You take the door to the bedroom.");
+                Console.ReadLine();
+                Bedroom(lanterns, inv);
+            }
+            else if (user == '2')
+            {
+                Console.Clear();
+                Console.WriteLine("You take the door to the bathroom.");
+                Console.ReadLine();
+                UpHallway(lanterns, inv); // 2nd bathroom method
+            }
+            else if (user == '3' && inv[5] == false)
+            {
+                Console.Clear();
+                Console.WriteLine("You have nothing to pull the door down with.");
+                Console.ReadLine();
+                UpHallway(lanterns, inv);
+            }
+            else if (user == '3' && inv[5] == true)
+            {
+                Console.Clear();
+                Console.WriteLine("You use your broom to pull the door down and ascend into the attic.");
+                Console.ReadLine();
+                UpHallway(lanterns, inv); // attic method
+            }
+            else if (user == '4')
+            {
+                Paintings();
+                UpHallway(lanterns, inv);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+                UpHallway(lanterns, inv);
+            }
+        }
+
+        static void Bedroom(bool[] lanterns, bool[] inv)
+        {
+            Console.Clear();
+            Console.WriteLine("You're in the master bedroom. The room is sparesly decorated with only a bed, a sidetable, and a painting on the wall.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Leave\n2. Search drawers\n3. Examine painting");
+            if (lanterns[3] == false)
+            {
+                Console.WriteLine("4. Look under bed");
+            }
+            char user = CharCheck();
+            if (user == '1')
+            {
+                Console.WriteLine("\nYou head back into the hallway.");
+                Console.ReadLine();
+                UpHallway(lanterns, inv);
+            }
+            if (user == '2' && inv[4] == true)
+            {
+                Console.WriteLine("\nThe drawers are completely empty.");
+                Console.ReadLine();
+                Bedroom(lanterns, inv);
+            }
+            else if (user == '2' && inv[4] == false)
+            {
+                Console.WriteLine("\nThe drawers are mostly cleaned out, the only item inside is a flashlight. You take it.");
+                inv[4] = true;
+                Console.ReadLine();
+                Bedroom(lanterns, inv);
+            }
+            else if (user == '3')
+            {
+                Console.WriteLine("\nThe painting is of a man with no mouth. It has a plaque underneath it that reads '3'");
+                Console.ReadLine();
+                Bedroom(lanterns, inv);
+            }
+            else if (user == '4' && lanterns[3] == false)
+            {
+                Console.Clear();
+                Console.WriteLine("You find a large lockbox underneath the bed. It has a combination lock for three numbers.");
+                Console.WriteLine("\nWhat do you want to do?");
+                Console.WriteLine("1. Open it\n2. Leave it");
+                user = CharCheck();
+                if (user == '1')
+                {
+                    Lockbox(lanterns);
+                    Bedroom(lanterns, inv);
+                }
+                else if (user == '2')
+                {
+                    Console.WriteLine("You put the lockbox back.");
+                    Console.ReadLine();
+                    Bedroom(lanterns, inv);
+                }
+            }
+        }
+
+        static void Lockbox(bool[] lanterns)
+        {
+            string code = "106";
+            string uCode = "0";
+            bool con = true;
+            do
+            {
+                Console.Clear();
+                Console.Write("Enter code: ");
+                uCode = Console.ReadLine();
+                if (uCode != code)
+                {
+                    Console.WriteLine("\nThe box doesn't open. Do you want to try again?");
+                    Console.WriteLine("\n1. Try again\n2. Leave");
+                    char user = CharCheck();
+                    if (user == '1')
+                    {
+                        con = true;
+                    }
+                    else if (user == '2')
+                    {
+                        con = false;
+                    }
+                }
+                else if (uCode == code)
+                {
+                    Console.WriteLine("\nThe box unlocks. Inside is a jack-o'-lantern!");
+                    lanterns[3] = true;
+                    con = false;
+                    Console.ReadLine();
+                }
+            } while (con == true);
+            Console.WriteLine("");
+        }
+        static void Paintings()
+        {
+            Console.Clear();
+            Console.WriteLine("There are four paintings on the wall.");
+            Console.WriteLine("\nWhich one do you want to look at?");
+            Console.WriteLine("1. First painting\n2. Second painting\n3. Third painting\n4. Leave the paintings");
+            char user = CharCheck();
+            if (user == '1')
+            {
+                Console.WriteLine("\nThis painting is of a man with no eyes. The plaque underneath says it was painted in 1811.");
+                Console.ReadLine();
+                Paintings();
+            }
+            else if (user == '2')
+            {
+                Console.WriteLine("\nThis painting is of a man with no ears. The plaque underneath says it was painted in 1803.");
+                Console.ReadLine();
+                Paintings();
+            }
+            else if (user == '3')
+            {
+                Console.WriteLine("\nThis painting is of a man with no mouth. The plaque unerneath says it was painted in 1861.");
+                Console.ReadLine();
+                Paintings();
+            }
+            else if (user == '4')
+            {
+                Console.WriteLine("\nYou leave the paintings to their solitude.");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+                Paintings();
+            }
+        }
+
         static void Street(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
-            string user = Console.ReadLine();
-            if (user == "1")
+            char user = CharCheck();
+            if (user == '1')
             {
                 Console.Clear();
                 Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
                 Console.ReadLine();
                 Street(lanterns, inv);
             }
-            else if (user == "2")
+            else if (user == '2')
             {
-                Dairy();
+                //Dairy();
             }
-            else if (user == "3")
+            else if (user == '3')
             {
                 Console.Clear();
                 Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
-            else if (user == "?")
+            else if (user == '?')
             {
                 Help();
                 Street(lanterns, inv);
@@ -260,13 +481,13 @@ namespace studio_project
 
 
         //Dominik
-        static void Puzzle1()
+        static bool Puzzle1()
         {
             Random rand = new Random();
             string[] puzzle = { "sinister", "october", "apparition", "halloween", };
             string chosen = puzzle[rand.Next(puzzle.Length)]; //Chooses a random word from the puzzle array
             string input;
-            string choice = "Y";
+            string choice = "Y";        //Set to Y as default for checks later
             char[] letters = chosen.ToCharArray(); //Convert chosen string to array of characters                    
             for (int i = 0; i < letters.Length; i++) //Repeat for every letter in the array
             {
@@ -275,36 +496,561 @@ namespace studio_project
                 letters[i] = letters[randomIndex];              //Changes the stored letter that was just stored to the chosen random char
                 letters[randomIndex] = temp;                    //Stores the used word in temp
             }
-            string jumble = new string(letters);                //Creates a string with the new jumbled word
+            string jumble = new string(letters);                //Creates a string storing the new jumbled word
+            Console.Clear();
             Console.WriteLine("There's a strange set of letters carved into the case:");
             Console.WriteLine();
-            Console.WriteLine(jumble);
-            Console.WriteLine();
             Console.WriteLine("Maybe unscrambling this jumbled word will open it?");
+            Console.WriteLine();
             do
             {
+                Console.WriteLine(jumble);
+                Console.WriteLine();
                 Console.Write("Attempt to unscramble: ");
-                input = Console.ReadLine().ToLower();
+                input = Console.ReadLine().ToLower();           //Gets the user's choice and converts it to lowercase
                 if (input != chosen)                            //Get user's attempt to unscramble word
                 {
+                    Console.Clear();
                     Console.Write("Nothing happened, try again? (Y/N): ");
-                    choice = Console.ReadLine().ToUpper();      //Get user's choice on if they want to replay or leave
+                    choice = Console.ReadLine().ToUpper();      //Get user's choice on if they want to replay or leave, capitalized
+                    Console.Clear();
                 }
-            } while (input != chosen && choice == "Y");         //Check: User hasn't gotten the puzzle correct and insists on retrying
-            if (choice != "Y")
+            } while (input != chosen && choice == "Y");         //Check: User hasn't gotten the puzzle correct and their choice is "Y"
+            if (choice != "Y")                              //Check: User doesn't want to retry
             {
+                Console.Clear();
                 Console.WriteLine("You give up and leave the case.");
-            }
-            if (input == chosen)
-            {
-                Console.WriteLine("You open the case successfully. Inside is a key radiating an sinister aura...");
-                Console.WriteLine("You've won, thank you for playtesting our demo! We hope you enjoyed.");
                 Console.ReadLine();
+                return false;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("You open the case successfully. Inside is a key radiating an sinister aura...");
+                Console.ReadLine();
+                return true;
             }
         }
-        static void Puzzle2()
+        static bool Puzzle2()
         {
-
+            string choice = "Y";
+            string entry;
+            Console.Clear();
+            Console.WriteLine("Upon approaching the door, there's lock with a series of raw binary on it.");
+            Console.WriteLine();
+            Console.WriteLine("You must convert this to decimal to enter...");
+            Console.WriteLine();
+            do
+            {
+                Console.WriteLine("1010011010");            //This is equal to 666 in decimal
+                Console.WriteLine();
+                Console.Write("Attempt to translate: ");
+                entry = Console.ReadLine();
+                if (entry != "666")
+                {
+                    Console.Clear();
+                    Console.Write("Incorrect, try again? (Y/N): ");
+                    choice = Console.ReadLine().ToUpper();
+                    Console.Clear();
+                }
+            } while (entry != "666" && choice == "Y");
+            if (choice != "Y")
+            {
+                Console.Clear();
+                Console.WriteLine("You gave up and left.");
+                Console.ReadLine();
+                return false;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("You successfully converted the binary to decimal.");
+                Console.ReadLine();
+                return true;
+            }
+        }
+        static void Encounter1(bool[] inv)
+        {
+            string choice;
+            Console.Clear();
+            Console.WriteLine("Upon wandering through the forest, you encounter a figure in a dark robe blocking the path...");
+            Console.WriteLine();
+            Console.WriteLine("What will you do?");
+            Console.WriteLine();
+            Console.WriteLine("1. Cower in fear from his aura");
+            if (inv[1] == true)
+            {
+                Console.WriteLine("2. Attempt to fight the figure");
+            }
+            choice = Console.ReadLine();
+            if (choice == "1")
+            {
+                //Let me know which part of the map this should send you back to.
+            }
+            else if (choice == "2" && inv[1] == true)
+            {
+                Fight1();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid input.");
+                Console.ReadLine();
+                Encounter1(inv);
+            }
+        }
+        static void Fight1()                    //Next time I will definitely break these up into smaller functions.
+        {
+            int turn = 1;
+            int enemyoption, enemyatk, dmgdealt, dmgtaken, rng;
+            string useroption, useratk;
+            string target = "0";
+            bool enemybleed = false;
+            bool userbleed = false;
+            bool userpoison = false;
+            bool guard = false;
+            bool enemyguard = false;
+            int usernrg = 50;
+            int userhp = 100;
+            int enemyhp = 100;
+            int bleedtimer = 0;
+            int poisontimer = 0;
+            int enemybleedtimer = 0;
+            Random rand = new Random();
+            Console.Clear();
+            Console.WriteLine("You equip your pruning knife, preparing yourself to fight.");
+            Thread.Sleep(1000);
+            Console.WriteLine();
+            Console.WriteLine("Get ready!");
+            Thread.Sleep(2000);
+            do
+            {
+                if (turn == 1 && userhp > 0)  //User's turn
+                {
+                    if (userbleed == true)          //If user is bleeding
+                    {
+                        bleedtimer++;        //User will bleed or be poisoned for 3 turns before status effects wear off.
+                        if (bleedtimer == 3)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("You're no longer bleeding!");
+                            userbleed = false;
+                            bleedtimer = 0;
+                            Thread.Sleep(3000);
+                        }
+                    }
+                    if (userpoison == true)
+                    {
+                        poisontimer++;
+                        if (poisontimer == 3)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("You're no longer poisoned!");
+                            userpoison = false;
+                            poisontimer = 0;
+                            Thread.Sleep(3000);
+                        }
+                    }
+                    guard = false;
+                    while (target != "1")
+                    {
+                        //Menu
+                        Console.Clear();
+                        Console.WriteLine($"HP: {userhp}");
+                        Console.WriteLine($"STAM: {usernrg}");
+                        Console.WriteLine();
+                        Console.WriteLine($"Select target!");
+                        Console.WriteLine();
+                        Console.WriteLine("1. Mysterious figure");
+                        target = Console.ReadLine();
+                        if (target != "1")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Invalid option!");
+                            Thread.Sleep(1500);
+                        }
+                    }
+                    Console.Clear();
+                    Console.WriteLine($"HP: {userhp}");
+                    Console.WriteLine($"STAM: {usernrg}");
+                    Console.WriteLine();
+                    Console.WriteLine("1. Attack\n2. Guard\n3. Action\n4. Back");
+                    useroption = Console.ReadLine();
+                    if (useroption == "1")
+                        //Attack
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"HP: {userhp}");
+                        Console.WriteLine($"STAM: {usernrg}");
+                        Console.WriteLine();
+                        Console.WriteLine("1. Slash (25 STAM)\n2. Stab (50 STAM)\n3. Back");
+                        useratk = Console.ReadLine();
+                        if (useratk == "1" && usernrg < 25)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Not enough stamina!");
+                            Thread.Sleep(1500);
+                        }
+                        if (useratk == "1" && usernrg >= 25)
+                            //Slash
+                        {
+                            if (enemyguard == true)
+                            {
+                                dmgdealt = rand.Next(3, 15);
+                            }
+                            else
+                            {
+                                dmgdealt = rand.Next(10, 26);
+                            }
+                            enemyhp = (enemyhp - dmgdealt);
+                            Console.Clear();
+                            Console.WriteLine($"You slash your target, dealing {dmgdealt} damage!");
+                            Thread.Sleep(1500);
+                            rng = rand.Next(0, 5);
+                            usernrg = (usernrg - 25);
+                            if (rng == 0)
+                            {
+                                enemybleedtimer = 0;
+                                if (enemybleed == false)
+                                {
+                                    enemybleed = true;
+                                    Console.WriteLine();
+                                    Console.WriteLine($"You inflicted bleed!");
+                                    Thread.Sleep(1500);
+                                }
+                            }
+                            if (enemybleed == true)
+                            {
+                                dmgdealt = rand.Next(3, 11);
+                                enemyhp = (enemyhp - dmgdealt);
+                                Console.WriteLine();
+                                Console.WriteLine($"Mysterious figure took {dmgdealt} bleed damage!");
+                                Thread.Sleep(1500);
+                            }
+                            usernrg = (usernrg + 40);       //Give user stamina after turn
+                            if (usernrg > 100)
+                            {
+                                usernrg = 100;      //Make sure user doesn't have over 100 stamina
+                            }
+                            Thread.Sleep(3000);
+                            turn = 2;
+                        }
+                        else if (useratk == "2" && usernrg < 50)        //Make sure user has enough stamina for this move
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Not enough stamina!");
+                            Thread.Sleep(1500);
+                        }
+                        else if (useratk == "2" && usernrg >= 50)
+                            //Stab
+                        {
+                            if (enemyguard == true)
+                            {
+                                dmgdealt = rand.Next(6, 18);
+                            }
+                            else
+                            {
+                                dmgdealt = rand.Next(18, 32);
+                            }
+                            enemyhp = (enemyhp - dmgdealt);
+                            Console.Clear();
+                            Console.WriteLine($"You stab your target, dealing {dmgdealt} damage!");
+                            Thread.Sleep(1500);
+                            usernrg = (usernrg - 50);
+                            if (enemybleed == false)
+                            {
+                                enemybleed = true;
+                                Console.WriteLine();
+                                Console.WriteLine("You inflicted bleed!");
+                                enemybleedtimer = 0;
+                                Thread.Sleep(1500);
+                            }
+                            if (enemybleed == true)
+                            {
+                                dmgdealt = rand.Next(3, 11);
+                                enemyhp = (enemyhp - dmgdealt);
+                                Console.WriteLine();
+                                Console.WriteLine($"Mysterious figure took {dmgdealt} bleed damage!");
+                                Thread.Sleep(1500);
+                            }
+                            usernrg = (usernrg + 40);
+                            if (usernrg > 100)
+                            {
+                                usernrg = 100;      //Make sure user doesn't have over 100 stamina
+                            }
+                            Thread.Sleep(3000);
+                            turn = 2;
+                        }
+                        else if (useratk == "3") { }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Invalid option!");
+                            Thread.Sleep(1500);
+                        }
+                    }
+                    else if (useroption == "2")
+                        //Block
+                    {
+                        Console.Clear();
+                        Console.WriteLine("You brace yourself!");
+                        guard = true;
+                        if (enemybleed == true)
+                        {
+                            dmgdealt = rand.Next(3, 11);
+                            enemyhp = (enemyhp - dmgdealt);
+                            Console.WriteLine();
+                            Console.WriteLine($"Mysterious figure took {dmgdealt} bleed damage!");
+                            Thread.Sleep(1500);
+                        }
+                        usernrg = (usernrg + 40);
+                        if (usernrg > 100)
+                        {
+                            usernrg = 100;      //Make sure user doesn't have over 100 stamina
+                        }
+                        Thread.Sleep(3000);
+                        turn = 2;
+                    }
+                    else if (useroption == "3")
+                        //Action
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"HP: {userhp}");
+                        Console.WriteLine($"STAM: {usernrg}");
+                        Console.WriteLine();
+                        Console.WriteLine("1. Inspect enemy\n2. Back");
+                        useratk = Console.ReadLine();
+                        if (useratk == "1")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("A mysterious figure wearing a dark robe, his identity is buried in the shadows of his hood. You can smell a sweet pumpkin aroma.");
+                            Console.WriteLine();
+                            Console.WriteLine($"HP: {enemyhp}");
+                            Console.ReadLine();
+                        }
+                        else if (useratk == "2") { }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Invalid option!");
+                            Thread.Sleep(1500);
+                        }
+                    }
+                    else if (useroption == "4") { target = "0"; }   //Go back
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Invalid option!");
+                        Thread.Sleep(1500);
+                    }
+                }
+                else if (turn == 2 && enemyhp > 0)      //Opponent's turn
+                {
+                    if (enemybleed == true)             //Enemy will bleed for 3 turns before status effects wear off.
+                    {
+                        enemybleedtimer++;
+                        if (enemybleedtimer == 3)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Mysterious figure recovered from the bleeding!");
+                            enemybleed = false;
+                            enemybleedtimer = 0;
+                            Thread.Sleep(3000);
+                        }
+                    }
+                    target = "0";
+                    enemyguard = false;
+                    Console.Clear();
+                    Console.WriteLine($"It's mysterious figure's turn!");
+                    enemyoption = rand.Next(0, 7);
+                    Thread.Sleep(1500);
+                    Console.WriteLine();
+                    if (enemyoption == 0)
+                        //Enemy: Guard
+                    {
+                        Console.WriteLine($"Mysterious figure chose to guard!");
+                        enemyguard = true;
+                        if (userpoison == true)
+                        {
+                            dmgtaken = rand.Next(1, 11);
+                            userhp = (userhp - dmgtaken);
+                            Console.WriteLine();
+                            Console.WriteLine($"You took {dmgtaken} poison damage!");
+                            Thread.Sleep(1500);
+                        }
+                        if (userbleed == true)
+                        {
+                            dmgtaken = rand.Next(1, 8);
+                            userhp = (userhp - dmgtaken);
+                            Console.WriteLine();
+                            Console.WriteLine($"You took {dmgtaken} bleed damage!");
+                            Thread.Sleep(1500);
+                        }
+                        Thread.Sleep(3000);
+                        turn = 1;
+                    }
+                    else if (enemyoption == 1 && enemyhp < 80)
+                        //Enemy: Heal
+                    {
+                        Console.WriteLine($"Mysterious figure used a healing chant, healing 20 HP and sealing their wounds!");
+                        enemyhp = (enemyhp + 20);
+                        enemybleed = false;
+                        enemybleedtimer = 0;
+                        if (userpoison == true)
+                        {
+                            dmgtaken = rand.Next(1, 11);
+                            userhp = (userhp - dmgtaken);
+                            Console.WriteLine();
+                            Console.WriteLine($"You took {dmgtaken} poison damage!");
+                            Thread.Sleep(1500);
+                        }
+                        if (userbleed == true)
+                        {
+                            dmgtaken = rand.Next(1, 8);
+                            userhp = (userhp - dmgtaken);
+                            Console.WriteLine();
+                            Console.WriteLine($"You took {dmgtaken} bleed damage!");
+                            Thread.Sleep(1500);
+                        }
+                        Thread.Sleep(3000);
+                        turn = 1;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Mysterious figure chose to attack!");
+                        Thread.Sleep(1500);
+                        Console.WriteLine();
+                        enemyatk = rand.Next(0, 5);
+                        if (enemyatk == 0)
+                            //Enemy: Ability 1
+                        {
+                            if (guard == true)
+                            {
+                                dmgtaken = rand.Next(0, 6);
+                            }
+                            else
+                            {
+                                dmgtaken = rand.Next(4, 18);
+                            }
+                            Console.WriteLine($"Mysterious figure casts plague, dealing {dmgtaken} damage!");
+                            Thread.Sleep(1500);
+                            poisontimer = 0;
+                            userhp = (userhp - dmgtaken);
+                            if (userpoison == false)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("You're poisoned!");
+                                Thread.Sleep(1500);
+                                userpoison = true;
+                            }
+                            if (userpoison == true)
+                            {
+                                dmgtaken = rand.Next(1, 11);
+                                userhp = (userhp - dmgtaken);
+                                Console.WriteLine();
+                                Console.WriteLine($"You took {dmgtaken} poison damage!");
+                                Thread.Sleep(1500);
+                            }
+                            if (userbleed == true)
+                            {
+                                dmgtaken = rand.Next(1, 8);
+                                userhp = (userhp - dmgtaken);
+                                Console.WriteLine();
+                                Console.WriteLine($"You took {dmgtaken} bleed damage!");
+                                Thread.Sleep(1500);
+                            }
+                            Thread.Sleep(3000);
+                            turn = 1;
+                        }
+                        else if (enemyatk == 1)
+                            //Enemy: Ability 2
+                        {
+                            if (guard == true)
+                            {
+                                dmgtaken = rand.Next(0, 9);
+                            }
+                            else
+                            {
+                                dmgtaken = rand.Next(6, 21);
+                            }
+                            Console.WriteLine($"Mysterious figure used ritual, dealing {dmgtaken} damage!");
+                            Thread.Sleep(1500);
+                            bleedtimer = 0;
+                            userhp = (userhp - dmgtaken);
+                            if (userbleed == false)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("You're bleeding!");
+                                Thread.Sleep(1500);
+                                userbleed = true;
+                            }
+                            if (userpoison == true)
+                            {
+                                dmgtaken = rand.Next(1, 11);
+                                userhp = (userhp - dmgtaken);
+                                Console.WriteLine();
+                                Console.WriteLine($"You took {dmgtaken} poison damage!");
+                                Thread.Sleep(1500);
+                            }
+                            if (userbleed == true)
+                            {
+                                dmgtaken = rand.Next(1, 8);
+                                userhp = (userhp - dmgtaken);
+                                Console.WriteLine();
+                                Console.WriteLine($"You took {dmgtaken} bleed damage!");
+                                Thread.Sleep(1500);
+                            }
+                            Thread.Sleep(3000);
+                            turn = 1;
+                        }
+                        else
+                            //Enemy: Default attack
+                        {
+                            if (guard == true)
+                            {
+                                dmgtaken = rand.Next(0, 8);
+                            }
+                            else
+                            {
+                                dmgtaken = rand.Next(9, 27);
+                            }
+                            Console.WriteLine($"Mysterious figure used strike, dealing {dmgtaken} damage!");
+                            Thread.Sleep(1500);
+                            userhp = (userhp - dmgtaken);
+                            if (userpoison == true)
+                            {
+                                dmgtaken = rand.Next(1, 11);
+                                userhp = (userhp - dmgtaken);
+                                Console.WriteLine();
+                                Console.WriteLine($"You took {dmgtaken} poison damage!");
+                                Thread.Sleep(1500);
+                            }
+                            if (userbleed == true)
+                            {
+                                dmgtaken = rand.Next(1, 8);
+                                userhp = (userhp - dmgtaken);
+                                Console.WriteLine();
+                                Console.WriteLine($"You took {dmgtaken} bleed damage!");
+                                Thread.Sleep(1500);
+                            }
+                            Thread.Sleep(3000);
+                            turn = 1;
+                        }
+                    }
+                }
+            } while (userhp > 0 && enemyhp > 0);
+            if (userhp > 0 && enemyhp <= 0)
+            {
+                Console.Clear();
+                Console.WriteLine("You won!");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("You lost!");
+                Console.ReadLine();
+            }
         }
         static void TextEvent()
         {
@@ -396,7 +1142,7 @@ namespace studio_project
         static void Hallway()
         {
             Console.Clear();
-            Console.WriteLine("You are in the hallway of the haunted manor.");
+            Console.WriteLine("You are in the hallway of the HAUNTED HOUSE.");
             Console.WriteLine("The hallway is dark, and the floorboards creak beneath your feet.");
             Console.WriteLine("There are two doors in front of you.");
 
@@ -441,30 +1187,36 @@ namespace studio_project
         }
 
         //living room description and options to explore the kitchen or return to the hallway
+        // attempt Puzzle 1
         static void LivingRoom()
         {
+       
             Console.Clear();
             Console.WriteLine("You enter the living room.");
             Console.WriteLine("Dusty furniture fills the room, and an old fireplace stands against the wall.");
             Console.WriteLine("There is one door leading into the kitchen.");
 
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Enter kitchen");
             Console.WriteLine("2. Return to hallway");
+            Console.WriteLine("3. Solve mysterious case file 1");
 
             string user = Console.ReadLine();
+            bool Puzzle1 = false;
+            if (Puzzle1)
+            {
+                Console.WriteLine();
+            }
+            else
+            {
+                Puzzle1 = false;
+            }
 
-            if (user == "1")
-            {
-                Kitchen();
-            }
-            else if (user == "2")
-            {
-                Hallway();
-            }
+              //Case 1 Puzzle
+       
         }
 
-        // kitchen that include an option to go back to the living rooom
+        // kitchen where the player can return to the living room 
+        // attempt Puzzle 2
         static void Kitchen()
         {
             Console.Clear();
@@ -474,6 +1226,8 @@ namespace studio_project
 
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Return to living room");
+            Console.WriteLine("2. Solve mysterious case file 2");
+
 
             string user = Console.ReadLine();
 
@@ -481,6 +1235,21 @@ namespace studio_project
             {
                 LivingRoom();
             }
+
+            // Case 2 Puzzle
+            else if (user == "2")
+            {
+                Puzzle2();
+                Console.WriteLine();
+                Console.WriteLine("Thank you for playing our haunted house demo!");    // Game Finished
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice. Please try again.");
+            }
+            Console.ReadKey();
+            Kitchen();
         }
 
 
@@ -623,90 +1392,130 @@ namespace studio_project
             Console.ReadLine();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //John
-        static void Dairy()
+        //Helper method for user
+        static void WaitForPlayer()
         {
-            Console.Clear();
-
-            Console.WriteLine("Welcome to the Abandoned Dairy!");
-            Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
-            Console.WriteLine("You feel that something mysterious is nearby.");
-            Console.WriteLine();
-
-            Console.WriteLine("What do you want to do?");
-            Console.WriteLine("1. Search the counter");
-            Console.WriteLine("2. Look behind the dairy");
-            Console.WriteLine("3. Inspect the shelves");
-            Console.WriteLine("4. Leave the dairy");
-            Console.Write("Enter your choice: ");
-
-            string choice = Console.ReadLine();
-
-            if (choice == "1")
-            {
-                Console.WriteLine("You search the dusty counter.");
-                Console.WriteLine("You find an old rusty key!");
-            }
-            else if (choice == "2")
-            {
-                Console.WriteLine("You look behind the dairy.");
-                Console.WriteLine("You hear a strange noise in the darkness.");
-            }
-            else if (choice == "3")
-            {
-                Console.WriteLine("You inspect the shelves.");
-                Console.WriteLine("You find an old note with a strange symbol.");
-            }
-            else if (choice == "4")
-            {
-                Console.WriteLine("You leave the dairy and return to the path.");
-            }
-            else
-            {
-                Console.WriteLine("Invalid choice. Please try again.");
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Press Enter to continue...");
+            Console.WriteLine("\nPress ENTER to continue.");
             Console.ReadLine();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // john paul
+
+//        //// Displays the abandoned dairy and handles the player's choices.
+//        static void Dairy()
+//        {
+//            Console.Clear();
+//            Console.WriteLine("A cold breeze moves through the empty building.");
+//            Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
+//            Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
+//            Console.WriteLine("Moonlight slips through the dusty windows.");
+//            Console.WriteLine("You feel that something mysterious is nearby.");
+//            Console.WriteLine();
+
+//            Console.WriteLine("What do you want to do?");
+//            Console.WriteLine("1. Search the counter");
+//            Console.WriteLine("2. Look behind the dairy");
+//            Console.WriteLine("3. Inspect the shelves");
+//            Console.WriteLine("4. Leave the dairy");
+//            Console.WriteLine("5. Try the mysterious locked door");
+//            Console.Write("Enter your choice: ");
+
+//            string choice = Console.ReadLine()?.Trim() ?? "";
+
+//            if (choice == "1")
+//            {
+//                Console.WriteLine("You search the dusty counter.");
+
+//if (!hasRustyKey),
+//                // Give the player the key only once.
+//{
+//    Console.WriteLine("You find an old rusty key!");
+//    Console.WriteLine("The key feels strangely cold in your hand.");
+//    hasRustyKey = true;
+//}
+//else
+//{
+//    Console.WriteLine("You already collected the rusty key.");
+//}
+//            }
+//            else if (choice == "2")
+//            {
+//                Console.WriteLine("You look behind the dairy.");
+//                Console.WriteLine("You hear a strange noise in the darkness.");
+//                Console.WriteLine("You notice fresh footprints in the dirt.");
+//            }
+//            else if (choice == "3")
+//                Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
+//            {
+//                Console.WriteLine("You inspect the shelves.");
+//                Console.WriteLine("You find an old note with a strange symbol.");
+//                Console.WriteLine("The symbol looks like a warning.");
+//            }
+//            else if (choice == "4")
+//            {
+//                Console.WriteLine("You hear the door creak shut behind you.");
+//                Console.WriteLine("You leave the dairy and return to the path.");
+//                Console.WriteLine("You wonder what other secrets the dairy holds.");
+//            else if (choice == "5")
+//{
+//    if (hasRustyKey)
+//    {
+//        Console.WriteLine("The rusty key unlocks the door!");
+//        Console.WriteLine("Inside, you discover a dusty old journal.");
+//    }
+//    else
+//    {
+//        Console.WriteLine("The door is locked. Find the rusty key first.");
+//    }
+//}
+//            }
+//            else
+//            {
+//                Console.WriteLine("Invalid choice!");
+//                Console.WriteLine("Please enter a number from 1 to 5.");
+//            }
+
+//            Console.WriteLine();
+//            Console.WriteLine("Press Enter to return to your adventure...");
+//            Console.ReadLine();
+//        }
+
 
 
 
