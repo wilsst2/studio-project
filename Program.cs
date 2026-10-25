@@ -289,7 +289,7 @@ namespace studio_project
             }
             else if (user == '4')
             {
-                // paintings method
+                Paintings();
                 UpHallway(lanterns, inv);
             }
             else
@@ -330,6 +330,43 @@ namespace studio_project
                 Console.WriteLine("\nThe painting is of a man with no mouth. It has a plaque underneath it that reads '3'");
                 Console.ReadLine();
                 Bedroom(lanterns, inv);
+            }
+        }
+        static void Paintings()
+        {
+            Console.Clear();
+            Console.WriteLine("There are four paintings on the wall.");
+            Console.WriteLine("\nWhich one do you want to look at?");
+            Console.WriteLine("1. First painting\n2. Second painting\n3. Third painting\n4. Leave the paintings");
+            char user = CharCheck();
+            if (user == '1')
+            {
+                Console.WriteLine("\nThis painting is of a man with no eyes. The plaque underneath says it was painted in 1811.");
+                Console.ReadLine();
+                Paintings();
+            }
+            else if (user == '2')
+            {
+                Console.WriteLine("\nThis painting is of a man with no ears. The plaque underneath says it was painted in 1803.");
+                Console.ReadLine();
+                Paintings();
+            }
+            else if (user == '3')
+            {
+                Console.WriteLine("\nThis painting is of a man with no mouth. The plaque unerneath says it was painted in 1861.");
+                Console.ReadLine();
+                Paintings();
+            }
+            else if (user == '4')
+            {
+                Console.WriteLine("\nYou leave the paintings to their solitude.");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+                Paintings();
             }
         }
 
