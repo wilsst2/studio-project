@@ -262,32 +262,77 @@ namespace studio_project
             if (user == '1')
             {
                 Console.Clear();
-                Console.WriteLine("You take the door to the bedroom");
-                UpHallway(lanterns, inv); // bedroom method
+                Console.WriteLine("You take the door to the bedroom.");
+                Console.ReadLine();
+                Bedroom(lanterns, inv);
             }
             else if (user == '2')
             {
                 Console.Clear();
-                Console.WriteLine("You take the door to the bathroom");
-                UpHallway(lanterns, inv); // upbathroom method
+                Console.WriteLine("You take the door to the bathroom.");
+                Console.ReadLine();
+                UpHallway(lanterns, inv); // 2nd bathroom method
             }
             else if (user == '3' && inv[5] == false)
             {
                 Console.Clear();
-                Console.WriteLine("You have nothing to pull the door down with");
+                Console.WriteLine("You have nothing to pull the door down with.");
+                Console.ReadLine();
                 UpHallway(lanterns, inv);
             }
             else if (user == '3' && inv[5] == true)
             {
                 Console.Clear();
                 Console.WriteLine("You use your broom to pull the door down and ascend into the attic.");
+                Console.ReadLine();
                 UpHallway(lanterns, inv); // attic method
             }
             else if (user == '4')
             {
-                UpHallway(lanterns, inv); // painting puzzle method
+                // paintings method
+                UpHallway(lanterns, inv);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+                UpHallway(lanterns, inv);
             }
         }
+
+        static void Bedroom(bool[] lanterns, bool[] inv)
+        {
+            Console.Clear();
+            Console.WriteLine("You're in the master bedroom. The room is sparesly decorated with only a bed, a sidetable, and a painting on the wall.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Look under the bed\n2. Search drawers\n3. Examine painting");
+            char user = CharCheck();
+            if (user == '1')
+            {
+                // lockbox
+                Bedroom(lanterns, inv);
+            }
+            else if (user == '2' && inv[4] == true)
+            {
+                Console.WriteLine("\nThe drawers are completely empty.");
+                Console.ReadLine();
+                Bedroom(lanterns, inv);
+            }
+            else if (user == '2' && inv[4] == false)
+            {
+                Console.WriteLine("\nThe drawers are mostly cleaned out, the only item inside is a flashlight. You take it.");
+                inv[4] = true;
+                Console.ReadLine();
+                Bedroom(lanterns, inv);
+            }
+            else if (user == '3')
+            {
+                Console.WriteLine("\nThe painting is of a man with no mouth. It has a plaque underneath it that reads '3'");
+                Console.ReadLine();
+                Bedroom(lanterns, inv);
+            }
+        }
+
         static void Street(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
