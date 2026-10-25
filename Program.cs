@@ -1424,6 +1424,10 @@ namespace studio_project
                         Console.WriteLine("\nPress ENTER to return to the forest.");
                         Console.ReadLine();
                         break;
+
+                    default:
+                        ShowInvalidChoice();
+                        break;
                 }
             }
         }
