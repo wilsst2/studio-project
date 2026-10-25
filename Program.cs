@@ -1333,10 +1333,30 @@ namespace studio_project
                 
                 switch (choice)
                 {
-                    case "1": room = 0; break;
-                    case "2": room = 1; break;
-                    case "3": room = 2; break;
-                    case "4": room = 3; break;
+                    case "1":
+                        room = 0;
+                        Console.WriteLine("\nYou return to the forest clearing.");
+                        Console.ReadLine();
+                        break;
+
+                    case "2":
+                        room = 1;
+                        Console.WriteLine("\nYou follow the narrow trail into the silver fog.");
+                        Console.ReadLine();
+                        break;
+
+                    case "3":
+                        room = 2;
+                        Console.WriteLine("\nYou carefully push through the thorny vines.");
+                        Console.ReadLine();
+                        break;
+
+                    case "4":
+                        room = 3;
+                        Console.WriteLine("\nYou approach the mysterious Witch's Grove.");
+                        Console.ReadLine();
+                        break;
+
                     case "5":
                         if (room == 0 && lanterns[2] == false)
                         {
