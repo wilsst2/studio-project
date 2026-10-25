@@ -1356,31 +1356,27 @@ namespace studio_project
                         break;
 
                     case "6":
-                        Console.WriteLine("\nAre you sure you want to leave the forest? (Y/N)");
-                        string confirm = Console.ReadLine().ToUpper();
+                        Console.WriteLine("\nThe path behind you disappears into the fog.");
+                        Console.WriteLine("Are you sure you want to leave the forest? (Y/N)");
+
+                        string confirm = Console.ReadLine().Trim().ToUpper();
 
                         if (confirm == "Y")
                         {
+                            Console.WriteLine("You leave the forest and return to the path.");
+                            Console.ReadLine();
                             Street(lanterns, inv);
                             return;
                         }
                         else if (confirm == "N")
                         {
-                            Console.WriteLine("You decide to remain in the forest.");
+                            Console.WriteLine("You decide to remain among the twisted trees.");
                             Console.ReadLine();
                         }
                         else
                         {
                             ShowInvalidChoice();
                         }
-                        break;
-
-                    case "?":
-                        Help();
-                        break;
-
-                    default:
-                        ShowInvalidChoice();
                         break;
                 }
             }
