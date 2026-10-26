@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
@@ -20,7 +21,7 @@ namespace studio_project
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
-            UpHallway(lanterns, inv);
+            Courtyard(lanterns, inv);
         }
         
         static char CharCheck()
@@ -65,7 +66,7 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("You take the steps up to the front door and enter the manor.");
                 Console.ReadLine();
-                Hallway();
+                Hallway(lanterns, inv);
             }
             else if (user == '2')
             {
@@ -1156,7 +1157,7 @@ namespace studio_project
         //Akirah
 
         // hallway with options to enter bathroom or living room
-        static void Hallway()
+        static void Hallway(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You are in the hallway of the HAUNTED HOUSE.");
@@ -1171,22 +1172,22 @@ namespace studio_project
 
             if (user == "1")
             {
-                BathRoom();
+                BathRoom(lanterns,inv);
             }
             else if (user == "2")
             {
-                LivingRoom();
+                LivingRoom(lanterns, inv);
             }
             else
             {
                 Console.WriteLine("Invalid choice. Please try again.");
                 Console.ReadKey();
-                Hallway();
+                Hallway(lanterns, inv);
             }
         }
 
         //bathroom scene and added a choice to go back to the hallway
-        static void BathRoom()
+        static void BathRoom(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You enter the bathroom.");
@@ -1199,75 +1200,146 @@ namespace studio_project
 
             if (user == "1")
             {
-                Hallway();
+                Hallway(lanterns, inv);
             }
         }
 
         //living room description and options to explore the kitchen or return to the hallway
         // attempt Puzzle 1
-        static void LivingRoom()
+        static void LivingRoom(bool[] lanterns, bool[] inv)
         {
-       
+
             Console.Clear();
             Console.WriteLine("You enter the living room.");
             Console.WriteLine("Dusty furniture fills the room, and an old fireplace stands against the wall.");
             Console.WriteLine("There is one door leading into the kitchen.");
 
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("2. Return to hallway");
+            Console.WriteLine("1. Return to hallway");
+            Console.WriteLine("2. Enter kitchen");
             Console.WriteLine("3. Solve mysterious case file 1");
 
             string user = Console.ReadLine();
-            bool Puzzle1 = false;
-            if (Puzzle1)
+
+             if (user == "1")
             {
-                Console.WriteLine();
+                Hallway(lanterns, inv);
+            }
+            else if (user == "2")
+            {
+                Console.WriteLine("\nYou must solve case file 1 before entering the kitchen.");
+                Console.ReadKey();
+                LivingRoom(lanterns, inv);
+            }
+            else if (user == "3")
+            {
+                bool solved = Puzzle1();
+
+                if (solved)
+                {
+                    Console.Clear();
+                    Console.WriteLine("You solved the first puzzle!");
+                    Console.WriteLine("The case opens, revealing a mysterious key.");
+                    Console.WriteLine("You can now enter the kitchen.");
+                    Console.ReadKey();
+                    Kitchen(lanterns, inv);
+                }
+                else
+                {
+                    Console.WriteLine("\nThe case remains locked.");
+                    Console.WriteLine("You are still in the living room.");
+                    Console.ReadKey();
+                    LivingRoom(lanterns, inv);
+                }
             }
             else
             {
-                Puzzle1 = false;
+                Console.WriteLine("Invalid choice.");
+                Console.ReadKey();
+                LivingRoom(lanterns, inv);
             }
-
-              //Case 1 Puzzle
-       
         }
 
         // kitchen where the player can return to the living room 
         // attempt Puzzle 2
-        static void Kitchen()
+        static void Kitchen(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You enter the kitchen.");
             Console.WriteLine("Old cupboards line the walls, and rusty pots hang from the ceiling.");
             Console.WriteLine("A rotten smell lingers in the air.");
+            Console.WriteLine("There is a broom thing laying somewhere...");
 
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Return to living room");
-            Console.WriteLine("2. Solve mysterious case file 2");
+            Console.WriteLine("1. Solve mysterious case file 2 ");
+         
 
 
             string user = Console.ReadLine();
+            if (inv[5] == false)
+            {
+                Console.WriteLine("2. Pick up the broom");
+            }
 
             if (user == "1")
             {
-                LivingRoom();
+                bool solved = Puzzle2();
+
+                if (solved)
+                {
+                    Console.Clear();
+                    Console.WriteLine("You successfully converted the binary to decimal!");
+                    Console.WriteLine("The exit unlocks.");
+                    Console.WriteLine();
+
+                    Console.WriteLine("What do you want to do?");
+                    Console.WriteLine("1. Exit the haunted house"); 
+                    Console.WriteLine("2. Return to the kitchen");      
+
+                    string choice = Console.ReadLine();
+
+                    if (choice == "1")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("You escaped the haunted house!");
+                        Console.WriteLine("Thank you for playing our haunted house demo!");
+                        Console.ReadLine();
+                        return;
+                    }
+                    else if (choice == "2")
+                    {
+                        Kitchen(lanterns,inv);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid choice.");
+                        Console.ReadKey();
+                        Kitchen(lanterns, inv);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\nThe exit remains locked.");
+                    Console.WriteLine("You are still in the kitchen.");
+                    Console.ReadKey();
+                    Kitchen(lanterns, inv);
+                }
+               
             }
 
-            // Case 2 Puzzle
-            else if (user == "2")
+            else if(user == "2")
             {
-                Puzzle2();
-                Console.WriteLine();
-                Console.WriteLine("Thank you for playing our haunted house demo!");    // Game Finished
-                Console.ReadLine();
+                Console.WriteLine("To pick up broom");
             }
+             
             else
             {
-                Console.WriteLine("Invalid choice. Please try again.");
+                Console.WriteLine("Invalid choice.");
+                Console.ReadKey();
+                Kitchen(lanterns, inv);
             }
-            Console.ReadKey();
-            Kitchen();
         }
+
 
 
 
@@ -1341,7 +1413,7 @@ namespace studio_project
 
                 if (visited[room])
                 {
-                    Console.WriteLine("You recognise this place, but it still feels dangerous.");
+                    Console.WriteLine("You recognize this place, but it still feels dangerous.");
                 }
                 else
                 {
@@ -1404,10 +1476,15 @@ namespace studio_project
                         break;
 
                     case "6":
+
+                        Console.WriteLine("\nAre you sure you want to leave the forest? (Y/N)");
+                        string confirm = Console.ReadLine().ToUpper();
+
                         Console.WriteLine("\nThe path behind you disappears into the fog.");
                         Console.WriteLine("Are you sure you want to leave the forest? (Y/N)");
 
-                        string confirm = Console.ReadLine().Trim().ToUpper();
+                         confirm = Console.ReadLine().Trim().ToUpper();
+
 
                         if (confirm == "Y")
                         {
@@ -1451,14 +1528,14 @@ namespace studio_project
         //Invalid choice
         static void ShowInvalidChoice()
         {
-            Console.WriteLine("\nThe forest does not recognise that choice.");
+            Console.WriteLine("\nThe forest does not recognize that choice.");
             Console.WriteLine("Please choose an option from the menu.");
             Console.WriteLine("Enter 1, 2, 3, 4, 5, 6, or ? for help.");
             Console.WriteLine("Press ENTER to try again.");
             Console.ReadLine();
         }
 
-        //Helper method for user
+        //Helper
         static void WaitForPlayer()
         {
             Console.WriteLine("\nPress ENTER to continue.");
