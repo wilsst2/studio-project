@@ -1242,42 +1242,72 @@ namespace studio_project
             }
         }
 
-            // kitchen where the player can return to the living room 
-            // attempt Puzzle 2
-            static void Kitchen()
+        // kitchen where the player can return to the living room 
+        // attempt Puzzle 2
+        static void Kitchen()
+        {
+            Console.Clear();
+            Console.WriteLine("You enter the kitchen.");
+            Console.WriteLine("Old cupboards line the walls, and rusty pots hang from the ceiling.");
+            Console.WriteLine("A rotten smell lingers in the air.");
+
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Solve mysterious case file 2");
+
+            string user = Console.ReadLine();
+
+            if (user == "1")
             {
-                Console.Clear();
-                Console.WriteLine("You enter the kitchen.");
-                Console.WriteLine("Old cupboards line the walls, and rusty pots hang from the ceiling.");
-                Console.WriteLine("A rotten smell lingers in the air.");
+                bool solved = Puzzle2();
 
-                Console.WriteLine("\nWhat do you want to do?");
-                Console.WriteLine("1. Return to living room");
-                Console.WriteLine("2. Solve mysterious case file 2");
-
-
-                string user = Console.ReadLine();
-
-                if (user == "1")
+                if (solved)
                 {
-                    LivingRoom();
-                }
-
-                // Case 2 Puzzle
-                else if (user == "2")
-                {
-                    Puzzle2();
+                    Console.Clear();
+                    Console.WriteLine("You successfully converted the binary to decimal!");
+                    Console.WriteLine("The exit unlocks.");
                     Console.WriteLine();
-                    Console.WriteLine("Thank you for playing our haunted house demo!");    // Game Finished
-                    Console.ReadLine();
+
+                    Console.WriteLine("What do you want to do?");
+                    Console.WriteLine("1. Exit the haunted house"); 
+                    Console.WriteLine("2. Return to the kitchen");      
+
+                    string choice = Console.ReadLine();
+
+                    if (choice == "1")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("You escaped the haunted house!");
+                        Console.WriteLine("Thank you for playing our haunted house demo!");
+                        Console.ReadLine();
+                        return;
+                    }
+                    else if (choice == "2")
+                    {
+                        Kitchen();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid choice.");
+                        Console.ReadKey();
+                        Kitchen();
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid choice. Please try again.");
+                    Console.WriteLine("\nThe exit remains locked.");
+                    Console.WriteLine("You are still in the kitchen.");
+                    Console.ReadKey();
+                    Kitchen();
                 }
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice.");
                 Console.ReadKey();
                 Kitchen();
             }
+        }
+
 
 
 
