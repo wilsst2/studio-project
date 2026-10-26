@@ -1412,7 +1412,7 @@ namespace studio_project
                     Console.WriteLine("5. Pick up jack-o'-lantern");
                 Console.WriteLine("6. Leave forest\n?. Help");
                 
-                string choice = Console.ReadLine() ??"";
+                string choice = Console.ReadLine();
                 
                 switch (choice)
                 {
@@ -1461,7 +1461,7 @@ namespace studio_project
                     case "6":
 
                         Console.WriteLine("\nAre you sure you want to leave the forest? (Y/N)");
-                        string confirm = Console.ReadLine() ?? "".ToUpper();
+                        string confirm = Console.ReadLine().ToUpper();
 
                         Console.WriteLine("\nThe path behind you disappears into the fog.");
                         Console.WriteLine("Are you sure you want to leave the forest? (Y/N)");
@@ -1518,7 +1518,7 @@ namespace studio_project
             Console.ReadLine();
         }
 
-        //Helper method for user
+        //Helper
         static void WaitForPlayer()
         {
             Console.WriteLine("\nPress ENTER to continue.");
