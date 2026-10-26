@@ -1190,67 +1190,94 @@ namespace studio_project
         // attempt Puzzle 1
         static void LivingRoom()
         {
-       
+
             Console.Clear();
             Console.WriteLine("You enter the living room.");
             Console.WriteLine("Dusty furniture fills the room, and an old fireplace stands against the wall.");
             Console.WriteLine("There is one door leading into the kitchen.");
 
             Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Enter kitchen");
             Console.WriteLine("2. Return to hallway");
             Console.WriteLine("3. Solve mysterious case file 1");
-
-            string user = Console.ReadLine();
-            bool Puzzle1 = false;
-            if (Puzzle1)
-            {
-                Console.WriteLine();
-            }
-            else
-            {
-                Puzzle1 = false;
-            }
-
-              //Case 1 Puzzle
-       
-        }
-
-        // kitchen where the player can return to the living room 
-        // attempt Puzzle 2
-        static void Kitchen()
-        {
-            Console.Clear();
-            Console.WriteLine("You enter the kitchen.");
-            Console.WriteLine("Old cupboards line the walls, and rusty pots hang from the ceiling.");
-            Console.WriteLine("A rotten smell lingers in the air.");
-
-            Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Return to living room");
-            Console.WriteLine("2. Solve mysterious case file 2");
-
 
             string user = Console.ReadLine();
 
             if (user == "1")
             {
+                Console.WriteLine("\nYou must solve case file 1 before entering the kitchen.");
+                Console.ReadKey();
                 LivingRoom();
             }
-
-            // Case 2 Puzzle
             else if (user == "2")
             {
-                Puzzle2();
-                Console.WriteLine();
-                Console.WriteLine("Thank you for playing our haunted house demo!");    // Game Finished
-                Console.ReadLine();
+                Hallway();
+            }
+            else if (user == "3")
+            {
+                bool solved = Puzzle1();
+
+                if (solved)
+                {
+                    Console.Clear();
+                    Console.WriteLine("You solved the first puzzle!");
+                    Console.WriteLine("The case opens, revealing a mysterious key.");
+                    Console.WriteLine("You can now enter the kitchen.");
+                    Console.ReadKey();
+                    Kitchen();
+                }
+                else
+                {
+                    Console.WriteLine("\nThe case remains locked.");
+                    Console.WriteLine("You are still in the living room.");
+                    Console.ReadKey();
+                    LivingRoom();
+                }
             }
             else
             {
-                Console.WriteLine("Invalid choice. Please try again.");
+                Console.WriteLine("Invalid choice.");
+                Console.ReadKey();
+                LivingRoom();
             }
-            Console.ReadKey();
-            Kitchen();
         }
+
+            // kitchen where the player can return to the living room 
+            // attempt Puzzle 2
+            static void Kitchen()
+            {
+                Console.Clear();
+                Console.WriteLine("You enter the kitchen.");
+                Console.WriteLine("Old cupboards line the walls, and rusty pots hang from the ceiling.");
+                Console.WriteLine("A rotten smell lingers in the air.");
+
+                Console.WriteLine("\nWhat do you want to do?");
+                Console.WriteLine("1. Return to living room");
+                Console.WriteLine("2. Solve mysterious case file 2");
+
+
+                string user = Console.ReadLine();
+
+                if (user == "1")
+                {
+                    LivingRoom();
+                }
+
+                // Case 2 Puzzle
+                else if (user == "2")
+                {
+                    Puzzle2();
+                    Console.WriteLine();
+                    Console.WriteLine("Thank you for playing our haunted house demo!");    // Game Finished
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+                Console.ReadKey();
+                Kitchen();
+            }
 
 
 
