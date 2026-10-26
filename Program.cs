@@ -1258,7 +1258,7 @@ namespace studio_project
 
 
             string user = Console.ReadLine();
-            if (inv[5] = false)
+            if (inv[5] = true)
             {
                 Console.WriteLine("You grab the broom");
             }
