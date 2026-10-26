@@ -20,7 +20,7 @@ namespace studio_project
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
-            UpHallway(lanterns, inv);
+            Courtyard(lanterns, inv);
         }
         
         static char CharCheck()
@@ -1197,21 +1197,21 @@ namespace studio_project
             Console.WriteLine("There is one door leading into the kitchen.");
 
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Enter kitchen");
-            Console.WriteLine("2. Return to hallway");
+            Console.WriteLine("1. Return to hallway");
+            Console.WriteLine("2. Enter kitchen");
             Console.WriteLine("3. Solve mysterious case file 1");
 
             string user = Console.ReadLine();
 
-            if (user == "1")
+             if (user == "1")
+            {
+                Hallway();
+            }
+            else if (user == "2")
             {
                 Console.WriteLine("\nYou must solve case file 1 before entering the kitchen.");
                 Console.ReadKey();
                 LivingRoom();
-            }
-            else if (user == "2")
-            {
-                Hallway();
             }
             else if (user == "3")
             {
