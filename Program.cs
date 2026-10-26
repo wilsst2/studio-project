@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
@@ -1253,18 +1254,17 @@ namespace studio_project
             Console.WriteLine("There is a broom thing laying somewhere...");
 
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Pick up the broom");
-            Console.WriteLine("2. Solve mysterious case file 2");
+            Console.WriteLine("1. Solve mysterious case file 2 ");
+         
 
 
             string user = Console.ReadLine();
-            if (inv[5] = false)
+            if (inv[5] == false)
             {
-                Console.WriteLine("You grab the broom");
+                Console.WriteLine("2. Pick up the broom");
             }
 
-           
-            if (user == "2")
+            if (user == "1")
             {
                 bool solved = Puzzle2();
 
@@ -1307,7 +1307,14 @@ namespace studio_project
                     Console.ReadKey();
                     Kitchen(lanterns, inv);
                 }
+               
             }
+
+            else if(user == "2")
+            {
+                Console.WriteLine("To pick up broom");
+            }
+             
             else
             {
                 Console.WriteLine("Invalid choice.");
