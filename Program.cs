@@ -16,8 +16,8 @@ namespace studio_project
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
-            bool[] lanterns = new bool[4];
-            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom
+            bool[] lanterns = new bool[5];
+            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
             UpHallway(lanterns, inv);
@@ -155,7 +155,7 @@ namespace studio_project
             else if (user == '4' && inv[0] == false)
             {
                 Console.Clear();
-                Console.WriteLine("You come closer to the fountain. The once marble structure is now slimey and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
+                Console.WriteLine("You come closer to the fountain. The once marble structure is now slimy and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
                 inv[0] = true;
                 Console.ReadLine();
                 Backyard(lanterns, inv);
@@ -354,6 +354,45 @@ namespace studio_project
                     Console.ReadLine();
                     Bedroom(lanterns, inv);
                 }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                Bedroom(lanterns, inv);
+            }
+        }
+        static void Attic(bool[] lanterns, bool[] inv)
+        {
+            Console.WriteLine("The attic is full of cobwebs and old boxes. It seems like nothing more than a storage room. There's an old painting laying on the floor and a window pointed into the backyard.");
+            Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Examine painting\n2. Look through window");
+            char user = CharCheck();
+            if (user == '1')
+            {
+                Console.WriteLine("\nThe painting is of a man with no eyes. It has a plaque underneath that reads '4'");
+                Console.ReadLine();
+                Attic(lanterns, inv);
+            }
+            else if (user == '2' && lanterns[4] == false && inv[0] == true)
+            {
+                Console.WriteLine("\nYou look through the window and notice a jack-o'-lantern sitting just outside on the windowsill. The latch is stuck, but you're able to use a coin to twist it open and claim your prize.");
+                lanterns[4] = true;
+                Console.ReadLine();
+                Attic(lanterns, inv);
+            }
+            else if (user == '2' && lanterns[4] == false && inv[0] == false)
+            {
+                Console.WriteLine("\nYou look through the window and notice a jack-o'-lantern sitting just outside on the windowsill. The latch is stuck and you can't dig your nails deep enough to twist it. You'll have to find something to help you open it.");
+                Console.ReadLine();
+                Attic(lanterns, inv);
+            }
+            else if (user == '2' && lanterns[4] == true)
+            {
+                Console.WriteLine("The window has a nice view into the backyard.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
             }
         }
 
