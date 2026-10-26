@@ -569,8 +569,12 @@ namespace studio_project
                 return true;
             }
         }
-        static void Encounter1(bool[] inv)
+        static void Encounter1(bool[] lanterns, bool[] inv)
         {
+            if (lanterns[5] == true)
+            {
+                ExploreForest(lanterns, inv);
+            }
             string choice;
             Console.Clear();
             Console.WriteLine("Upon wandering through the forest, you encounter a figure in a dark robe blocking the path...");
@@ -589,17 +593,17 @@ namespace studio_project
             }
             else if (choice == "2" && inv[1] == true)
             {
-                Fight1();
+                Fight1(lanterns, inv);
             }
             else
             {
                 Console.Clear();
                 Console.WriteLine("Invalid input.");
                 Console.ReadLine();
-                Encounter1(inv);
+                Encounter1(lanterns, inv);
             }
         }
-        static void Fight1()                    //Next time I will definitely break these up into smaller functions.
+        static void Fight1(bool[] lanterns, bool[] inv)
         {
             int turn = 1;
             int enemyoption, enemyatk, dmgdealt, dmgtaken, rng;
@@ -610,7 +614,7 @@ namespace studio_project
             bool userpoison = false;
             bool guard = false;
             bool enemyguard = false;
-            int usernrg = 50;
+            int usernrg = 40;
             int userhp = 100;
             int enemyhp = 100;
             int bleedtimer = 0;
@@ -661,7 +665,7 @@ namespace studio_project
                         Console.WriteLine();
                         Console.WriteLine($"Select target!");
                         Console.WriteLine();
-                        Console.WriteLine("1. Mysterious figure");
+                        Console.WriteLine($"1. Mysterious Figure\t[{enemyhp} HP]");
                         target = Console.ReadLine();
                         if (target != "1")
                         {
@@ -1041,69 +1045,82 @@ namespace studio_project
             } while (userhp > 0 && enemyhp > 0);
             if (userhp > 0 && enemyhp <= 0)
             {
+                lanterns[5] = true;
                 Console.Clear();
                 Console.WriteLine("You won!");
+                Console.WriteLine();
+                Console.WriteLine("Press ENTER to continue!");
                 Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("The mysterious figure falls backwards, a lit jack-o'lantern rolls out from the hood of his dark robe.\nUpon collecting it, the robe blows away with the wind. You may now forage deeper into the forest.");
+                Thread.Sleep(5000);
+                Console.WriteLine();
+                Console.WriteLine("Press ENTER to continue!");
+                Console.ReadLine();
+                Console.Clear();
             }
             else
             {
                 Console.Clear();
-                Console.WriteLine("You lost!");
+                Console.WriteLine("You stagger back onto the grass, succumbing to injuries and passing out.\nYou wake up in the courtyard of the manor, miraculously healed from injuries and retaining your inventory.");
+                Thread.Sleep(5000);
+                Console.WriteLine();
+                Console.WriteLine("Press ENTER to continue");
                 Console.ReadLine();
+                Console.Clear();
+                Courtyard(lanterns, inv);
             }
         }
-        static void TextEvent()
+        static void BossFight(bool[] lanterns, bool[] inv, string bosstarget)
         {
-            Random rand = new Random();
-            int x = rand.Next(1, 16);       //1/3 Chance to print one of these, otherwise does nothing
-            switch (x)
-            {
-                case 1:
-                    {
-                        Console.WriteLine("You can feel yourself being watched...");
-                        Console.WriteLine("Press ENTER to look around");
-                        Console.ReadLine();
-                        Console.WriteLine();
-                        Console.WriteLine("You think you're completely alone.");
-                        Console.WriteLine();
-                        break;
-                    }
-                case 2:
-                    {
-                        Console.WriteLine("A cold breeze passes...");
-                        Console.WriteLine("Press ENTER to steady yourself");
-                        Console.ReadLine();
-                        Console.WriteLine();
-                        break;
-                    }
-                case 3:
-                    {
-                        Console.WriteLine("You feel chills down your spine...");
-                        Console.WriteLine();
-                        Console.WriteLine("Press ENTER to continue");
-                        Console.ReadLine();
-                        break;
-                    }
-                case 4:
-                    {
-                        Console.WriteLine("You don't feel safe here...");
-                        Console.WriteLine();
-                        break;
-                    }
-                case 5:
-                    {
-                        Console.WriteLine("You can smell the rotting and decaying of pumpkins...");
-                        Console.WriteLine();
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
-            }
-
+            bool zombie = true; bool skeleton = true; bool horseman = true; int bossuserhp = 500; int bossuserstam = 200; int zombiehp = 100; int skeletonhp = 150; int horsemanhp = 666; int usertarget;
+            usertarget = BossFightSelectTarget(zombie, skeleton, horseman, bossuserhp, bossuserstam, zombiehp, skeletonhp, horsemanhp);
         }
+        //static int BossFightOptionSelect(int[] usertarget)
+        //{
 
+        //}
+        static int BossFightSelectTarget(bool zombie, bool skeleton, bool horseman, int bossuserhp, int bossuserstam, int zombiehp, int skeletonhp, int horsemanhp)
+        {
+            //Target 1 = Horseman, Target 2 = Skeleton, Target 3 = Zombie
+            bool validchoice = false;
+            Console.Clear();
+            Console.WriteLine($"HP: {bossuserhp}");
+            Console.WriteLine($"STAM: {bossuserstam}");
+            Console.WriteLine();
+            Console.WriteLine($"Select target!");
+            Console.WriteLine();
+            do
+            {
+                List<string> targets = new List<string>();
+                if (horseman)
+                {
+                    Console.WriteLine($"{targets.Count + 1}. Headless Horseman [{horsemanhp} HP]");
+                    targets.Add("horseman");
+                }
+                if (skeleton)
+                {
+                    Console.WriteLine($"{targets.Count + 1}. Skeleton [{skeletonhp} HP]");
+                    targets.Add("skeleton");
+                }
+                if (zombie)
+                {
+                    Console.WriteLine($"{targets.Count + 1}. Zombie [{zombiehp} HP]");
+                    targets.Add("zombie");
+                }
+                int choice = Convert.ToInt32(Console.ReadLine());
+                string selectedTarget = targets[choice - 1];
+                if (selectedTarget == "horseman") return 1;
+                else if (selectedTarget == "skeleton") return 2;
+                else if (selectedTarget == "zombie") return 3;
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Invalid option!");
+                    Thread.Sleep(1500);
+                }
+            } while (true);
+        }
 
 
 
