@@ -16,11 +16,11 @@ namespace studio_project
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
-            bool[] lanterns = new bool[5];
-            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic
+            bool[] lanterns = new bool[6];
+            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic, 6 = fight
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
-            UpHallway(lanterns, inv);
+            Courtyard(lanterns, inv);
         }
         
         static char CharCheck()
@@ -51,13 +51,10 @@ namespace studio_project
                 Console.WriteLine(" A jack-o'-lantern hangs in one of them.");
             }
             Console.WriteLine("\nWhat do you want to do?");
+            Console.WriteLine("1. Enter manor\n2. Move to backyard\n3. Go to the forest\n4. Leave");
             if (lanterns[0] == false)
             {
-                Console.WriteLine("1. Enter manor\n2. Move to backyard\n3. Leave\n4. Approach jack-o'-lantern");
-            }
-            else
-            {
-                Console.WriteLine("1. Enter manor\n2. Backyard\n3. Leave");
+                Console.WriteLine("5. Approach jack-o'-lantern");
             }
             char user = CharCheck();
             if (user == '1')
@@ -75,12 +72,18 @@ namespace studio_project
             }
             else if (user == '3')
             {
+                Console.WriteLine("\nYou follow the path from the courtyard into the forest.");
+                Console.ReadLine();
+                Encounter1(lanterns, inv);
+            }
+            else if (user == '4')
+            {
                 Console.Clear();
                 Console.WriteLine("The heavy gates of the courtyard clang shut behind you as you leave. Thick midnight fog prevents you from properly surveying your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
                 Console.ReadLine();
                 Street(lanterns, inv);
             }
-            else if (user == '4' && lanterns[0] == false)
+            else if (user == '5' && lanterns[0] == false)
             {
                 Console.Clear();
                 Console.Write("The jack-o'lantern is suspended within a net, which is attached to a rope keeping it firmly in the sky.");
@@ -285,7 +288,7 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("You use your broom to pull the door down and ascend into the attic.");
                 Console.ReadLine();
-                UpHallway(lanterns, inv); // attic method
+                Attic(lanterns, inv);
             }
             else if (user == '4')
             {
@@ -608,7 +611,7 @@ namespace studio_project
                 return true;
             }
         }
-        static void Encounter1(bool[] inv)
+        static void Encounter1(bool[] lanterns, bool[] inv)
         {
             string choice;
             Console.Clear();
@@ -635,7 +638,7 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("Invalid input.");
                 Console.ReadLine();
-                Encounter1(inv);
+                Encounter1(lanterns, inv);
             }
         }
         static void Fight1()                    //Next time I will definitely break these up into smaller functions.
