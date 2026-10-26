@@ -16,8 +16,8 @@ namespace studio_project
             Console.WriteLine("\nPress enter to start the game");
             Console.ReadLine();
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
-            bool[] lanterns = new bool[6];
-            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic, 6 = fight
+            bool[] lanterns = new bool[4];
+            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
             Courtyard(lanterns, inv);
@@ -51,10 +51,13 @@ namespace studio_project
                 Console.WriteLine(" A jack-o'-lantern hangs in one of them.");
             }
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Enter manor\n2. Move to backyard\n3. Go to the forest\n4. Leave");
             if (lanterns[0] == false)
             {
-                Console.WriteLine("5. Approach jack-o'-lantern");
+                Console.WriteLine("1. Enter manor\n2. Move to backyard\n3. Leave\n4. Approach jack-o'-lantern");
+            }
+            else
+            {
+                Console.WriteLine("1. Enter manor\n2. Backyard\n3. Leave");
             }
             char user = CharCheck();
             if (user == '1')
@@ -62,7 +65,7 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("You take the steps up to the front door and enter the manor.");
                 Console.ReadLine();
-                Hallway();
+                Hallway(lanterns, inv);
             }
             else if (user == '2')
             {
@@ -72,18 +75,12 @@ namespace studio_project
             }
             else if (user == '3')
             {
-                Console.WriteLine("\nYou follow the path from the courtyard into the forest.");
-                Console.ReadLine();
-                Encounter1(lanterns, inv);
-            }
-            else if (user == '4')
-            {
                 Console.Clear();
                 Console.WriteLine("The heavy gates of the courtyard clang shut behind you as you leave. Thick midnight fog prevents you from properly surveying your surroundings, but you are able to follow the road towards a bright glow in the distance. As you approach, you see a neon lit up welcome sign and realize you have found a dairy.");
                 Console.ReadLine();
                 Street(lanterns, inv);
             }
-            else if (user == '5' && lanterns[0] == false)
+            else if (user == '4' && lanterns[0] == false)
             {
                 Console.Clear();
                 Console.Write("The jack-o'lantern is suspended within a net, which is attached to a rope keeping it firmly in the sky.");
@@ -158,7 +155,7 @@ namespace studio_project
             else if (user == '4' && inv[0] == false)
             {
                 Console.Clear();
-                Console.WriteLine("You come closer to the fountain. The once marble structure is now slimy and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
+                Console.WriteLine("You come closer to the fountain. The once marble structure is now slimey and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
                 inv[0] = true;
                 Console.ReadLine();
                 Backyard(lanterns, inv);
@@ -288,7 +285,7 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("You use your broom to pull the door down and ascend into the attic.");
                 Console.ReadLine();
-                Attic(lanterns, inv);
+                UpHallway(lanterns, inv); // attic method
             }
             else if (user == '4')
             {
@@ -357,45 +354,6 @@ namespace studio_project
                     Console.ReadLine();
                     Bedroom(lanterns, inv);
                 }
-            }
-            else
-            {
-                Console.WriteLine("Invalid input");
-                Bedroom(lanterns, inv);
-            }
-        }
-        static void Attic(bool[] lanterns, bool[] inv)
-        {
-            Console.WriteLine("The attic is full of cobwebs and old boxes. It seems like nothing more than a storage room. There's an old painting laying on the floor and a window pointed into the backyard.");
-            Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Examine painting\n2. Look through window");
-            char user = CharCheck();
-            if (user == '1')
-            {
-                Console.WriteLine("\nThe painting is of a man with no eyes. It has a plaque underneath that reads '4'");
-                Console.ReadLine();
-                Attic(lanterns, inv);
-            }
-            else if (user == '2' && lanterns[4] == false && inv[0] == true)
-            {
-                Console.WriteLine("\nYou look through the window and notice a jack-o'-lantern sitting just outside on the windowsill. The latch is stuck, but you're able to use a coin to twist it open and claim your prize.");
-                lanterns[4] = true;
-                Console.ReadLine();
-                Attic(lanterns, inv);
-            }
-            else if (user == '2' && lanterns[4] == false && inv[0] == false)
-            {
-                Console.WriteLine("\nYou look through the window and notice a jack-o'-lantern sitting just outside on the windowsill. The latch is stuck and you can't dig your nails deep enough to twist it. You'll have to find something to help you open it.");
-                Console.ReadLine();
-                Attic(lanterns, inv);
-            }
-            else if (user == '2' && lanterns[4] == true)
-            {
-                Console.WriteLine("The window has a nice view into the backyard.");
-            }
-            else
-            {
-                Console.WriteLine("Invalid input");
             }
         }
 
@@ -611,7 +569,7 @@ namespace studio_project
                 return true;
             }
         }
-        static void Encounter1(bool[] lanterns, bool[] inv)
+        static void Encounter1(bool[] inv)
         {
             string choice;
             Console.Clear();
@@ -638,7 +596,7 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("Invalid input.");
                 Console.ReadLine();
-                Encounter1(lanterns, inv);
+                Encounter1(inv);
             }
         }
         static void Fight1()                    //Next time I will definitely break these up into smaller functions.
@@ -1181,7 +1139,7 @@ namespace studio_project
         //Akirah
 
         // hallway with options to enter bathroom or living room
-        static void Hallway()
+        static void Hallway(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You are in the hallway of the HAUNTED HOUSE.");
@@ -1196,22 +1154,22 @@ namespace studio_project
 
             if (user == "1")
             {
-                BathRoom();
+                BathRoom(lanterns,inv);
             }
             else if (user == "2")
             {
-                LivingRoom();
+                LivingRoom(lanterns, inv);
             }
             else
             {
                 Console.WriteLine("Invalid choice. Please try again.");
                 Console.ReadKey();
-                Hallway();
+                Hallway(lanterns, inv);
             }
         }
 
         //bathroom scene and added a choice to go back to the hallway
-        static void BathRoom()
+        static void BathRoom(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You enter the bathroom.");
@@ -1224,13 +1182,13 @@ namespace studio_project
 
             if (user == "1")
             {
-                Hallway();
+                Hallway(lanterns, inv);
             }
         }
 
         //living room description and options to explore the kitchen or return to the hallway
         // attempt Puzzle 1
-        static void LivingRoom()
+        static void LivingRoom(bool[] lanterns, bool[] inv)
         {
 
             Console.Clear();
@@ -1247,13 +1205,13 @@ namespace studio_project
 
              if (user == "1")
             {
-                Hallway();
+                Hallway(lanterns, inv);
             }
             else if (user == "2")
             {
                 Console.WriteLine("\nYou must solve case file 1 before entering the kitchen.");
                 Console.ReadKey();
-                LivingRoom();
+                LivingRoom(lanterns, inv);
             }
             else if (user == "3")
             {
@@ -1266,39 +1224,47 @@ namespace studio_project
                     Console.WriteLine("The case opens, revealing a mysterious key.");
                     Console.WriteLine("You can now enter the kitchen.");
                     Console.ReadKey();
-                    Kitchen();
+                    Kitchen(lanterns, inv);
                 }
                 else
                 {
                     Console.WriteLine("\nThe case remains locked.");
                     Console.WriteLine("You are still in the living room.");
                     Console.ReadKey();
-                    LivingRoom();
+                    LivingRoom(lanterns, inv);
                 }
             }
             else
             {
                 Console.WriteLine("Invalid choice.");
                 Console.ReadKey();
-                LivingRoom();
+                LivingRoom(lanterns, inv);
             }
         }
 
         // kitchen where the player can return to the living room 
         // attempt Puzzle 2
-        static void Kitchen()
+        static void Kitchen(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You enter the kitchen.");
             Console.WriteLine("Old cupboards line the walls, and rusty pots hang from the ceiling.");
             Console.WriteLine("A rotten smell lingers in the air.");
+            Console.WriteLine("There is a broom thing laying somewhere...");
 
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Solve mysterious case file 2");
+            Console.WriteLine("1. Pick up the broom");
+            Console.WriteLine("2. Solve mysterious case file 2");
+
 
             string user = Console.ReadLine();
+            if (inv[5] = false)
+            {
+                Console.WriteLine("You grab the broom");
+            }
 
-            if (user == "1")
+           
+            if (user == "2")
             {
                 bool solved = Puzzle2();
 
@@ -1325,13 +1291,13 @@ namespace studio_project
                     }
                     else if (choice == "2")
                     {
-                        Kitchen();
+                        Kitchen(lanterns,inv);
                     }
                     else
                     {
                         Console.WriteLine("Invalid choice.");
                         Console.ReadKey();
-                        Kitchen();
+                        Kitchen(lanterns, inv);
                     }
                 }
                 else
@@ -1339,14 +1305,14 @@ namespace studio_project
                     Console.WriteLine("\nThe exit remains locked.");
                     Console.WriteLine("You are still in the kitchen.");
                     Console.ReadKey();
-                    Kitchen();
+                    Kitchen(lanterns, inv);
                 }
             }
             else
             {
                 Console.WriteLine("Invalid choice.");
                 Console.ReadKey();
-                Kitchen();
+                Kitchen(lanterns, inv);
             }
         }
 
@@ -1585,86 +1551,85 @@ namespace studio_project
 
     // john paul
 
- 
- // Displays the abandoned dairy and handles the player's choices.
-static void Dairy()
-{
-    Console.Clear();
- 
-    Console.WriteLine("A cold breeze moves through the empty building.");
-    Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
-    Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
-    Console.WriteLine("Moonlight slips through the dusty windows.");
-    Console.WriteLine("You feel that something mysterious is nearby.");
-    Console.WriteLine();
- 
-    Console.WriteLine("What do you want to do?");
-    Console.WriteLine("1. Search the counter");
-    Console.WriteLine("2. Look behind the dairy");
-    Console.WriteLine("3. Inspect the shelves");
-    Console.WriteLine("4. Leave the dairy");
-    Console.WriteLine("5. Try the mysterious locked door");
-    Console.Write("Enter your choice: ");
- 
-    string choice = Console.ReadLine()?.Trim() ?? "";
- 
-    if (choice == "1")
-    {
-        Console.WriteLine("You search the dusty counter.");
- 
-        if (!hasRustyKey)
-        {
-            Console.WriteLine("You find an old rusty key!");
-            Console.WriteLine("The key feels strangely cold in your hand.");
-            hasRustyKey = true;
-        }
-        else
-        {
-            Console.WriteLine("You already collected the rusty key.");
-        }
-    }
-    else if (choice == "2")
-    {
-        Console.WriteLine("You look behind the dairy.");
-        Console.WriteLine("You hear a strange noise in the darkness.");
-        Console.WriteLine("You notice fresh footprints in the dirt.");
-    }
-    else if (choice == "3")
-    {
-        Console.WriteLine("You inspect the shelves.");
-        Console.WriteLine("You find an old note with a strange symbol.");
-        Console.WriteLine("The symbol looks like a warning.");
-        Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
-    }
-    else if (choice == "4")
-    {
-        Console.WriteLine("You hear the door creak shut behind you.");
-        Console.WriteLine("You leave the dairy and return to the path.");
-        Console.WriteLine("You wonder what other secrets the dairy holds.");
-    }
-    else if (choice == "5")
-    {
-        if (hasRustyKey)
-        {
-            Console.WriteLine("The rusty key unlocks the door!");
-            Console.WriteLine("Inside, you discover a dusty old journal.");
-        }
-        else
-        {
-            Console.WriteLine("The door is locked. Find the rusty key first.");
-        }
-    }
-    else
-    {
-        Console.WriteLine("Invalid choice!");
-        Console.WriteLine("Please enter a number from 1 to 5.");
-    }
- 
-    Console.WriteLine();
-    Console.WriteLine("Press Enter to return to your adventure...");
-    Console.ReadLine();
-}
- 
+//        //// Displays the abandoned dairy and handles the player's choices.
+//        static void Dairy()
+//        {
+//            Console.Clear();
+//            Console.WriteLine("A cold breeze moves through the empty building.");
+//            Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
+//            Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
+//            Console.WriteLine("Moonlight slips through the dusty windows.");
+//            Console.WriteLine("You feel that something mysterious is nearby.");
+//            Console.WriteLine();
+
+//            Console.WriteLine("What do you want to do?");
+//            Console.WriteLine("1. Search the counter");
+//            Console.WriteLine("2. Look behind the dairy");
+//            Console.WriteLine("3. Inspect the shelves");
+//            Console.WriteLine("4. Leave the dairy");
+//            Console.WriteLine("5. Try the mysterious locked door");
+//            Console.Write("Enter your choice: ");
+
+//            string choice = Console.ReadLine()?.Trim() ?? "";
+
+//            if (choice == "1")
+//            {
+//                Console.WriteLine("You search the dusty counter.");
+
+//if (!hasRustyKey),
+//                // Give the player the key only once.
+//{
+//    Console.WriteLine("You find an old rusty key!");
+//    Console.WriteLine("The key feels strangely cold in your hand.");
+//    hasRustyKey = true;
+//}
+//else
+//{
+//    Console.WriteLine("You already collected the rusty key.");
+//}
+//            }
+//            else if (choice == "2")
+//            {
+//                Console.WriteLine("You look behind the dairy.");
+//                Console.WriteLine("You hear a strange noise in the darkness.");
+//                Console.WriteLine("You notice fresh footprints in the dirt.");
+//            }
+//            else if (choice == "3")
+//                Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
+//            {
+//                Console.WriteLine("You inspect the shelves.");
+//                Console.WriteLine("You find an old note with a strange symbol.");
+//                Console.WriteLine("The symbol looks like a warning.");
+//            }
+//            else if (choice == "4")
+//            {
+//                Console.WriteLine("You hear the door creak shut behind you.");
+//                Console.WriteLine("You leave the dairy and return to the path.");
+//                Console.WriteLine("You wonder what other secrets the dairy holds.");
+//            else if (choice == "5")
+//{
+//    if (hasRustyKey)
+//    {
+//        Console.WriteLine("The rusty key unlocks the door!");
+//        Console.WriteLine("Inside, you discover a dusty old journal.");
+//    }
+//    else
+//    {
+//        Console.WriteLine("The door is locked. Find the rusty key first.");
+//    }
+//}
+//            }
+//            else
+//            {
+//                Console.WriteLine("Invalid choice!");
+//                Console.WriteLine("Please enter a number from 1 to 5.");
+//            }
+
+//            Console.WriteLine();
+//            Console.WriteLine("Press Enter to return to your adventure...");
+//            Console.ReadLine();
+//        }
+
 
 
 
