@@ -18,10 +18,10 @@ namespace studio_project
             Console.ReadLine();
             // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[6];
-            lanterns[0] = true; lanterns[1] = true; lanterns[2] = true; lanterns[3] = true; lanterns[4] = true; lanterns[5] = true; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
+            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
             bool[] inv = new bool[6];
-            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = true; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
-            Basement(lanterns, inv);
+            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
+            Courtyard(lanterns, inv);
         }
         
         static char CharCheck()
