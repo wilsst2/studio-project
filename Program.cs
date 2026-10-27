@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.ComponentModel.Design;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
@@ -692,7 +694,7 @@ namespace studio_project
             choice = Console.ReadLine();
             if (choice == "1")
             {
-                //Let me know which part of the map this should send you back to.
+                Courtyard(lanterns, inv);
             }
             else if (choice == "2" && inv[1] == true)
             {
@@ -781,7 +783,7 @@ namespace studio_project
                     Console.WriteLine($"HP: {userhp}");
                     Console.WriteLine($"STAM: {usernrg}");
                     Console.WriteLine();
-                    Console.WriteLine("1. Attack\n2. Guard\n3. Action\n4. Back");
+                    Console.WriteLine("1. Attack\n2. Guard\n3. Action");
                     useroption = Console.ReadLine();
                     if (useroption == "1")
                         //Attack
@@ -809,7 +811,7 @@ namespace studio_project
                             {
                                 dmgdealt = rand.Next(10, 26);
                             }
-                            enemyhp = (enemyhp - dmgdealt);
+                            enemyhp = (enemyhp -= dmgdealt);
                             Console.Clear();
                             Console.WriteLine($"You slash your target, dealing {dmgdealt} damage!");
                             Thread.Sleep(1500);
@@ -829,9 +831,9 @@ namespace studio_project
                             if (enemybleed == true)
                             {
                                 dmgdealt = rand.Next(3, 11);
-                                enemyhp = (enemyhp - dmgdealt);
+                                enemyhp = (enemyhp -= dmgdealt);
                                 Console.WriteLine();
-                                Console.WriteLine($"Mysterious figure took {dmgdealt} bleed damage!");
+                                Console.WriteLine($"Mysterious Figure took {dmgdealt} bleed damage!");
                                 Thread.Sleep(1500);
                             }
                             usernrg = (usernrg + 40);       //Give user stamina after turn
@@ -859,7 +861,7 @@ namespace studio_project
                             {
                                 dmgdealt = rand.Next(18, 32);
                             }
-                            enemyhp = (enemyhp - dmgdealt);
+                            enemyhp = (enemyhp -= dmgdealt);
                             Console.Clear();
                             Console.WriteLine($"You stab your target, dealing {dmgdealt} damage!");
                             Thread.Sleep(1500);
@@ -875,9 +877,9 @@ namespace studio_project
                             if (enemybleed == true)
                             {
                                 dmgdealt = rand.Next(3, 11);
-                                enemyhp = (enemyhp - dmgdealt);
+                                enemyhp = (enemyhp -= dmgdealt);
                                 Console.WriteLine();
-                                Console.WriteLine($"Mysterious figure took {dmgdealt} bleed damage!");
+                                Console.WriteLine($"Mysterious Figure took {dmgdealt} bleed damage!");
                                 Thread.Sleep(1500);
                             }
                             usernrg = (usernrg + 40);
@@ -905,9 +907,9 @@ namespace studio_project
                         if (enemybleed == true)
                         {
                             dmgdealt = rand.Next(3, 11);
-                            enemyhp = (enemyhp - dmgdealt);
+                            enemyhp = (enemyhp -= dmgdealt);
                             Console.WriteLine();
-                            Console.WriteLine($"Mysterious figure took {dmgdealt} bleed damage!");
+                            Console.WriteLine($"Mysterious Figure took {dmgdealt} bleed damage!");
                             Thread.Sleep(1500);
                         }
                         usernrg = (usernrg + 40);
@@ -930,7 +932,7 @@ namespace studio_project
                         if (useratk == "1")
                         {
                             Console.Clear();
-                            Console.WriteLine("A mysterious figure wearing a dark robe, his identity is buried in the shadows of his hood. You can smell a sweet pumpkin aroma.");
+                            Console.WriteLine("A Mysterious Figure wearing a dark robe, his identity is buried in the shadows of his hood. You can smell a sweet pumpkin aroma.");
                             Console.WriteLine();
                             Console.WriteLine($"HP: {enemyhp}");
                             Console.ReadLine();
@@ -959,7 +961,7 @@ namespace studio_project
                         if (enemybleedtimer == 3)
                         {
                             Console.Clear();
-                            Console.WriteLine("Mysterious figure recovered from the bleeding!");
+                            Console.WriteLine("Mysterious Figure recovered from the bleeding!");
                             enemybleed = false;
                             enemybleedtimer = 0;
                             Thread.Sleep(3000);
@@ -968,14 +970,14 @@ namespace studio_project
                     target = "0";
                     enemyguard = false;
                     Console.Clear();
-                    Console.WriteLine($"It's mysterious figure's turn!");
+                    Console.WriteLine($"It's Mysterious Figure's turn!");
                     enemyoption = rand.Next(0, 7);
                     Thread.Sleep(1500);
                     Console.WriteLine();
                     if (enemyoption == 0)
                         //Enemy: Guard
                     {
-                        Console.WriteLine($"Mysterious figure chose to guard!");
+                        Console.WriteLine($"Mysterious Figure chose to guard!");
                         enemyguard = true;
                         if (userpoison == true)
                         {
@@ -999,7 +1001,7 @@ namespace studio_project
                     else if (enemyoption == 1 && enemyhp < 80)
                         //Enemy: Heal
                     {
-                        Console.WriteLine($"Mysterious figure used a healing chant, healing 20 HP and sealing their wounds!");
+                        Console.WriteLine($"Mysterious Figure used a healing chant, healing 20 HP and sealing their wounds!");
                         enemyhp = (enemyhp + 20);
                         enemybleed = false;
                         enemybleedtimer = 0;
@@ -1024,7 +1026,7 @@ namespace studio_project
                     }
                     else
                     {
-                        Console.WriteLine($"Mysterious figure chose to attack!");
+                        Console.WriteLine($"Mysterious Figure chose to attack!");
                         Thread.Sleep(1500);
                         Console.WriteLine();
                         enemyatk = rand.Next(0, 5);
@@ -1039,7 +1041,7 @@ namespace studio_project
                             {
                                 dmgtaken = rand.Next(4, 18);
                             }
-                            Console.WriteLine($"Mysterious figure casts plague, dealing {dmgtaken} damage!");
+                            Console.WriteLine($"Mysterious Figure casts plague, dealing {dmgtaken} damage!");
                             Thread.Sleep(1500);
                             poisontimer = 0;
                             userhp = (userhp - dmgtaken);
@@ -1080,7 +1082,7 @@ namespace studio_project
                             {
                                 dmgtaken = rand.Next(6, 21);
                             }
-                            Console.WriteLine($"Mysterious figure used ritual, dealing {dmgtaken} damage!");
+                            Console.WriteLine($"Mysterious Figure used ritual, dealing {dmgtaken} damage!");
                             Thread.Sleep(1500);
                             bleedtimer = 0;
                             userhp = (userhp - dmgtaken);
@@ -1121,7 +1123,7 @@ namespace studio_project
                             {
                                 dmgtaken = rand.Next(9, 27);
                             }
-                            Console.WriteLine($"Mysterious figure used strike, dealing {dmgtaken} damage!");
+                            Console.WriteLine($"Mysterious Figure used strike, dealing {dmgtaken} damage!");
                             Thread.Sleep(1500);
                             userhp = (userhp - dmgtaken);
                             if (userpoison == true)
@@ -1155,7 +1157,7 @@ namespace studio_project
                 Console.WriteLine("Press ENTER to continue!");
                 Console.ReadLine();
                 Console.Clear();
-                Console.WriteLine("The mysterious figure falls backwards, a lit jack-o'lantern rolls out from the hood of his dark robe.\nUpon collecting it, the robe blows away with the wind. You may now forage deeper into the forest.");
+                Console.WriteLine("The Mysterious Figure falls backwards, a lit jack-o'lantern rolls out from the hood of his dark robe.\nUpon collecting it, the robe blows away with the wind. You may now forage deeper into the forest.");
                 Thread.Sleep(5000);
                 Console.WriteLine();
                 Console.WriteLine("Press ENTER to continue!");
@@ -1174,54 +1176,143 @@ namespace studio_project
                 Courtyard(lanterns, inv);
             }
         }
-        static void BossFight(bool[] lanterns, bool[] inv, string bosstarget)
+        public static void BossFight(bool[] lanterns, bool[] inv, string bosstarget)
         {
-            bool zombie = true; bool skeleton = true; bool horseman = true; int bossuserhp = 500; int bossuserstam = 200; int zombiehp = 100; int skeletonhp = 150; int horsemanhp = 666; int usertarget;
-            usertarget = BossFightSelectTarget(zombie, skeleton, horseman, bossuserhp, bossuserstam, zombiehp, skeletonhp, horsemanhp);
-        }
-        //static int BossFightOptionSelect(int[] usertarget)
-        //{
-
-        //}
-        static int BossFightSelectTarget(bool zombie, bool skeleton, bool horseman, int bossuserhp, int bossuserstam, int zombiehp, int skeletonhp, int horsemanhp)
-        {
-            //Target 1 = Horseman, Target 2 = Skeleton, Target 3 = Zombie
-            bool validchoice = false;
-            Console.Clear();
-            Console.WriteLine($"HP: {bossuserhp}");
-            Console.WriteLine($"STAM: {bossuserstam}");
-            Console.WriteLine();
-            Console.WriteLine($"Select target!");
-            Console.WriteLine();
+            int bossuserhp = 500; int bossuserstam = 200; int horsemanhp = 666; int usertarget;
+            int turn = 0;
             do
             {
-                List<string> targets = new List<string>();
-                if (horseman)
+                horsemanhp = BossFightOptionSelect(ref bossuserhp, ref bossuserstam, horsemanhp);
+                bossuserhp = HorsemanTurn(bossuserhp);
+            } while (horsemanhp > 0 && bossuserhp > 0);
+        }
+        public static int HorsemanTurn(int bossuserhp)
+        {
+            Console.Clear();
+            Random rand = new Random();
+            int horsemanattack;
+            horsemanattack = rand.Next(0, 4);
+            Console.WriteLine("It's Headless Horseman's Turn!");
+            Thread.Sleep(1500);
+            Console.WriteLine();
+            if (horsemanattack == 0)
+            {
+                int dmgdealt = rand.Next(20, 60);
+                bossuserhp -= dmgdealt;
+                Console.WriteLine($"Headless Horseman used Axe Swing, dealing {dmgdealt} damage!");
+                Thread.Sleep(1500);
+            }
+            else if (horsemanattack == 1)
+            {
+                int dmgdealt = rand.Next(5, 80);
+                bossuserhp -= dmgdealt;
+                Console.WriteLine($"Headless Horseman used Mount Buck, dealing {dmgdealt} damage!");
+                Thread.Sleep(1500);
+            }
+            else if (horsemanattack == 2)
+            {
+                int dmgdealt = rand.Next(40, 120);
+                int rng = rand.Next(0, 3);
+                Console.WriteLine("Headless Horseman used Axe Throw...");
+                Thread.Sleep(1500);
+                Console.WriteLine();
+                if (rng == 0 || rng == 1)
                 {
-                    Console.WriteLine($"{targets.Count + 1}. Headless Horseman [{horsemanhp} HP]");
-                    targets.Add("horseman");
+                    Console.WriteLine("You dodged!");
+                    Thread.Sleep(1500);
                 }
-                if (skeleton)
+                else
                 {
-                    Console.WriteLine($"{targets.Count + 1}. Skeleton [{skeletonhp} HP]");
-                    targets.Add("skeleton");
+                    Console.WriteLine($"The axe strikes your mech, dealing {dmgdealt} damage!");
+                    bossuserhp -= dmgdealt;
                 }
-                if (zombie)
+                Thread.Sleep(1500);
+            }
+            else
+            {
+                int dmgdealt = 45;
+                bossuserhp -= dmgdealt;
+                Console.WriteLine($"Headless Horseman used Haunting, dealing {dmgdealt} damage!");
+                Thread.Sleep(1500);
+            }
+            return bossuserhp;
+        }
+        public static int BossFightOptionSelect(ref int bossuserhp, ref int bossuserstam, int horsemanhp)
+        {
+            Random rand = new Random();
+            do
+            {
+                string useratk;
+                bool guard = false;
+                bool validchoice = false;
+                do
                 {
-                    Console.WriteLine($"{targets.Count + 1}. Zombie [{zombiehp} HP]");
-                    targets.Add("zombie");
+                    Console.Clear();
+                    Console.WriteLine($"HP: {bossuserhp}");
+                    Console.WriteLine($"STAM: {bossuserstam}");
+                    Console.WriteLine();
+                    Console.WriteLine($"Select target!");
+                    Console.WriteLine();
+                    Console.WriteLine($"1. Headless Horseman ({horsemanhp} HP)");
+                    string choice = Console.ReadLine();
+                    if (choice == "1")
+                    { validchoice = true; }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Invalid option!");
+                        Thread.Sleep(1500);
+                    }
+                } while (validchoice == false);
+                Console.Clear();
+                Console.WriteLine($"HP: {bossuserhp}");
+                Console.WriteLine($"STAM: {bossuserstam}");
+                Console.WriteLine();
+                Console.WriteLine($"1. Attack\n2. Rest\n3. Action\n");
+                string useroption = Console.ReadLine();
+                if (useroption == "1")
+                {
+                    Console.Clear();
+                    Console.WriteLine($"HP: {bossuserhp}");
+                    Console.WriteLine($"STAM: {bossuserstam}");
+                    Console.WriteLine();
+                    Console.WriteLine("1. Pumpkin Smash (60 STAM)\n2. Jack-O'Flames (100 STAM)\n3. Root Snare (80 STAM)\n4. Summon Jack-O'Minion (140 STAM)");
+                    useratk = Console.ReadLine();
                 }
-                int choice = Convert.ToInt32(Console.ReadLine());
-                string selectedTarget = targets[choice - 1];
-                if (selectedTarget == "horseman") return 1;
-                else if (selectedTarget == "skeleton") return 2;
-                else if (selectedTarget == "zombie") return 3;
+                else if (useroption == "2")
+                {
+                    int hpheal = rand.Next(50, 90);
+                    Console.Clear();
+                    Console.WriteLine("You take a moment to steady yourself, giving the jack-o'lantern mech time to photosynthesize and reverse damage...");
+                    Thread.Sleep(1500);
+                    Console.WriteLine();
+                    Console.WriteLine($"You healed {hpheal} HP!");
+                    Thread.Sleep(1500);
+                    bossuserhp = bossuserhp += hpheal;
+                }
+                else if (useroption == "3")
+                {
+                    Console.Clear();
+                    Console.WriteLine($"HP: {bossuserhp}");
+                    Console.WriteLine($"STAM: {bossuserstam}");
+                    Console.WriteLine();
+                    Console.WriteLine("1. Inspect enemy\n2. Back");
+                    useratk = Console.ReadLine();
+                    if (useratk == "1")
+                    {
+                         Console.Clear();
+                         Console.WriteLine("The Headless Horseman himself has come to collect his children whom you've barbarically meshed into a machine of war.");
+                         Console.WriteLine();
+                         Console.WriteLine($"HP: {horsemanhp}");
+                         Console.ReadLine();
+                    }
+                }
                 else
                 {
                     Console.Clear();
                     Console.WriteLine("Invalid option!");
                     Thread.Sleep(1500);
-                }
+                }  
             } while (true);
         }
 
