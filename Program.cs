@@ -16,17 +16,19 @@ namespace studio_project
         //Blake
         static void Main()
         {
-            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
-            Console.WriteLine("\nPress enter to start the game");
-            Console.ReadLine();
-            // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
+            //Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
+            //Console.WriteLine("\nPress enter to start the game");
+            //Console.ReadLine();
+            //// boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[6];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
             bool[] inv = new bool[6];
-            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
-            Courtyard(lanterns, inv);
+            inv[0] = false; inv[1] = true; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
+            //Courtyard(lanterns, inv);
+            Encounter1(ref lanterns, inv);
+            BossFight(lanterns, inv);
         }
-        
+
         static char CharCheck()
         {
             char user = '0';
@@ -271,7 +273,7 @@ namespace studio_project
             }
         }
 
-        static void UpHallway(bool[]lanterns, bool[]inv)
+        static void UpHallway(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
             Console.WriteLine("You stand in the creaky upstairs hallway. There's a latch on the roof and various paintings on the walls that appear to be from different eras with different styles.");
@@ -729,10 +731,15 @@ namespace studio_project
             Random rand = new Random();
             Console.Clear();
             Console.WriteLine("You equip your pruning knife, preparing yourself to fight.");
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
+            Console.WriteLine();
+            Console.WriteLine("You catch the smell of pumpkin.");
+            Console.WriteLine();
+            Console.WriteLine("Press ENTER to continue!");
+            Thread.Sleep(2000);
             Console.WriteLine();
             Console.WriteLine("Get ready!");
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             do
             {
                 if (turn == 1 && userhp > 0)  //User's turn
@@ -787,7 +794,7 @@ namespace studio_project
                     Console.WriteLine("1. Attack\n2. Guard\n3. Action\n4. Back");
                     useroption = Console.ReadLine();
                     if (useroption == "1")
-                        //Attack
+                    //Attack
                     {
                         Console.Clear();
                         Console.WriteLine($"HP: {userhp}");
@@ -795,14 +802,8 @@ namespace studio_project
                         Console.WriteLine();
                         Console.WriteLine("1. Slash (25 STAM)\n2. Stab (50 STAM)\n3. Back");
                         useratk = Console.ReadLine();
-                        if (useratk == "1" && usernrg < 25)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("Not enough stamina!");
-                            Thread.Sleep(1500);
-                        }
                         if (useratk == "1" && usernrg >= 25)
-                            //Slash
+                        //Slash
                         {
                             if (enemyguard == true)
                             {
@@ -837,22 +838,19 @@ namespace studio_project
                                 Console.WriteLine($"Mysterious Figure took {dmgdealt} bleed damage!");
                                 Thread.Sleep(1500);
                             }
-                            usernrg = (usernrg + 40);       //Give user stamina after turn
+                            usernrg = (usernrg + 30);       //Give user stamina after turn
                             if (usernrg > 100)
                             {
                                 usernrg = 100;      //Make sure user doesn't have over 100 stamina
                             }
-                            Thread.Sleep(3000);
+                            Console.WriteLine();
+                            Console.WriteLine($"You recovered 30 STAM!");
+                            Thread.Sleep(1500);
+                            Thread.Sleep(1500);
                             turn = 2;
                         }
-                        else if (useratk == "2" && usernrg < 50)        //Make sure user has enough stamina for this move
-                        {
-                            Console.Clear();
-                            Console.WriteLine("Not enough stamina!");
-                            Thread.Sleep(1500);
-                        }
                         else if (useratk == "2" && usernrg >= 50)
-                            //Stab
+                        //Stab
                         {
                             if (enemyguard == true)
                             {
@@ -883,24 +881,27 @@ namespace studio_project
                                 Console.WriteLine($"Mysterious Figure took {dmgdealt} bleed damage!");
                                 Thread.Sleep(1500);
                             }
-                            usernrg = (usernrg + 40);
+                            usernrg = (usernrg + 30);
                             if (usernrg > 100)
                             {
                                 usernrg = 100;      //Make sure user doesn't have over 100 stamina
                             }
-                            Thread.Sleep(3000);
+                            Console.WriteLine();
+                            Console.WriteLine($"You recovered 30 STAM!");
+                            Thread.Sleep(1500);
+                            Thread.Sleep(1500);
                             turn = 2;
                         }
                         else if (useratk == "3") { }
                         else
                         {
                             Console.Clear();
-                            Console.WriteLine("Invalid option!");
+                            Console.WriteLine("Invalid option/Not enough stamina!");
                             Thread.Sleep(1500);
                         }
                     }
                     else if (useroption == "2")
-                        //Block
+                    //Block
                     {
                         Console.Clear();
                         Console.WriteLine("You brace yourself!");
@@ -913,16 +914,19 @@ namespace studio_project
                             Console.WriteLine($"Mysterious Figure took {dmgdealt} bleed damage!");
                             Thread.Sleep(1500);
                         }
-                        usernrg = (usernrg + 40);
+                        usernrg = (usernrg + 30);
                         if (usernrg > 100)
                         {
                             usernrg = 100;      //Make sure user doesn't have over 100 stamina
                         }
-                        Thread.Sleep(3000);
+                        Console.WriteLine();
+                        Console.WriteLine($"You recovered 30 STAM!");
+                        Thread.Sleep(1500);
+                        Thread.Sleep(1500);
                         turn = 2;
                     }
                     else if (useroption == "3")
-                        //Action
+                    //Action
                     {
                         Console.Clear();
                         Console.WriteLine($"HP: {userhp}");
@@ -976,7 +980,7 @@ namespace studio_project
                     Thread.Sleep(1500);
                     Console.WriteLine();
                     if (enemyoption == 0)
-                        //Enemy: Guard
+                    //Enemy: Guard
                     {
                         Console.WriteLine($"Mysterious Figure chose to guard!");
                         enemyguard = true;
@@ -1000,9 +1004,10 @@ namespace studio_project
                         turn = 1;
                     }
                     else if (enemyoption == 1 && enemyhp < 80)
-                        //Enemy: Heal
+                    //Enemy: Heal
                     {
                         Console.WriteLine($"Mysterious Figure used a healing chant, healing 20 HP and sealing their wounds!");
+                        Thread.Sleep(1500);
                         enemyhp = (enemyhp + 20);
                         enemybleed = false;
                         enemybleedtimer = 0;
@@ -1022,17 +1027,17 @@ namespace studio_project
                             Console.WriteLine($"You took {dmgtaken} bleed damage!");
                             Thread.Sleep(1500);
                         }
-                        Thread.Sleep(3000);
+                        Thread.Sleep(1500);
                         turn = 1;
                     }
                     else
                     {
-                        Console.WriteLine($"Mysterious Figure chose to attack!");
+                        Console.WriteLine($"Mysterious Figure chose to attack you!");
                         Thread.Sleep(1500);
                         Console.WriteLine();
                         enemyatk = rand.Next(0, 5);
                         if (enemyatk == 0)
-                            //Enemy: Ability 1
+                        //Enemy: Ability 1
                         {
                             if (guard == true)
                             {
@@ -1073,7 +1078,7 @@ namespace studio_project
                             turn = 1;
                         }
                         else if (enemyatk == 1)
-                            //Enemy: Ability 2
+                        //Enemy: Ability 2
                         {
                             if (guard == true)
                             {
@@ -1114,7 +1119,7 @@ namespace studio_project
                             turn = 1;
                         }
                         else
-                            //Enemy: Default attack
+                        //Enemy: Default attack
                         {
                             if (guard == true)
                             {
@@ -1185,14 +1190,34 @@ namespace studio_project
             bool fire = false;
             bool cursed = false;
             int bossuserhp = 500; int bossuserstam = 120; int horsemanhp = 666;
+            Console.Clear();
+            Console.WriteLine("You stomp out of the shed towards the forest, the ground shaking beneath you as you walk deeper, knocking over trees and crushing rocks beneath your feet.");
+            Thread.Sleep(3000);
+            Console.WriteLine();
+            Console.WriteLine("A voice booms from deep within the trees, you can hear the galloping of a horse approaching.");
+            Thread.Sleep(3000);
+            Console.WriteLine();
+            Console.WriteLine("'You dare call that mech your creation? those jack-O'lanterns are no toys for you to take. They are my blood! I will take my children back and harvest your soul!'");
+            Thread.Sleep(3000);
+            Console.WriteLine();
+            Console.WriteLine("It's the headless horseman himself, you've taken his children and he's angry...");
+            Console.WriteLine();
+            Console.WriteLine("Press ENTER to continue!");
+            Console.ReadLine();
+            Thread.Sleep(2000);
+            Console.WriteLine();
+            Console.WriteLine("Get ready!");
+            Thread.Sleep(3000);
             do
             {
                 horsemanhp = BossFightOptionSelect(ref bossuserhp, ref bossuserstam, horsemanhp, ref stun, ref fire);
-                if (stun == false && horsemanhp > 0) { bossuserhp = HorsemanTurn(bossuserhp, ref cursed); }
+                if (stun == false && horsemanhp > 0) { bossuserhp = HorsemanTurnPlayer(bossuserhp, ref cursed); }
                 stun = false;
                 if (cursed == true)
                 {
-                    bossuserstam = bossuserstam - 25;
+                    Console.WriteLine("The curse drains your energy, stealing 20 STAM!");
+                    Thread.Sleep(3000);
+                    bossuserstam = bossuserstam - 20;
                     cursedtimer++;
                     if (cursedtimer == 3)
                     {
@@ -1213,21 +1238,36 @@ namespace studio_project
                         Thread.Sleep(3000);
                         fire = false;
                         firetimer = 0;
-                    }    
+                    }
                 }
             } while (horsemanhp > 0 && bossuserhp > 0);
             if (bossuserhp <= 0)
             {
-                Console.Clear();
-                Thread.Sleep(3000);
-                Console.WriteLine("Bad Ending...");
-                Thread.Sleep(3000);
-                Console.WriteLine();
-                Console.WriteLine("The mech falters, falling apart as pumpkins splat onto the ground. The Headless Horseman is gone, and he's taken your soul with him...");
-                Thread.Sleep(3000);
-                Console.WriteLine();
-                Console.WriteLine("End.");
-                Console.ReadLine();
+                bool quit = false;
+                while (quit == false)
+                {
+                    Console.Clear();
+                    Thread.Sleep(3000);
+                    Console.WriteLine("Bad Ending...");
+                    Thread.Sleep(3000);
+                    Console.WriteLine();
+                    Console.WriteLine("The mech falters, falling apart as pumpkins splat onto the ground. The Headless Horseman is gone, and he's taken your soul with him...");
+                    Thread.Sleep(3000);
+                    Console.WriteLine();
+                    Console.Write("Restart boss fight? (Y/N): ");
+                    string retry = Console.ReadLine();
+                    if (retry == "Y")
+                    {
+                        BossFight(lanterns, inv);
+                    }
+                    else if (retry == "N") { quit = true; }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Invalid option!");
+                        Thread.Sleep(1500);
+                    }
+                }
             }
             else if (horsemanhp <= 0)
             {
@@ -1236,20 +1276,23 @@ namespace studio_project
                 Console.WriteLine("Good Ending!");
                 Thread.Sleep(3000);
                 Console.WriteLine();
-                Console.WriteLine("The Headless Horseman fades into the air, galloping is heard in the distance as he makes his getaway. You've kept your soul these spooky holidays...");
+                Console.WriteLine("The Headless Horseman fades into the air, galloping is heard in the distance as he makes his cowardly getaway. You've kept your soul these spooky holidays...");
                 Thread.Sleep(3000);
                 Console.WriteLine();
                 Console.WriteLine("End.");
                 Console.ReadLine();
             }
         }
-        public static int HorsemanTurn(int bossuserhp, ref bool cursed)
+        public static int HorsemanTurnPlayer(int bossuserhp, ref bool cursed)
         {
             Console.Clear();
             Random rand = new Random();
             int horsemanattack;
             horsemanattack = rand.Next(0, 4);
-            Console.WriteLine("It's Headless Horseman's Turn!");
+            Console.WriteLine("It's Headless Horseman's turn!");
+            Thread.Sleep(1500);
+            Console.WriteLine();
+            Console.WriteLine("Headless Horseman chose to attack you!");
             Thread.Sleep(1500);
             Console.WriteLine();
             if (horsemanattack == 0)
@@ -1293,10 +1336,11 @@ namespace studio_project
                 if (cursed == false)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("You've been cursed and now regenerate stamina at half the rate!");
+                    Console.WriteLine("You've been cursed for 3 turns!");
                     cursed = true;
+                    Thread.Sleep(1500);
                 }
-                Thread.Sleep(3000);
+                Thread.Sleep(1500);
             }
             return bossuserhp;
         }
@@ -1306,7 +1350,6 @@ namespace studio_project
             do
             {
                 string useratk;
-                bool guard = false;
                 bool validchoice = false;
                 do
                 {
@@ -1339,19 +1382,19 @@ namespace studio_project
                     Console.WriteLine($"HP: {bossuserhp}");
                     Console.WriteLine($"STAM: {bossuserstam}");
                     Console.WriteLine();
-                    Console.WriteLine("1. Pumpkin Smash (60 STAM)\n2. Jack-O'Flames (100 STAM)\n3. Root Snare (130 STAM)\n4. Back");
+                    Console.WriteLine("1. Pumpkin Smash (60 STAM)\n2. Candle Blaze (100 STAM)\n3. Root Snare (130 STAM)\n4. Back");
                     useratk = Console.ReadLine();
                     if (useratk == "1" && bossuserstam >= 60)
                     {
                         int dmgdeal = rand.Next(40, 100);
                         Console.Clear();
-                        Console.WriteLine($"You pummel into the ground using pumpkin fists, deaing {dmgdeal} damage!");
+                        Console.WriteLine($"You pummel into the ground using mech's pumpkin fists, deaing {dmgdeal} damage!");
                         Thread.Sleep(1500);
                         horsemanhp = horsemanhp - dmgdeal;
                         bossuserstam = bossuserstam - 60;
                         bossuserstam = bossuserstam + 50;
                         if (bossuserstam > 150)
-                            { bossuserstam = 150; }
+                        { bossuserstam = 150; }
                         if (fire == true)
                         {
                             dmgdeal = rand.Next(15, 25);
@@ -1360,6 +1403,9 @@ namespace studio_project
                             Thread.Sleep(1500);
                             horsemanhp = horsemanhp - dmgdeal;
                         }
+                        Console.WriteLine();
+                        Console.WriteLine($"You recovered 50 STAM!");
+                        Thread.Sleep(1500);
                         Thread.Sleep(1500);
                         return horsemanhp;
                     }
@@ -1367,7 +1413,7 @@ namespace studio_project
                     {
                         int dmgdeal = rand.Next(60, 120);
                         Console.Clear();
-                        Console.WriteLine($"You use the lantern to blast fire, dealing {dmgdeal} damage!");
+                        Console.WriteLine($"You use the lit candles to blast fire, dealing {dmgdeal} damage!");
                         Thread.Sleep(1500);
                         horsemanhp = horsemanhp - dmgdeal;
                         bossuserstam = bossuserstam - 100;
@@ -1378,7 +1424,7 @@ namespace studio_project
                         {
                             fire = true;
                             Console.WriteLine();
-                            Console.WriteLine($"You set the forest ablaze!");
+                            Console.WriteLine($"You set the forest ablaze for 3 turns!");
                             Thread.Sleep(1500);
                         }
                         if (fire == true)
@@ -1389,6 +1435,9 @@ namespace studio_project
                             Thread.Sleep(1500);
                             horsemanhp = horsemanhp - dmgdeal;
                         }
+                        Thread.Sleep(1500);
+                        Console.WriteLine();
+                        Console.WriteLine($"You recovered 50 STAM!");
                         Thread.Sleep(1500);
                         return horsemanhp;
                     }
@@ -1412,6 +1461,9 @@ namespace studio_project
                             Thread.Sleep(1500);
                             horsemanhp = horsemanhp - dmgdeal;
                         }
+                        Console.WriteLine();
+                        Console.WriteLine($"You recovered 50 STAM!");
+                        Thread.Sleep(1500);
                         Thread.Sleep(1500);
                         return horsemanhp;
                     }
@@ -1419,7 +1471,7 @@ namespace studio_project
                     else
                     {
                         Console.Clear();
-                        Console.WriteLine("Invalid option!");
+                        Console.WriteLine("Invalid option/Not enough stamina!");
                         Thread.Sleep(1500);
                     }
                 }
@@ -1433,7 +1485,7 @@ namespace studio_project
                     Console.WriteLine($"You healed {hpheal} HP!");
                     Thread.Sleep(1500);
                     bossuserhp = bossuserhp += hpheal;
-                    bossuserstam = bossuserstam + 50;
+                    bossuserstam = bossuserstam + 75;
                     if (bossuserstam > 150)
                     { bossuserstam = 150; }
                     if (fire == true)
@@ -1444,6 +1496,9 @@ namespace studio_project
                         Thread.Sleep(1500);
                         horsemanhp = horsemanhp - dmgdeal;
                     }
+                    Console.WriteLine();
+                    Console.WriteLine($"You recovered 75 STAM!");
+                    Thread.Sleep(1500);
                     Thread.Sleep(1500);
                     return horsemanhp;
                 }
@@ -1457,11 +1512,11 @@ namespace studio_project
                     useratk = Console.ReadLine();
                     if (useratk == "1")
                     {
-                         Console.Clear();
-                         Console.WriteLine("The Headless Horseman himself has come to avenge his children whom you've barbarically meshed into a machine of war.");
-                         Console.WriteLine();
-                         Console.WriteLine($"HP: {horsemanhp}");
-                         Console.ReadLine();
+                        Console.Clear();
+                        Console.WriteLine("The Headless Horseman himself has come to avenge his children whom you've barbarically meshed into a machine of war.");
+                        Console.WriteLine();
+                        Console.WriteLine($"HP: {horsemanhp}");
+                        Console.ReadLine();
                     }
                 }
                 else if (useroption == "4") { }
@@ -1470,7 +1525,7 @@ namespace studio_project
                     Console.Clear();
                     Console.WriteLine("Invalid option!");
                     Thread.Sleep(1500);
-                }  
+                }
             } while (true);
         }
 
@@ -1523,7 +1578,7 @@ namespace studio_project
 
             if (user == "1")
             {
-                BathRoom(lanterns,inv);
+                BathRoom(lanterns, inv);
             }
             else if (user == "2")
             {
@@ -1572,7 +1627,7 @@ namespace studio_project
 
             string user = Console.ReadLine();
 
-             if (user == "1")
+            if (user == "1")
             {
                 Hallway(lanterns, inv);
             }
@@ -1586,7 +1641,7 @@ namespace studio_project
             {
                 bool solved = Puzzle1();             //case file 1
 
-                if (solved) 
+                if (solved)
                 {
                     Console.Clear();
                     Console.WriteLine("You solved the first puzzle!");
@@ -1620,7 +1675,7 @@ namespace studio_project
             Console.WriteLine("Old cupboards line the walls, and rusty pots hang from the ceiling.");
             Console.WriteLine("A rotten smell lingers in the air.");
 
-           
+
             //if (inv[5])
             //{
             //    Console.WriteLine("\n You have already picked up the broom");
@@ -1642,7 +1697,7 @@ namespace studio_project
             //Console.WriteLine("4. Return to the living room");
             //Console.Write("\nEnter your choice: ");
 
-            
+
             string user = Console.ReadLine();
 
             if (user == "1")
@@ -1713,9 +1768,9 @@ namespace studio_project
             //        Console.WriteLine("Your inventory is empty.");
             //    }
 
-                Console.WriteLine("\nPress any key to return to the kitchen.");
-                Console.ReadKey();
-            }
+            Console.WriteLine("\nPress any key to return to the kitchen.");
+            Console.ReadKey();
+        }
         //    else if (user == "4")
         //    {
         //        LivingRoom(lanterns, inv);
@@ -1790,7 +1845,7 @@ namespace studio_project
 
              "Thorny vines cover the ground. Something beneath the leaves " +
              "scratches and moves in the darkness.",
-  
+
              "Dead trees surround an abandoned grove. Strange symbols glow " +
               "on their bark, and a witch's laughter echoes nearby."
             };
@@ -1812,13 +1867,13 @@ namespace studio_project
                 if (room == 0 && lanterns[2] == false)
                     Console.WriteLine("A glowing jack-o'-lantern rests beside a tree.");
                 Console.WriteLine("\n1. Clearing\n2. Foggy path\n3. Briar patch\n4. Witch's grove");
-                
+
                 if (room == 0 && lanterns[2] == false)
                     Console.WriteLine("5. Pick up jack-o'-lantern");
                 Console.WriteLine("6. Leave forest\n?. Help");
-                
+
                 string choice = Console.ReadLine();
-                
+
                 switch (choice)
                 {
                     case "1":
@@ -1871,7 +1926,7 @@ namespace studio_project
                         Console.WriteLine("\nThe path behind you disappears into the fog.");
                         Console.WriteLine("Are you sure you want to leave the forest? (Y/N)");
 
-                         confirm = Console.ReadLine().Trim().ToUpper();
+                        confirm = Console.ReadLine().Trim().ToUpper();
 
 
                         if (confirm == "Y")
@@ -1933,68 +1988,72 @@ namespace studio_project
 
 
 
-// John Paul
-// Displays the abandoned dairy and handles the player's choices.
-static void Dairy()
-{
-    string choice = "";
-
-    while (choice != "4")
-    {
-        Console.Clear();
-
-        Console.WriteLine("A cold breeze moves through the empty building.");
-        Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
-        Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
-        Console.WriteLine("Moonlight slips through the dusty windows.");
-        Console.WriteLine("You feel that something mysterious is nearby.");
-        Console.WriteLine();
-
-        Console.WriteLine("What do you want to do?");
-        Console.WriteLine("1. Search the counter");
-        Console.WriteLine("2. Look behind the dairy");
-        Console.WriteLine("3. Inspect the shelves");
-        Console.WriteLine("4. Leave the dairy");
-        Console.WriteLine("5. Try the mysterious locked door");
-        Console.Write("Enter your choice: ");
-
-        choice = Console.ReadLine()?.Trim() ?? "";
-        Console.WriteLine();
-
-        if (choice == "1")
+        // John Paul
+        // Displays the abandoned dairy and handles the player's choices.
+        static void Dairy()
         {
-            Console.WriteLine("You search the dusty counter.");
+            string choice = "";
 
-            if (!hasRustyKey)
+            while (choice != "4")
             {
-                Console.WriteLine("You find an old rusty key!");
-                Console.WriteLine("The key feels strangely cold in your hand.");
-                hasRustyKey = true;
-            }
-            else
-            {
-                Console.WriteLine("You already collected the rusty key.");
-            }
-        }
-        else if (choice == "2")
-        {
-            Console.WriteLine("You look behind the dairy.");
-            Console.WriteLine("You hear a strange noise in the darkness.");
-            Console.WriteLine("You notice fresh footprints in the dirt.");
-        }
-        else if (choice == "3")
-        {
-            Console.WriteLine("You inspect the shelves.");
-            Console.WriteLine("You find an old note with a strange symbol.");
-            Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
-            Console.WriteLine("The symbol looks like a warning.");
-        }
-        else if (choice == "4")
-        {
-            Console.WriteLine("You hear the door creak shut behind you.");
-            Console.WriteLine("You leave the dairy and return to the path.");
-            Console.WriteLine("You wonder what other secrets the
+                Console.Clear();
 
+                Console.WriteLine("A cold breeze moves through the empty building.");
+                Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
+                Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
+                Console.WriteLine("Moonlight slips through the dusty windows.");
+                Console.WriteLine("You feel that something mysterious is nearby.");
+                Console.WriteLine();
+
+                Console.WriteLine("What do you want to do?");
+                Console.WriteLine("1. Search the counter");
+                Console.WriteLine("2. Look behind the dairy");
+                Console.WriteLine("3. Inspect the shelves");
+                Console.WriteLine("4. Leave the dairy");
+                Console.WriteLine("5. Try the mysterious locked door");
+                Console.Write("Enter your choice: ");
+
+                choice = Console.ReadLine()?.Trim() ?? "";
+                Console.WriteLine();
+
+                if (choice == "1")
+                {
+                    Console.WriteLine("You search the dusty counter.");
+
+                    if (!hasRustyKey)
+                    {
+                        Console.WriteLine("You find an old rusty key!");
+                        Console.WriteLine("The key feels strangely cold in your hand.");
+                        hasRustyKey = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already collected the rusty key.");
+                    }
+                }
+                else if (choice == "2")
+                {
+                    Console.WriteLine("You look behind the dairy.");
+                    Console.WriteLine("You hear a strange noise in the darkness.");
+                    Console.WriteLine("You notice fresh footprints in the dirt.");
+                }
+                else if (choice == "3")
+                {
+                    Console.WriteLine("You inspect the shelves.");
+                    Console.WriteLine("You find an old note with a strange symbol.");
+                    Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
+                    Console.WriteLine("The symbol looks like a warning.");
+                }
+                else if (choice == "4")
+                {
+                    Console.WriteLine("You hear the door creak shut behind you.");
+                    Console.WriteLine("You leave the dairy and return to the path.");
+                    Console.WriteLine("You wonder what other secrets the");
+                }
+            }
+        }
+    }
+}
 
 
 
