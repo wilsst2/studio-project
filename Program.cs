@@ -21,7 +21,7 @@ namespace studio_project
             //Console.ReadLine();
             //// boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[6];
-            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
+            lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = street, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = true; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
             //Courtyard(lanterns, inv);
@@ -54,7 +54,7 @@ namespace studio_project
             Console.Write("You stand in front of an old, dilapidated manor, it's doors wide open and welcoming. The courtyard is in a state of disrepair, overgrown shrubs reach for the walls, wildflowers sprout through the cracked asphalt driveway, and cobwebs enshroud the windows. The moon-shadows of the dead trees surround you.");
             if (lanterns[0] == false)
             {
-                Console.WriteLine(" A jack-o'-lantern hangs in one of them.");
+                Console.WriteLine(" A jack-o'-lantern hangs in one of them, illuminating the area.");
             }
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Enter manor\n2. Move to backyard\n3. Go to the forest\n4. Leave");
@@ -120,7 +120,7 @@ namespace studio_project
             Console.Clear();
             Console.WriteLine("The area is even more overgrown than the courtyard. There is a no longer running fountain and a dingy garden shed tucked away in the far corner.");
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Enter manor\n2. Move to courtyard\n3. Approach garden shed");
+            Console.WriteLine("1. Enter manor\n2. Move to courtyard\n3. Enter garden shed");
             if (inv[0] == false)
             {
                 Console.WriteLine("4. Investigate fountain");
@@ -128,22 +128,19 @@ namespace studio_project
             char user = CharCheck();
             if (user == '1')
             {
-                Console.Clear();
-                Console.WriteLine("You enter the manor through the backdoor.");
+                Console.WriteLine("\nYou enter the manor through the backdoor.");
                 Console.ReadLine();
                 Backyard(lanterns, inv); // unsure what this room will be
             }
             else if (user == '2')
             {
-                Console.Clear();
-                Console.WriteLine("You move around the manor to the courtyard");
+                Console.WriteLine("\nYou move around the manor to the courtyard");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
             }
             else if (user == '3')
             {
-                Console.Clear();
-                Console.Write("You trudge through the mud to reach the garden shed.");
+                Console.Write("\nYou trudge through the mud to reach the garden shed.");
                 if (inv[2] == false)
                 {
                     Console.WriteLine(" There's a rusty padlock keeping the door locked. It doesn't budge.");
@@ -152,15 +149,14 @@ namespace studio_project
                 }
                 else
                 {
-                    Console.WriteLine("You use your key to unlock the padlock and enter.");
+                    Console.WriteLine(" You use your key to unlock the padlock and enter.");
                     Console.ReadLine();
                     GardenShed(lanterns, inv);
                 }
             }
             else if (user == '4' && inv[0] == false)
             {
-                Console.Clear();
-                Console.WriteLine("You come closer to the fountain. The once marble structure is now slimy and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
+                Console.WriteLine("\nYou come closer to the fountain. The once pristine marble structure is now slimy and covered in green. Larvae rests on the surface, the water here has been undisturbed for a long time. You can see coins lining the bottom of the fountain and are able to swipe them up");
                 inv[0] = true;
                 Console.ReadLine();
                 Backyard(lanterns, inv);
@@ -172,7 +168,7 @@ namespace studio_project
             }
             else
             {
-                Console.WriteLine("Invalid input");
+                Console.WriteLine("\nInvalid input");
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
@@ -194,15 +190,13 @@ namespace studio_project
             char user = CharCheck();
             if (user == '1')
             {
-                Console.Clear();
-                Console.WriteLine("You leave the garden shed and return to the backyard.");
+                Console.WriteLine("\nYou leave the garden shed and return to the backyard.");
                 Console.ReadLine();
                 Backyard(lanterns, inv);
             }
             else if (user == '2' && inv[1] == false)
             {
-                Console.Clear();
-                Console.WriteLine("You grab the pruning knife");
+                Console.WriteLine("\nYou grab the pruning knife");
                 inv[1] = true;
                 Console.ReadLine();
                 GardenShed(lanterns, inv);
@@ -214,8 +208,7 @@ namespace studio_project
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine("Invalid input");
+                Console.WriteLine("\nInvalid input");
                 Backyard(lanterns, inv);
             }
         }
@@ -228,7 +221,7 @@ namespace studio_project
             }
             else
             {
-                Console.Write("You stand in a cold, damp concrete basement. Sweeping your torch across the room reveals a thick layer of dust covering your surroundings. The workbench in the corner seems to be the only thing spared from time.");
+                Console.Write("You stand in a cold, damp concrete basement. Sweeping your torch across the room reveals a thick layer of dust covering your surroundings. The workbench in the corner seems to be the only thing spared from time, the painting on the wall included.");
                 if (inv[3] == false)
                 {
                     Console.WriteLine(" There is also a key on a wall hanger.");
@@ -238,23 +231,32 @@ namespace studio_project
             Console.WriteLine("1. Leave basement");
             if (inv[4] == true)
             {
-                Console.WriteLine("2. Use workbench");
+                Console.WriteLine("2. Examine painting\n3. Use workbench");
                 if (inv[3] == false)
                 {
-                    Console.WriteLine("3. Take key");
+                    Console.WriteLine("4. Take key");
                 }
             }
             char user = CharCheck();
             if (user == '1')
             {
+                Console.WriteLine("You ascend back up the stairs.");
+                Console.ReadLine();
                 // method to return to whatever room takes you to the basement
+                Basement(lanterns, inv);
             }
             else if (user == '2' && inv[4] == true)
+            {
+                Console.WriteLine("\nThe painting is of a man with no ears. The plaque underneath reads '3'");
+                Console.ReadLine();
+                Basement(lanterns, inv);
+            }
+            else if (user == '3' && inv[4] == true)
             {
                 Console.WriteLine("\nYou approach the workbench.");
                 Workbench(lanterns, inv);
             }
-            else if (user == '3' && inv[3] == false && inv[4] == true)
+            else if (user == '4' && inv[3] == false && inv[4] == true)
             {
                 Console.WriteLine("\nYou take the key.");
                 inv[3] = true;
@@ -276,46 +278,41 @@ namespace studio_project
         static void UpHallway(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
-            Console.WriteLine("You stand in the creaky upstairs hallway. There's a latch on the roof and various paintings on the walls that appear to be from different eras with different styles.");
+            Console.WriteLine("You stand in the creaky upstairs hallway. There's a latch on the roof and various paintings on the walls that depict the same man.");
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Enter bedroom\n2. Enter bathroom\n3. Enter attic\n4. Examine paintings");
+            Console.WriteLine("1. Enter bedroom\n2. Enter attic\n3. Examine paintings");
             char user = CharCheck();
             if (user == '1')
             {
-                Console.Clear();
-                Console.WriteLine("You take the door to the bedroom.");
+                Console.WriteLine("\nYou take the door to the bedroom.");
                 Console.ReadLine();
                 Bedroom(lanterns, inv);
             }
-            else if (user == '2')
+            else if (user == '2' && inv[5] == false)
             {
-                Console.Clear();
-                Console.WriteLine("You take the door to the bathroom.");
-                Console.ReadLine();
-                UpHallway(lanterns, inv); // 2nd bathroom method
-            }
-            else if (user == '3' && inv[5] == false)
-            {
-                Console.Clear();
-                Console.WriteLine("You have nothing to pull the door down with.");
+                Console.WriteLine("\nYou have nothing to pull the door down with.");
                 Console.ReadLine();
                 UpHallway(lanterns, inv);
             }
-            else if (user == '3' && inv[5] == true)
+            else if (user == '2' && inv[5] == true)
             {
-                Console.Clear();
-                Console.WriteLine("You use your broom to pull the door down and ascend into the attic.");
+                Console.WriteLine("\nYou use your broom to pull the door down and ascend into the attic.");
                 Console.ReadLine();
-                UpHallway(lanterns, inv); // attic method
+                Attic(lanterns, inv);
             }
             else if (user == '4')
             {
                 Paintings();
                 UpHallway(lanterns, inv);
             }
+            else if (user == '?')
+            {
+                Help();
+                UpHallway(lanterns, inv);
+            }
             else
             {
-                Console.WriteLine("Invalid input");
+                Console.WriteLine("\nInvalid input");
                 Console.ReadLine();
                 UpHallway(lanterns, inv);
             }
@@ -371,10 +368,15 @@ namespace studio_project
                 }
                 else if (user == '2')
                 {
-                    Console.WriteLine("You put the lockbox back.");
+                    Console.WriteLine("\nYou put the lockbox back.");
                     Console.ReadLine();
                     Bedroom(lanterns, inv);
                 }
+            }
+            else if (user == '?')
+            {
+                Help();
+                Bedroom(lanterns, inv);
             }
             else
             {
@@ -395,16 +397,10 @@ namespace studio_project
                 Console.ReadLine();
                 Attic(lanterns, inv);
             }
-            else if (user == '2' && lanterns[4] == false && inv[0] == true)
+            else if (user == '2' && lanterns[4] == false)
             {
-                Console.WriteLine("\nYou look through the window and notice a jack-o'-lantern sitting just outside on the windowsill. The latch is stuck, but you're able to use a coin to twist it open and claim your prize.");
+                Console.WriteLine("\nYou look through the window and notice a jack-o'-lantern sitting just outside on the windowsill. You open it up and claim your lantern!");
                 lanterns[4] = true;
-                Console.ReadLine();
-                Attic(lanterns, inv);
-            }
-            else if (user == '2' && lanterns[4] == false && inv[0] == false)
-            {
-                Console.WriteLine("\nYou look through the window and notice a jack-o'-lantern sitting just outside on the windowsill. The latch is stuck and you can't dig your nails deep enough to twist it. You'll have to find something to help you open it.");
                 Console.ReadLine();
                 Attic(lanterns, inv);
             }
@@ -412,15 +408,22 @@ namespace studio_project
             {
                 Console.WriteLine("The window has a nice view into the backyard.");
             }
+            else if (user == '?')
+            {
+                Help();
+                Attic(lanterns, inv);
+            }
             else
             {
-                Console.WriteLine("Invalid input");
+                Console.WriteLine("\nInvalid input");
+                Console.ReadLine();
+                Attic(lanterns, inv);
             }
         }
 
         static void Lockbox(bool[] lanterns)
         {
-            string code = "106";
+            string code = "013";
             string uCode = "0";
             bool con = true;
             do
@@ -450,7 +453,7 @@ namespace studio_project
                     Console.ReadLine();
                 }
             } while (con == true);
-            Console.WriteLine("");
+            Console.WriteLine("\nYou put the lockbox back.");
         }
         static void Paintings()
         {
@@ -461,19 +464,19 @@ namespace studio_project
             char user = CharCheck();
             if (user == '1')
             {
-                Console.WriteLine("\nThis painting is of a man with no eyes. The plaque underneath says it was painted in 1811.");
+                Console.WriteLine("\nThis painting is of a man with no eyes. The plaque underneath says it was painted in 1850.");
                 Console.ReadLine();
                 Paintings();
             }
             else if (user == '2')
             {
-                Console.WriteLine("\nThis painting is of a man with no ears. The plaque underneath says it was painted in 1803.");
+                Console.WriteLine("\nThis painting is of a man with no ears. The plaque underneath says it was painted in 1811.");
                 Console.ReadLine();
                 Paintings();
             }
             else if (user == '3')
             {
-                Console.WriteLine("\nThis painting is of a man with no mouth. The plaque underneath says it was painted in 1861.");
+                Console.WriteLine("\nThis painting is of a man with no mouth. The plaque underneath says it was painted in 1836.");
                 Console.ReadLine();
                 Paintings();
             }
@@ -510,8 +513,7 @@ namespace studio_project
                 if (user == '1')
                 {
                     Console.WriteLine("\nYou get to work on your magnum opus. Through blood, sweat, and tears, you bring this work of art to life and step into it's orange carapace. You ascend the stairs, leave the manor, and approach your final challenge.");
-                    //BossFight(lanterns, inv);
-                    Basement(lanterns, inv);
+                    BossFight(lanterns, inv);
                 }
                 else if (user == '2')
                 {
@@ -540,31 +542,45 @@ namespace studio_project
         static void Street(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
-            Console.WriteLine("You stand in front of the dairy. While the sign is bright and blinding, there are no other lights and there doesn't appear to be anyone else around.");
+            Console.Write("You stand in front of the dairy. Though the sign is bright and blinding, the rest of the dairy is dark.");
+            if (lanterns[1] == false)
+            {
+                Console.WriteLine("The only other light comes from the claw machine outside the dairy, which contains the soft glow of a jack-o'-lantern");
+            }
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Look around\n2. Enter dairy\n3. Return to manor");
+            Console.WriteLine("1. Enter dairy\n2. Return to manor\n3. Use claw machine");
             char user = CharCheck();
             if (user == '1')
             {
-                Console.Clear();
-                Console.WriteLine("The road you were following appears to end at the dairy. All that surrounds you is the forest. You are alone.");
-                Console.ReadLine();
-                Street(lanterns, inv);
+                Dairy();
             }
             else if (user == '2')
             {
-                //Dairy();
-            }
-            else if (user == '3')
-            {
-                Console.Clear();
-                Console.WriteLine("You follow the path back to the manor and enter the courtyard.");
+                Console.WriteLine("\nYou follow the path back to the manor and enter the courtyard.");
                 Console.ReadLine();
                 Courtyard(lanterns, inv);
+            }
+            else if (user == '3' && inv[0] == false)
+            {
+                Console.WriteLine("\nIt will cost fifty cents to use the claw machine. You don't have any coins on you.");
+                Console.ReadLine();
+                Street(lanterns, inv);
+            }
+            else if (user == '3' && inv[0] == true)
+            {
+                Console.WriteLine("\nIt costs fifty cents to use the claw machine. You use the coins you found in the fountain and win the jack-o'-lantern!");
+                lanterns[1] = true;
+                Console.ReadLine();
+                Street(lanterns, inv);
             }
             else if (user == '?')
             {
                 Help();
+                Street(lanterns, inv);
+            }
+            else
+            {
+                Console.WriteLine("\nInvalid input");
                 Street(lanterns, inv);
             }
         }
@@ -2053,6 +2069,7 @@ namespace studio_project
             }
         }
     }
+<<<<<<< HEAD
 }
 
 
@@ -2087,3 +2104,6 @@ namespace studio_project
 
 
 
+=======
+}
+>>>>>>> f81d3116b941da89c8f350d37005481293440ace
