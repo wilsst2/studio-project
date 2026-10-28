@@ -1578,15 +1578,15 @@ namespace studio_project
             }
             else if (user == "2")
             {
-                Console.WriteLine("\nYou must solve case file 1 before entering the kitchen.");
+                Console.WriteLine("\nYou must solve case file 1 before entering the kitchen.");                 //solve case first
                 Console.ReadKey();
                 LivingRoom(lanterns, inv);
             }
             else if (user == "3")
             {
-                bool solved = Puzzle1();
+                bool solved = Puzzle1();             //case file 1
 
-                if (solved)
+                if (solved) 
                 {
                     Console.Clear();
                     Console.WriteLine("You solved the first puzzle!");
@@ -1621,14 +1621,14 @@ namespace studio_project
             Console.WriteLine("A rotten smell lingers in the air.");
 
            
-            if (inv[5])
-            {
-                Console.WriteLine("\n You have already picked up the broom");
-            }
-            else
-            {
-                Console.WriteLine("\nYou notice a dusty broomlying in the corner.");
-            }
+            //if (inv[5])
+            //{
+            //    Console.WriteLine("\n You have already picked up the broom");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("\nYou notice a dusty broomlying in the corner.");
+            //}
 
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Solve mysterious case file 2 ");
@@ -1638,16 +1638,16 @@ namespace studio_project
                 Console.WriteLine("2. Pick up the broom");
             }
 
-            Console.WriteLine("3. Check inventory");
-            Console.WriteLine("4. Return to the living room");
-            Console.Write("\nEnter your choice: ");
+            //Console.WriteLine("3. Check inventory");
+            //Console.WriteLine("4. Return to the living room");
+            //Console.Write("\nEnter your choice: ");
 
             
             string user = Console.ReadLine();
 
             if (user == "1")
             {
-                bool solved = Puzzle2();
+                bool solved = Puzzle2();                    // case file 2
 
                 if (solved)
                 {
@@ -1691,42 +1691,42 @@ namespace studio_project
                 }
 
             }
-            else if (user == "2" && !inv[5])
-            {
-                inv[5] = true;
+            //else if (user == "2" && !inv[5])
+            //{
+            //    inv[5] = true;
 
-                Console.WriteLine("\nYou picked up the broom!");
-                Console.WriteLine("The broom has been added to your inventory.");
-                Console.WriteLine("\nPress any key to continue.");
-                Console.ReadKey();
-            }
-            else if (user == "3")
-            {
-                Console.WriteLine("\n=== YOUR INVENTORY ===");
+            //    Console.WriteLine("\nYou picked up the broom!");
+            //    Console.WriteLine("The broom has been added to your inventory.");
+            //    Console.WriteLine("\nPress any key to continue.");
+            //    Console.ReadKey();
+            //}
+            //else if (user == "3")
+            //{
+            //    Console.WriteLine("\n=== YOUR INVENTORY ===");
 
-                if (inv[5])
-                {
-                    Console.WriteLine("- Broom");
-                }
-                else
-                {
-                    Console.WriteLine("Your inventory is empty.");
-                }
+            //    if (inv[5])
+            //    {
+            //        Console.WriteLine("- Broom");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Your inventory is empty.");
+            //    }
 
                 Console.WriteLine("\nPress any key to return to the kitchen.");
                 Console.ReadKey();
             }
-            else if (user == "4")
-            {
-                LivingRoom(lanterns, inv);
-                return;
-            }
-            else
-            {
-                Console.WriteLine("\nInvalid choice. Please select an option from the menu.");
-                Console.ReadKey();
-            }
-        }
+        //    else if (user == "4")
+        //    {
+        //        LivingRoom(lanterns, inv);
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("\nInvalid choice. Please select an option from the menu.");
+        //        Console.ReadKey();
+        //    }
+        //}
 
 
 
