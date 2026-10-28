@@ -1933,12 +1933,67 @@ namespace studio_project
 
 
 
+// John Paul
+// Displays the abandoned dairy and handles the player's choices.
+static void Dairy()
+{
+    string choice = "";
 
+    while (choice != "4")
+    {
+        Console.Clear();
 
+        Console.WriteLine("A cold breeze moves through the empty building.");
+        Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
+        Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
+        Console.WriteLine("Moonlight slips through the dusty windows.");
+        Console.WriteLine("You feel that something mysterious is nearby.");
+        Console.WriteLine();
 
+        Console.WriteLine("What do you want to do?");
+        Console.WriteLine("1. Search the counter");
+        Console.WriteLine("2. Look behind the dairy");
+        Console.WriteLine("3. Inspect the shelves");
+        Console.WriteLine("4. Leave the dairy");
+        Console.WriteLine("5. Try the mysterious locked door");
+        Console.Write("Enter your choice: ");
 
+        choice = Console.ReadLine()?.Trim() ?? "";
+        Console.WriteLine();
 
+        if (choice == "1")
+        {
+            Console.WriteLine("You search the dusty counter.");
 
+            if (!hasRustyKey)
+            {
+                Console.WriteLine("You find an old rusty key!");
+                Console.WriteLine("The key feels strangely cold in your hand.");
+                hasRustyKey = true;
+            }
+            else
+            {
+                Console.WriteLine("You already collected the rusty key.");
+            }
+        }
+        else if (choice == "2")
+        {
+            Console.WriteLine("You look behind the dairy.");
+            Console.WriteLine("You hear a strange noise in the darkness.");
+            Console.WriteLine("You notice fresh footprints in the dirt.");
+        }
+        else if (choice == "3")
+        {
+            Console.WriteLine("You inspect the shelves.");
+            Console.WriteLine("You find an old note with a strange symbol.");
+            Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
+            Console.WriteLine("The symbol looks like a warning.");
+        }
+        else if (choice == "4")
+        {
+            Console.WriteLine("You hear the door creak shut behind you.");
+            Console.WriteLine("You leave the dairy and return to the path.");
+            Console.WriteLine("You wonder what other secrets the
 
 
 
@@ -1966,123 +2021,10 @@ namespace studio_project
 
 
 
-    // john paul
 
-//        //// Displays the abandoned dairy and handles the player's choices.
-//        static void Dairy()
-//        {
-//            Console.Clear();
-//            Console.WriteLine("A cold breeze moves through the empty building.");
-//            Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
-//            Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
-//            Console.WriteLine("Moonlight slips through the dusty windows.");
-//            Console.WriteLine("You feel that something mysterious is nearby.");
-//            Console.WriteLine();
 
-//            Console.WriteLine("What do you want to do?");
-//            Console.WriteLine("1. Search the counter");
-//            Console.WriteLine("2. Look behind the dairy");
-//            Console.WriteLine("3. Inspect the shelves");
-//            Console.WriteLine("4. Leave the dairy");
-//            Console.WriteLine("5. Try the mysterious locked door");
-//            Console.Write("Enter your choice: ");
 
-//            string choice = Console.ReadLine()?.Trim() ?? "";
 
-//            if (choice == "1")
-//            {
-//                Console.WriteLine("You search the dusty counter.");
 
-//if (!hasRustyKey),
-//                // Give the player the key only once.
-//{
-//    Console.WriteLine("You find an old rusty key!");
-//    Console.WriteLine("The key feels strangely cold in your hand.");
-//    hasRustyKey = true;
-//}
-//else
-//{
-//    Console.WriteLine("You already collected the rusty key.");
-//}
-//            }
-//            else if (choice == "2")
-//            {
-//                Console.WriteLine("You look behind the dairy.");
-//                Console.WriteLine("You hear a strange noise in the darkness.");
-//                Console.WriteLine("You notice fresh footprints in the dirt.");
-//            }
-//            else if (choice == "3")
-//                Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
-//            {
-//                Console.WriteLine("You inspect the shelves.");
-//                Console.WriteLine("You find an old note with a strange symbol.");
-//                Console.WriteLine("The symbol looks like a warning.");
-//            }
-//            else if (choice == "4")
-//            {
-//                Console.WriteLine("You hear the door creak shut behind you.");
-//                Console.WriteLine("You leave the dairy and return to the path.");
-//                Console.WriteLine("You wonder what other secrets the dairy holds.");
-//            else if (choice == "5")
-//{
-//    if (hasRustyKey)
-//    {
-//        Console.WriteLine("The rusty key unlocks the door!");
-//        Console.WriteLine("Inside, you discover a dusty old journal.");
-//    }
-//    else
-//    {
-//        Console.WriteLine("The door is locked. Find the rusty key first.");
-//    }
-//}
-//            }
-//            else
-//            {
-//                Console.WriteLine("Invalid choice!");
-//                Console.WriteLine("Please enter a number from 1 to 5.");
-//            }
 
-//            Console.WriteLine();
-//            Console.WriteLine("Press Enter to return to your adventure...");
-//            Console.ReadLine();
-//        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-}
