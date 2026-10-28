@@ -16,17 +16,15 @@ namespace studio_project
         //Blake
         static void Main()
         {
-            //Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
-            //Console.WriteLine("\nPress enter to start the game");
-            //Console.ReadLine();
-            //// boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
+            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
+            Console.WriteLine("\nPress enter to start the game");
+            Console.ReadLine();
+            // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[6];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
-            //Courtyard(lanterns, inv);
-            Fight1(lanterns, inv);
-            BossFight(lanterns, inv);
+            Courtyard(lanterns, inv);
         }
         
         static char CharCheck()
@@ -78,7 +76,7 @@ namespace studio_project
             {
                 Console.WriteLine("\nYou follow the path from the courtyard to the forest.");
                 Console.ReadLine();
-                Encounter1(lanterns, inv);
+                Encounter1(ref lanterns, inv);
             }
             else if (user == '4')
             {
@@ -677,7 +675,7 @@ namespace studio_project
                 return true;
             }
         }
-        static void Encounter1(bool[] lanterns, bool[] inv)
+        static void Encounter1(ref bool[] lanterns, bool[] inv)
         {
             if (lanterns[5] == true)
             {
@@ -708,7 +706,7 @@ namespace studio_project
                 Console.Clear();
                 Console.WriteLine("Invalid input.");
                 Console.ReadLine();
-                Encounter1(lanterns, inv);
+                Encounter1(ref lanterns, inv);
             }
         }
         static void Fight1(bool[] lanterns, bool[] inv)
@@ -1218,6 +1216,32 @@ namespace studio_project
                     }    
                 }
             } while (horsemanhp > 0 && bossuserhp > 0);
+            if (bossuserhp <= 0)
+            {
+                Console.Clear();
+                Thread.Sleep(3000);
+                Console.WriteLine("Bad Ending...");
+                Thread.Sleep(3000);
+                Console.WriteLine();
+                Console.WriteLine("The mech falters, falling apart as pumpkins splat onto the ground. The Headless Horseman is gone, and he's taken your soul with him...");
+                Thread.Sleep(3000);
+                Console.WriteLine();
+                Console.WriteLine("End.");
+                Console.ReadLine();
+            }
+            else if (horsemanhp <= 0)
+            {
+                Console.Clear();
+                Thread.Sleep(3000);
+                Console.WriteLine("Good Ending!");
+                Thread.Sleep(3000);
+                Console.WriteLine();
+                Console.WriteLine("The Headless Horseman fades into the air, galloping is heard in the distance as he makes his getaway. You've kept your soul these spooky holidays...");
+                Thread.Sleep(3000);
+                Console.WriteLine();
+                Console.WriteLine("End.");
+                Console.ReadLine();
+            }
         }
         public static int HorsemanTurn(int bossuserhp, ref bool cursed)
         {
@@ -1350,20 +1374,18 @@ namespace studio_project
                         bossuserstam = bossuserstam + 50;
                         if (bossuserstam > 150)
                         { bossuserstam = 150; }
+                        if (fire == false)
+                        {
+                            fire = true;
+                            Console.WriteLine();
+                            Console.WriteLine($"You set the forest ablaze!");
+                            Thread.Sleep(1500);
+                        }
                         if (fire == true)
                         {
                             dmgdeal = rand.Next(15, 25);
                             Console.WriteLine();
                             Console.WriteLine($"The fire roars, dealing {dmgdeal} damage to all enemies!");
-                            Thread.Sleep(1500);
-                            horsemanhp = horsemanhp - dmgdeal;
-                        }
-                        if (fire == false)
-                        {
-                            fire = true;
-                            dmgdeal = rand.Next(15, 25);
-                            Console.WriteLine();
-                            Console.WriteLine($"You set the forest ablaze, dealing {dmgdeal} damage to all enemies!");
                             Thread.Sleep(1500);
                             horsemanhp = horsemanhp - dmgdeal;
                         }
