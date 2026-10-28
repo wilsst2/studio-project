@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
+using System.Xml.Schema;
 
 namespace studio_project
 {
@@ -15,15 +16,16 @@ namespace studio_project
         //Blake
         static void Main()
         {
-            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
-            Console.WriteLine("\nPress enter to start the game");
-            Console.ReadLine();
-            // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
+            //Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
+            //Console.WriteLine("\nPress enter to start the game");
+            //Console.ReadLine();
+            //// boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[6];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = kitchen, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
-            Courtyard(lanterns, inv);
+            //Courtyard(lanterns, inv);
+            BossFight(lanterns, inv);
         }
         
         static char CharCheck()
@@ -783,7 +785,7 @@ namespace studio_project
                     Console.WriteLine($"HP: {userhp}");
                     Console.WriteLine($"STAM: {usernrg}");
                     Console.WriteLine();
-                    Console.WriteLine("1. Attack\n2. Guard\n3. Action");
+                    Console.WriteLine("1. Attack\n2. Guard\n3. Action\n4. Back");
                     useroption = Console.ReadLine();
                     if (useroption == "1")
                         //Attack
@@ -1176,17 +1178,47 @@ namespace studio_project
                 Courtyard(lanterns, inv);
             }
         }
-        public static void BossFight(bool[] lanterns, bool[] inv, string bosstarget)
+        public static void BossFight(bool[] lanterns, bool[] inv)
         {
-            int bossuserhp = 500; int bossuserstam = 200; int horsemanhp = 666; int usertarget;
-            int turn = 0;
+            int cursedtimer = 0;
+            int firetimer = 0;
+            bool stun = false;
+            bool fire = false;
+            bool cursed = false;
+            int bossuserhp = 500; int bossuserstam = 120; int horsemanhp = 666;
             do
             {
-                horsemanhp = BossFightOptionSelect(ref bossuserhp, ref bossuserstam, horsemanhp);
-                bossuserhp = HorsemanTurn(bossuserhp);
+                horsemanhp = BossFightOptionSelect(ref bossuserhp, ref bossuserstam, horsemanhp, ref stun, ref fire);
+                if (stun == false) { bossuserhp = HorsemanTurn(bossuserhp, ref cursed); }
+                stun = false;
+                if (cursed == true)
+                {
+                    bossuserstam = bossuserstam - 25;
+                    cursedtimer++;
+                    if (cursedtimer == 3)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("You're no longer cursed!");
+                        Thread.Sleep(3000);
+                        cursed = false;
+                        cursedtimer = 0;
+                    }
+                }
+                if (fire == true)
+                {
+                    firetimer++;
+                    if (firetimer == 3)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The flames die down...");
+                        Thread.Sleep(3000);
+                        fire = false;
+                        firetimer = 0;
+                    }    
+                }
             } while (horsemanhp > 0 && bossuserhp > 0);
         }
-        public static int HorsemanTurn(int bossuserhp)
+        public static int HorsemanTurn(int bossuserhp, ref bool cursed)
         {
             Console.Clear();
             Random rand = new Random();
@@ -1200,14 +1232,14 @@ namespace studio_project
                 int dmgdealt = rand.Next(20, 60);
                 bossuserhp -= dmgdealt;
                 Console.WriteLine($"Headless Horseman used Axe Swing, dealing {dmgdealt} damage!");
-                Thread.Sleep(1500);
+                Thread.Sleep(3000);
             }
             else if (horsemanattack == 1)
             {
                 int dmgdealt = rand.Next(5, 80);
                 bossuserhp -= dmgdealt;
                 Console.WriteLine($"Headless Horseman used Mount Buck, dealing {dmgdealt} damage!");
-                Thread.Sleep(1500);
+                Thread.Sleep(3000);
             }
             else if (horsemanattack == 2)
             {
@@ -1219,14 +1251,13 @@ namespace studio_project
                 if (rng == 0 || rng == 1)
                 {
                     Console.WriteLine("You dodged!");
-                    Thread.Sleep(1500);
                 }
                 else
                 {
                     Console.WriteLine($"The axe strikes your mech, dealing {dmgdealt} damage!");
                     bossuserhp -= dmgdealt;
                 }
-                Thread.Sleep(1500);
+                Thread.Sleep(3000);
             }
             else
             {
@@ -1234,10 +1265,17 @@ namespace studio_project
                 bossuserhp -= dmgdealt;
                 Console.WriteLine($"Headless Horseman used Haunting, dealing {dmgdealt} damage!");
                 Thread.Sleep(1500);
+                if (cursed = false)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("You've been cursed and now regenerate stamina at half the rate!");
+                    cursed = true;
+                }
+                Thread.Sleep(3000);
             }
             return bossuserhp;
         }
-        public static int BossFightOptionSelect(ref int bossuserhp, ref int bossuserstam, int horsemanhp)
+        public static int BossFightOptionSelect(ref int bossuserhp, ref int bossuserstam, int horsemanhp, ref bool stun, ref bool fire)
         {
             Random rand = new Random();
             do
@@ -1268,7 +1306,7 @@ namespace studio_project
                 Console.WriteLine($"HP: {bossuserhp}");
                 Console.WriteLine($"STAM: {bossuserstam}");
                 Console.WriteLine();
-                Console.WriteLine($"1. Attack\n2. Rest\n3. Action\n");
+                Console.WriteLine($"1. Attack\n2. Rest\n3. Action\n4. Back");
                 string useroption = Console.ReadLine();
                 if (useroption == "1")
                 {
@@ -1276,8 +1314,88 @@ namespace studio_project
                     Console.WriteLine($"HP: {bossuserhp}");
                     Console.WriteLine($"STAM: {bossuserstam}");
                     Console.WriteLine();
-                    Console.WriteLine("1. Pumpkin Smash (60 STAM)\n2. Jack-O'Flames (100 STAM)\n3. Root Snare (80 STAM)\n4. Summon Jack-O'Minion (140 STAM)");
+                    Console.WriteLine("1. Pumpkin Smash (60 STAM)\n2. Jack-O'Flames (100 STAM)\n3. Root Snare (130 STAM)");
                     useratk = Console.ReadLine();
+                    if (useratk == "1" && bossuserstam >= 60)
+                    {
+                        int dmgdeal = rand.Next(40, 100);
+                        Console.Clear();
+                        Console.WriteLine($"You pummel into the ground using pumpkin fists, deaing {dmgdeal} damage!");
+                        Thread.Sleep(3000);
+                        horsemanhp = horsemanhp - dmgdeal;
+                        bossuserstam = bossuserstam - 60;
+                        bossuserstam = bossuserstam + 50;
+                        if (bossuserstam > 150)
+                            { bossuserstam = 150; }
+                        if (fire == true)
+                        {
+                            dmgdeal = rand.Next(15, 25);
+                            Console.WriteLine();
+                            Console.WriteLine($"The fire roars, dealing {dmgdeal} damage to all enemies!");
+                            Thread.Sleep(1500);
+                            horsemanhp = horsemanhp - dmgdeal;
+                        }
+                        return horsemanhp;
+                    }
+                    else if (useratk == "2" && bossuserstam >= 100)
+                    {
+                        int dmgdeal = rand.Next(60, 120);
+                        Console.Clear();
+                        Console.WriteLine($"You use the lantern to blast fire, dealing {dmgdeal} damage!");
+                        Thread.Sleep(1500);
+                        horsemanhp = horsemanhp - dmgdeal;
+                        bossuserstam = bossuserstam - 100;
+                        bossuserstam = bossuserstam + 50;
+                        if (bossuserstam > 150)
+                        { bossuserstam = 150; }
+                        if (fire == true)
+                        {
+                            dmgdeal = rand.Next(15, 25);
+                            Console.WriteLine();
+                            Console.WriteLine($"The fire roars, dealing {dmgdeal} damage to all enemies!");
+                            Thread.Sleep(1500);
+                            horsemanhp = horsemanhp - dmgdeal;
+                        }
+                        if (fire == false)
+                        {
+                            fire = true;
+                            dmgdeal = rand.Next(15, 25);
+                            Console.WriteLine();
+                            Console.WriteLine($"You set the forest ablaze, dealing {dmgdeal} damage to all enemies!");
+                            Thread.Sleep(1500);
+                            horsemanhp = horsemanhp - dmgdeal;
+                        }
+                        Thread.Sleep(1500);
+                        return horsemanhp;
+                    }
+                    else if (useratk == "3" && bossuserstam >= 130)
+                    {
+                        int dmgdeal = rand.Next(10, 30);
+                        Console.Clear();
+                        Console.WriteLine($"You ensnare Headless Horseman in roots, deaing {dmgdeal} damage and stunning him!");
+                        Thread.Sleep(3000);
+                        horsemanhp = horsemanhp - dmgdeal;
+                        bossuserstam = bossuserstam - 130;
+                        bossuserstam = bossuserstam + 50;
+                        if (bossuserstam > 150)
+                        { bossuserstam = 150; }
+                        stun = true;
+                        if (fire == true)
+                        {
+                            dmgdeal = rand.Next(15, 25);
+                            Console.WriteLine();
+                            Console.WriteLine($"The fire roars, dealing {dmgdeal} damage to all enemies!");
+                            Thread.Sleep(1500);
+                            horsemanhp = horsemanhp - dmgdeal;
+                        }
+                        return horsemanhp;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Invalid option!");
+                        Thread.Sleep(1500);
+                    }
                 }
                 else if (useroption == "2")
                 {
@@ -1289,6 +1407,19 @@ namespace studio_project
                     Console.WriteLine($"You healed {hpheal} HP!");
                     Thread.Sleep(1500);
                     bossuserhp = bossuserhp += hpheal;
+                    bossuserstam = bossuserstam + 50;
+                    if (bossuserstam > 150)
+                    { bossuserstam = 150; }
+                    if (fire == true)
+                    {
+                        int dmgdeal = rand.Next(15, 25);
+                        Console.WriteLine();
+                        Console.WriteLine($"The fire roars, dealing {dmgdeal} damage to all enemies!");
+                        Thread.Sleep(1500);
+                        horsemanhp = horsemanhp - dmgdeal;
+                    }
+                    Thread.Sleep(1500);
+                    return horsemanhp;
                 }
                 else if (useroption == "3")
                 {
@@ -1301,12 +1432,13 @@ namespace studio_project
                     if (useratk == "1")
                     {
                          Console.Clear();
-                         Console.WriteLine("The Headless Horseman himself has come to collect his children whom you've barbarically meshed into a machine of war.");
+                         Console.WriteLine("The Headless Horseman himself has come to avenge his children whom you've barbarically meshed into a machine of war.");
                          Console.WriteLine();
                          Console.WriteLine($"HP: {horsemanhp}");
                          Console.ReadLine();
                     }
                 }
+                else if (useroption == "4") { }
                 else
                 {
                     Console.Clear();
