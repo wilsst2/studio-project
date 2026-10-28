@@ -16,17 +16,15 @@ namespace studio_project
         //Blake
         static void Main()
         {
-            //Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
-            //Console.WriteLine("\nPress enter to start the game");
-            //Console.ReadLine();
-            //// boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
+            Console.WriteLine("Welcome to this as yet unnamed and unfinished game!\n\nIt is a puzzle game set in a haunted manor where your goal is to find jack-o'-lanterns. You will have preset options to pick from determining where you want to go, items you want to pick up, etc. Some options may not be available until you have gained items or knowledge from other rooms so it is worth revisiting places later on. If you are confused, just type '?' at any time and you will recieve a more in depth tutorial - not actually, the tutorial exists but is only accessible from a few areas at the moment");
+            Console.WriteLine("\nPress enter to start the game");
+            Console.ReadLine();
+            // boolean arrays for inventory - remember to comment what number your items correspond to so we can keep track easier
             bool[] lanterns = new bool[6];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = street, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
             bool[] inv = new bool[6];
-            inv[0] = false; inv[1] = true; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
-            //Courtyard(lanterns, inv);
-            Encounter1(ref lanterns, inv);
-            BossFight(lanterns, inv);
+            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
+            Courtyard(lanterns, inv);
         }
 
         static char CharCheck()
@@ -752,6 +750,7 @@ namespace studio_project
             Console.WriteLine("You catch the smell of pumpkin.");
             Console.WriteLine();
             Console.WriteLine("Press ENTER to continue!");
+            Console.ReadLine();
             Thread.Sleep(2000);
             Console.WriteLine();
             Console.WriteLine("Get ready!");
@@ -816,7 +815,7 @@ namespace studio_project
                         Console.WriteLine($"HP: {userhp}");
                         Console.WriteLine($"STAM: {usernrg}");
                         Console.WriteLine();
-                        Console.WriteLine("1. Slash (25 STAM)\n2. Stab (50 STAM)\n3. Back");
+                        Console.WriteLine("1. Slash\t[25 STAM]\n2. Stab\t\t[50 STAM]\n3. Back");
                         useratk = Console.ReadLine();
                         if (useratk == "1" && usernrg >= 25)
                         //Slash
@@ -999,6 +998,7 @@ namespace studio_project
                     //Enemy: Guard
                     {
                         Console.WriteLine($"Mysterious Figure chose to guard!");
+                        Thread.Sleep(1500);
                         enemyguard = true;
                         if (userpoison == true)
                         {
@@ -1016,7 +1016,7 @@ namespace studio_project
                             Console.WriteLine($"You took {dmgtaken} bleed damage!");
                             Thread.Sleep(1500);
                         }
-                        Thread.Sleep(3000);
+                        Thread.Sleep(1500);
                         turn = 1;
                     }
                     else if (enemyoption == 1 && enemyhp < 80)
@@ -1090,7 +1090,7 @@ namespace studio_project
                                 Console.WriteLine($"You took {dmgtaken} bleed damage!");
                                 Thread.Sleep(1500);
                             }
-                            Thread.Sleep(3000);
+                            Thread.Sleep(1500);
                             turn = 1;
                         }
                         else if (enemyatk == 1)
@@ -1231,6 +1231,7 @@ namespace studio_project
                 stun = false;
                 if (cursed == true)
                 {
+                    Console.Clear();
                     Console.WriteLine("The curse drains your energy, stealing 20 STAM!");
                     Thread.Sleep(3000);
                     bossuserstam = bossuserstam - 20;
@@ -1363,11 +1364,11 @@ namespace studio_project
         public static int BossFightOptionSelect(ref int bossuserhp, ref int bossuserstam, int horsemanhp, ref bool stun, ref bool fire)
         {
             Random rand = new Random();
+            bool validchoice = false;
+            string useratk;
             do
             {
-                string useratk;
-                bool validchoice = false;
-                do
+                while (validchoice == false)
                 {
                     Console.Clear();
                     Console.WriteLine($"HP: {bossuserhp}");
@@ -1375,17 +1376,16 @@ namespace studio_project
                     Console.WriteLine();
                     Console.WriteLine($"Select target!");
                     Console.WriteLine();
-                    Console.WriteLine($"1. Headless Horseman({horsemanhp} HP)");
+                    Console.WriteLine($"1. Headless Horseman\t[{horsemanhp} HP]");
                     string choice = Console.ReadLine();
-                    if (choice == "1")
-                    { validchoice = true; }
+                    if (choice == "1") { validchoice = true; }
                     else
                     {
                         Console.Clear();
                         Console.WriteLine("Invalid option!");
                         Thread.Sleep(1500);
                     }
-                } while (validchoice == false);
+                }
                 Console.Clear();
                 Console.WriteLine($"HP: {bossuserhp}");
                 Console.WriteLine($"STAM: {bossuserstam}");
@@ -1398,7 +1398,7 @@ namespace studio_project
                     Console.WriteLine($"HP: {bossuserhp}");
                     Console.WriteLine($"STAM: {bossuserstam}");
                     Console.WriteLine();
-                    Console.WriteLine("1. Pumpkin Smash (60 STAM)\n2. Candle Blaze (100 STAM)\n3. Root Snare (130 STAM)\n4. Back");
+                    Console.WriteLine("1. Pumpkin Smash\t[60 STAM]\n2. Candle Blaze\t\t[100 STAM]\n3. Root Snare\t\t[130 STAM]\n4. Back");
                     useratk = Console.ReadLine();
                     if (useratk == "1" && bossuserstam >= 60)
                     {
@@ -1535,7 +1535,7 @@ namespace studio_project
                         Console.ReadLine();
                     }
                 }
-                else if (useroption == "4") { }
+                else if (useroption == "4") { validchoice = false; }
                 else
                 {
                     Console.Clear();
@@ -2069,41 +2069,4 @@ namespace studio_project
             }
         }
     }
-<<<<<<< HEAD
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-}
->>>>>>> f81d3116b941da89c8f350d37005481293440ace
