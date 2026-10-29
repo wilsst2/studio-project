@@ -24,6 +24,7 @@ namespace studio_project
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = street, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
             bool[] inv = new bool[6];
             inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
+            BossFight(lanterns, inv);
             Courtyard(lanterns, inv);
         }
 
@@ -715,7 +716,7 @@ namespace studio_project
             }
             else if (choice == "2" && inv[1] == true)
             {
-                Fight1(lanterns, inv);
+                Fight1(ref lanterns, inv);
             }
             else
             {
@@ -725,7 +726,7 @@ namespace studio_project
                 Encounter1(ref lanterns, inv);
             }
         }
-        static void Fight1(bool[] lanterns, bool[] inv)
+        static void Fight1(ref bool[] lanterns, bool[] inv)
         {
             int turn = 1;
             int enemyoption, enemyatk, dmgdealt, dmgtaken, rng;
@@ -811,18 +812,30 @@ namespace studio_project
                     if (useroption == "1")
                     //Attack
                     {
-                        Console.Clear();
-                        Console.WriteLine($"HP: {userhp}");
-                        Console.WriteLine($"STAM: {usernrg}");
-                        Console.WriteLine();
-                        Console.WriteLine("1. Slash\t[25 STAM]\n2. Stab\t\t[50 STAM]\n3. Back");
-                        useratk = Console.ReadLine();
+                        if (enemyguard == true)
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"HP: {userhp}");
+                            Console.WriteLine($"STAM: {usernrg}");
+                            Console.WriteLine();
+                            Console.WriteLine("1. Slash\t[25 STAM]\t[3-15 DMG]\t[BLEED (1/4)]\n2. Stab\t\t[50 STAM]\t[6-17 DMG]\t[BLEED]\n3. Back");
+                            useratk = Console.ReadLine();
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"HP: {userhp}");
+                            Console.WriteLine($"STAM: {usernrg}");
+                            Console.WriteLine();
+                            Console.WriteLine("1. Slash\t[25 STAM]\t[10-25 DMG]\t[1/4 BLEED]\n2. Stab\t\t[50 STAM]\t[18-31 DMG]\t[BLEED]\n3. Back");
+                            useratk = Console.ReadLine();
+                        }
                         if (useratk == "1" && usernrg >= 25)
                         //Slash
                         {
                             if (enemyguard == true)
                             {
-                                dmgdealt = rand.Next(3, 15);
+                                dmgdealt = rand.Next(3, 16);
                             }
                             else
                             {
@@ -832,7 +845,7 @@ namespace studio_project
                             Console.Clear();
                             Console.WriteLine($"You slash your target, dealing {dmgdealt} damage!");
                             Thread.Sleep(1500);
-                            rng = rand.Next(0, 5);
+                            rng = rand.Next(0, 4);
                             usernrg = (usernrg - 25);
                             if (rng == 0)
                             {
@@ -841,13 +854,13 @@ namespace studio_project
                                 {
                                     enemybleed = true;
                                     Console.WriteLine();
-                                    Console.WriteLine($"You inflicted bleed!");
+                                    Console.WriteLine($"You inflicted bleed for 3 turns!");
                                     Thread.Sleep(1500);
                                 }
                             }
                             if (enemybleed == true)
                             {
-                                dmgdealt = rand.Next(3, 11);
+                                dmgdealt = rand.Next(6, 11);
                                 enemyhp = (enemyhp -= dmgdealt);
                                 Console.WriteLine();
                                 Console.WriteLine($"Mysterious Figure took {dmgdealt} bleed damage!");
@@ -884,13 +897,13 @@ namespace studio_project
                             {
                                 enemybleed = true;
                                 Console.WriteLine();
-                                Console.WriteLine("You inflicted bleed!");
+                                Console.WriteLine("You inflicted bleed for 3 turns!");
                                 enemybleedtimer = 0;
                                 Thread.Sleep(1500);
                             }
                             if (enemybleed == true)
                             {
-                                dmgdealt = rand.Next(3, 11);
+                                dmgdealt = rand.Next(6, 11);
                                 enemyhp = (enemyhp -= dmgdealt);
                                 Console.WriteLine();
                                 Console.WriteLine($"Mysterious Figure took {dmgdealt} bleed damage!");
@@ -923,7 +936,7 @@ namespace studio_project
                         guard = true;
                         if (enemybleed == true)
                         {
-                            dmgdealt = rand.Next(3, 11);
+                            dmgdealt = rand.Next(6, 11);
                             enemyhp = (enemyhp -= dmgdealt);
                             Console.WriteLine();
                             Console.WriteLine($"Mysterious Figure took {dmgdealt} bleed damage!");
@@ -1002,7 +1015,7 @@ namespace studio_project
                         enemyguard = true;
                         if (userpoison == true)
                         {
-                            dmgtaken = rand.Next(1, 11);
+                            dmgtaken = rand.Next(4, 13);
                             userhp = (userhp - dmgtaken);
                             Console.WriteLine();
                             Console.WriteLine($"You took {dmgtaken} poison damage!");
@@ -1070,7 +1083,7 @@ namespace studio_project
                             if (userpoison == false)
                             {
                                 Console.WriteLine();
-                                Console.WriteLine("You're poisoned!");
+                                Console.WriteLine("You're poisoned for 3 turns!");
                                 Thread.Sleep(1500);
                                 userpoison = true;
                             }
@@ -1111,7 +1124,7 @@ namespace studio_project
                             if (userbleed == false)
                             {
                                 Console.WriteLine();
-                                Console.WriteLine("You're bleeding!");
+                                Console.WriteLine("You're bleeding for 3 turns!");
                                 Thread.Sleep(1500);
                                 userbleed = true;
                             }
@@ -1333,7 +1346,7 @@ namespace studio_project
                 Console.WriteLine("Headless Horseman used Axe Throw...");
                 Thread.Sleep(1500);
                 Console.WriteLine();
-                if (rng == 0 || rng == 1)
+                if (rng == 0)
                 {
                     Console.WriteLine("You dodged!");
                 }
@@ -1398,7 +1411,7 @@ namespace studio_project
                     Console.WriteLine($"HP: {bossuserhp}");
                     Console.WriteLine($"STAM: {bossuserstam}");
                     Console.WriteLine();
-                    Console.WriteLine("1. Pumpkin Smash\t[60 STAM]\n2. Candle Blaze\t\t[100 STAM]\n3. Root Snare\t\t[130 STAM]\n4. Back");
+                    Console.WriteLine("1. Pumpkin Smash\t[60 STAM]\t[40-99 DMG]\n2. Candle Blaze\t\t[100 STAM]\t[60-118 DMG]\t[FIRE]\n3. Root Snare\t\t[130 STAM]\t[10-42 DMG]\t[STUN]\n4. Back");
                     useratk = Console.ReadLine();
                     if (useratk == "1" && bossuserstam >= 60)
                     {
@@ -1427,7 +1440,7 @@ namespace studio_project
                     }
                     else if (useratk == "2" && bossuserstam >= 100)
                     {
-                        int dmgdeal = rand.Next(60, 120);
+                        int dmgdeal = rand.Next(60, 119);
                         Console.Clear();
                         Console.WriteLine($"You use the lit candles to blast fire, dealing {dmgdeal} damage!");
                         Thread.Sleep(1500);
@@ -1459,7 +1472,7 @@ namespace studio_project
                     }
                     else if (useratk == "3" && bossuserstam >= 130)
                     {
-                        int dmgdeal = rand.Next(10, 30);
+                        int dmgdeal = rand.Next(10, 43);
                         Console.Clear();
                         Console.WriteLine($"You ensnare Headless Horseman in roots, deaing {dmgdeal} damage and stunning him!");
                         Thread.Sleep(1500);
