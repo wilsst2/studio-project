@@ -1884,10 +1884,15 @@ namespace studio_project
         {
             int room = 0;
             bool[] visited = new bool[4];
+
+            bool hasKey = false;
+            bool mapUnlocked = false;
+            bool hasLadder = false;
+
             string[] rooms =
             {
-             "You step into a dark, forgotten forest. Twisted trees reach " +
-              "towards the sky while cold wind whispers through the branches.",
+             "You step into a dark, forgotten forest.\n" +
+             "Twisted trees reach towards the sky, while cold wind whispers through the branches.",
 
              "Thick silver fog covers the path. Strange footsteps follow " +
               "you, but nobody is there.",
@@ -1898,9 +1903,11 @@ namespace studio_project
              "Dead trees surround an abandoned grove. Strange symbols glow " +
               "on their bark, and a witch's laughter echoes nearby."
             };
+
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("=== HAUNTED FOREST ===\n");
                 Console.WriteLine(rooms[room]);
 
                 if (visited[room])
@@ -1914,16 +1921,43 @@ namespace studio_project
                 }
 
                 if (room == 0 && lanterns[2] == false)
-                    Console.WriteLine("A glowing jack-o'-lantern rests beside a tree.");
-                Console.WriteLine("\n1. Clearing\n2. Foggy path\n3. Briar patch\n4. Witch's grove");
+                {
+                    Console.WriteLine("A glowing jack-o'-lantern hangs high in a tree.");
+                }
 
-                if (room == 0 && lanterns[2] == false)
-                    Console.WriteLine("5. Pick up jack-o'-lantern");
-                Console.WriteLine("6. Leave forest\n?. Help");
+                Console.WriteLine("\n1. Clearing");
+                Console.WriteLine("2. Foggy path");
+                Console.WriteLine("3. Briar patch");
+                Console.WriteLine("4. Witch's grove");
+
+                if (room == 2 && !hasKey)
+                {
+                    Console.WriteLine("5. Search the thorny bushes for a key");
+                }
+                Console.WriteLine("6. Leave forest");
+
+                if (room == 3 && hasKey && !mapUnlocked)
+                {
+                    Console.WriteLine("7. Unlock the mysterious map");
+                }
+
+                if (room == 1 && mapUnlocked && !hasLadder)
+                {
+                    Console.WriteLine("8. Find the hidden ladder");
+                }
+
+                if (room == 0 && hasLadder && !lanterns[2])
+                {
+                    Console.WriteLine("9. Climb the ladder and collect the lantern");
+                }
+
+                Console.WriteLine("?. Help");
+                Console.Write("\nEnter your choice: ");
+
 
                 string choice = Console.ReadLine();
 
-                switch (choice)
+                switch (choice.Trim())
                 {
                     case "1":
                         room = 0;
@@ -1950,16 +1984,19 @@ namespace studio_project
                         break;
 
                     case "5":
-                        if (room == 0 && lanterns[2] == false)
+                        if (room == 2 && !hasKey)
                         {
-                            lanterns[2] = true;
-                            Console.WriteLine("\nYou carefully lift the glowing jack-o'-lantern.");
-                            Console.WriteLine("Its warm orange light pushes back the surrounding darkness.");
-                            Console.WriteLine("For a moment, the whispers in the trees fall silent.");
-                            Console.WriteLine("You have collected the forest jack-o'-lantern!");
+                            Console.WriteLine(
+                                "\nYou search beneath the thorny bushes.");
 
-                            Console.WriteLine("\nPress ENTER to continue.");
-                            Console.ReadLine();
+                            Console.WriteLine(
+                                "Something cold touches your hand.");
+
+                            Console.WriteLine(
+                                "You discover an old rusty key hidden under the leaves!");
+
+                            hasKey = true;
+                            WaitForPlayer();
                         }
                         else
                         {
@@ -1969,7 +2006,7 @@ namespace studio_project
 
 
                     case "6":
-                        Console.WriteLine(
+                        Console.Write(
                             "\nAre you sure you want to leave the forest? (Y/N)");
 
                         string confirm =
@@ -1986,7 +2023,7 @@ namespace studio_project
                         else if (confirm == "N")
                         {
                             Console.WriteLine(
-                                "\nYou decide to stay in the forest.");
+                                "\nYou decide to remain in the forest.");
 
                             WaitForPlayer();
                         }
@@ -1997,24 +2034,70 @@ namespace studio_project
                         break;
 
 
-                    case "?":
-                        Console.Clear();
-                        Console.WriteLine("=== HAUNTED FOREST HELP ===");
-                        Console.WriteLine("Choose a number to explore a forest area.");
-                        Console.WriteLine("1 - Explore the Clearing");
-                        Console.WriteLine("2 - Explore the Foggy Path");
-                        Console.WriteLine("3 - Explore the Briar Patch");
-                        Console.WriteLine("4 - Explore the Witch's Grove");
-                        Console.WriteLine("5 - Collect the lantern when available.");
-                        Console.WriteLine("6 - Leave the forest.");
-                        Console.WriteLine("? - Display these instructions.");
-                        Console.WriteLine("\nPress ENTER to return to the forest.");
-                        Console.ReadLine();
+                    case "7":
+                        if (room == 3 && hasKey && !mapUnlocked)
+                        {
+                            Console.WriteLine(
+                                "\nYou find an old map hidden inside a hollow tree.");
+
+                            Console.WriteLine(
+                                "You use the rusty key to unlock its small metal case.");
+
+                            Console.WriteLine(
+                                "The map reveals a ladder hidden along the foggy path!");
+
+                            mapUnlocked = true;
+                            WaitForPlayer();
+                        }
+                        else
+                        {
+                            ShowInvalidChoice();
+                        }
                         break;
 
                     default:
                         ShowInvalidChoice();
                         break;
+
+                    case "8":
+                        if (room == 1 && mapUnlocked && !hasLadder)
+                        {
+                            Console.WriteLine(
+                                "\nYou follow the directions on the map.");
+
+                            Console.WriteLine(
+                                "Behind a cluster of dead trees, you discover a wooden ladder!");
+
+                            Console.WriteLine(
+                                "You carry the ladder back to the clearing.");
+
+                            hasLadder = true;
+                            WaitForPlayer();
+                        }
+                        else
+                        {
+                            ShowInvalidChoice();
+                        }
+                        break;
+
+                    case "?":
+                        Console.Clear();
+                        Console.WriteLine("=== HAUNTED FOREST HELP ===");
+                        Console.WriteLine("1 - Go to the clearing");
+                        Console.WriteLine("2 - Go to the foggy path");
+                        Console.WriteLine("3 - Go to the briar patch");
+                        Console.WriteLine("4 - Go to the Witch's grove");
+                        Console.WriteLine("5 - Search for the key when available");
+                        Console.WriteLine("6 - Leave the forest");
+                        Console.WriteLine("7 - Unlock the map when available");
+                        Console.WriteLine("8 - Find the ladder when available");
+                        Console.WriteLine("9 - Climb the ladder when available");
+                        Console.WriteLine("? - Display help");
+
+                        WaitForPlayer();
+                        break;
+
+                
                 }
             }
         }
