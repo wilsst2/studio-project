@@ -76,8 +76,12 @@ namespace studio_project
             else if (user == '3')
             {
                 Console.WriteLine("\nYou follow the path from the courtyard to the forest.");
+
                 Console.ReadLine();
-                Encounter1(ref lanterns, inv);
+
+                ExploreForest(lanterns, inv);
+
+                Courtyard(lanterns, inv);
             }
             else if (user == '4')
             {
@@ -1963,34 +1967,35 @@ namespace studio_project
                         }
                         break;
 
+
                     case "6":
+                        Console.WriteLine(
+                            "\nAre you sure you want to leave the forest? (Y/N)");
 
-                        Console.WriteLine("\nAre you sure you want to leave the forest? (Y/N)");
-                        string confirm = Console.ReadLine().ToUpper();
-
-                        Console.WriteLine("\nThe path behind you disappears into the fog.");
-                        Console.WriteLine("Are you sure you want to leave the forest? (Y/N)");
-
-                        confirm = Console.ReadLine().Trim().ToUpper();
-
+                        string confirm =
+                            (Console.ReadLine() ?? "").Trim().ToUpper();
 
                         if (confirm == "Y")
                         {
-                            Console.WriteLine("You leave the forest and return to the path.");
-                            Console.ReadLine();
-                            Street(lanterns, inv);
+                            Console.WriteLine(
+                                "\nYou leave the forest and return to the courtyard.");
+
+                            WaitForPlayer();
                             return;
                         }
                         else if (confirm == "N")
                         {
-                            Console.WriteLine("You decide to remain among the twisted trees.");
-                            Console.ReadLine();
+                            Console.WriteLine(
+                                "\nYou decide to stay in the forest.");
+
+                            WaitForPlayer();
                         }
                         else
                         {
                             ShowInvalidChoice();
                         }
                         break;
+
 
                     case "?":
                         Console.Clear();
@@ -2029,6 +2034,9 @@ namespace studio_project
             Console.WriteLine("\nPress ENTER to continue.");
             Console.ReadLine();
         }
+
+
+
 
 
 
