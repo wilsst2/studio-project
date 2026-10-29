@@ -1879,7 +1879,7 @@ namespace studio_project
 
 
         //David Haunted Forest
-
+        //3. Explore the forest and find the hidden lantern
         static void ExploreForest(bool[] lanterns, bool[] inv)
         {
             int room = 0;
