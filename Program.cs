@@ -1907,7 +1907,15 @@ namespace studio_project
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("=== HAUNTED FOREST ===\n");
+
+                string title = "HAUNTED FOREST";
+                int spaces = (Console.WindowWidth - title.Length) / 2;
+
+                Console.WriteLine(new string('=', Console.WindowWidth));
+                Console.WriteLine(new string(' ', Math.Max(0, spaces)) + title);
+                Console.WriteLine(new string('=', Console.WindowWidth));
+                Console.WriteLine();
+
                 Console.WriteLine(rooms[room]);
 
                 if (visited[room])
