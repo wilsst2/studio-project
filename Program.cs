@@ -2091,10 +2091,17 @@ namespace studio_project
                     case "9":
                         if (room == 0 && hasLadder && !lanterns[2])
                         {
-                            Console.WriteLine("\nYou place the ladder against the old tree.");
-                            Console.WriteLine("Carefully, you climb towards the glowing pumpkin.");
-                            Console.WriteLine("You reach the branch and collect the jack-o'-lantern!");
-                            Console.WriteLine("Its warm orange light pushes away the darkness.");
+                            Console.WriteLine("   | |");
+                            Console.WriteLine("   |-|");
+                            Console.WriteLine("   |-|");
+                            Console.WriteLine("   |-|");
+                            Console.WriteLine("   |-|");
+                            Console.WriteLine("   | |");
+                            Console.WriteLine("You place the ladder against the old tree.");
+                            Console.WriteLine(" Carefully, you climb towards the glowing pumpkin.");
+                            Console.WriteLine(" You reach the branch and collect the jack-o'-lantern!");
+                            Console.WriteLine(" Its warm orange light pushes away the darkness.");
+                            Console.WriteLine("\n Congratulations! You collected the forest lantern!");
 
                             lanterns[2] = true;
 
