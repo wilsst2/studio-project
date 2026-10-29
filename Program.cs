@@ -23,8 +23,8 @@ namespace studio_project
             bool[] lanterns = new bool[6];
             lanterns[0] = false; lanterns[1] = false; lanterns[2] = false; lanterns[3] = false; lanterns[4] = false; lanterns[5] = false; // 0 = courtyard, 1 = street, 2 = forest, 3 = bedroom, 4 = attic, 5 = fight
             bool[] inv = new bool[6];
-            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = false; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
-            BossFight(lanterns, inv);
+            
+            inv[0] = false; inv[1] = false; inv[2] = false; inv[3] = false; inv[4] = false; inv[5] = true; // 0 = coins, 1 = pruning knife, 3 = garden shed key, 4 = flashlight, 5 = broom
             Courtyard(lanterns, inv);
         }
 
@@ -129,7 +129,7 @@ namespace studio_project
             {
                 Console.WriteLine("\nYou enter the manor through the backdoor.");
                 Console.ReadLine();
-                Backyard(lanterns, inv); // unsure what this room will be
+                Hallway(lanterns, inv);
             }
             else if (user == '2')
             {
@@ -241,8 +241,7 @@ namespace studio_project
             {
                 Console.WriteLine("You ascend back up the stairs.");
                 Console.ReadLine();
-                // method to return to whatever room takes you to the basement
-                Basement(lanterns, inv);
+                Hallway(lanterns, inv);
             }
             else if (user == '2' && inv[4] == true)
             {
@@ -279,21 +278,25 @@ namespace studio_project
             Console.Clear();
             Console.WriteLine("You stand in the creaky upstairs hallway. There's a latch on the roof and various paintings on the walls that depict the same man.");
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Enter bedroom\n2. Enter attic\n3. Examine paintings");
+            Console.WriteLine("1. Go Downstairs\n2. Enter bedroom\n3. Enter attic\n4. Examine paintings");
             char user = CharCheck();
             if (user == '1')
+            {
+                Hallway(lanterns, inv);
+            }
+            else if (user == '2')
             {
                 Console.WriteLine("\nYou take the door to the bedroom.");
                 Console.ReadLine();
                 Bedroom(lanterns, inv);
             }
-            else if (user == '2' && inv[5] == false)
+            else if (user == '3' && inv[5] == false)
             {
                 Console.WriteLine("\nYou have nothing to pull the door down with.");
                 Console.ReadLine();
                 UpHallway(lanterns, inv);
             }
-            else if (user == '2' && inv[5] == true)
+            else if (user == '3' && inv[5] == true)
             {
                 Console.WriteLine("\nYou use your broom to pull the door down and ascend into the attic.");
                 Console.ReadLine();
@@ -551,7 +554,8 @@ namespace studio_project
             char user = CharCheck();
             if (user == '1')
             {
-                Dairy();
+                Console.WriteLine("\nPlaceholder cuz you cant go here");
+                Street(lanterns, inv);
             }
             else if (user == '2')
             {
@@ -1602,6 +1606,7 @@ namespace studio_project
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Enter bathroom");
             Console.WriteLine("2. Enter living room");
+            Console.WriteLine("3. Go upstairs\n4. Go downstairs"); //temporary for testing
 
             string user = Console.ReadLine();
 
@@ -1612,6 +1617,14 @@ namespace studio_project
             else if (user == "2")
             {
                 LivingRoom(lanterns, inv);
+            }
+            else if (user == "3")
+            {
+                UpHallway(lanterns, inv);
+            }
+            else if (user == "4")
+            {
+                Basement(lanterns, inv);
             }
             else
             {
@@ -1715,11 +1728,11 @@ namespace studio_project
             //}
 
             Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Solve mysterious case file 2 ");
+            Console.WriteLine("1. Leave\n2. Solve mysterious case file 2 ");
 
             if (!inv[5])
             {
-                Console.WriteLine("2. Pick up the broom");
+                Console.WriteLine("3. Pick up the broom");
             }
 
             //Console.WriteLine("3. Check inventory");
@@ -1728,8 +1741,11 @@ namespace studio_project
 
 
             string user = Console.ReadLine();
-
-            if (user == "1")
+            if (user == "1") // temp for testing
+            {
+                Hallway(lanterns, inv);
+            }
+            else if (user == "2")
             {
                 bool solved = Puzzle2();                    // case file 2
 
@@ -2019,67 +2035,67 @@ namespace studio_project
 
         // John Paul
         // Displays the abandoned dairy and handles the player's choices.
-        static void Dairy()
-        {
-            string choice = "";
+        //static void Dairy()
+        //{
+        //    string choice = "";
 
-            while (choice != "4")
-            {
-                Console.Clear();
+        //    while (choice != "4")
+        //    {
+        //        Console.Clear();
 
-                Console.WriteLine("A cold breeze moves through the empty building.");
-                Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
-                Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
-                Console.WriteLine("Moonlight slips through the dusty windows.");
-                Console.WriteLine("You feel that something mysterious is nearby.");
-                Console.WriteLine();
+        //        Console.WriteLine("A cold breeze moves through the empty building.");
+        //        Console.WriteLine("=== Welcome to the Abandoned Dairy ===");
+        //        Console.WriteLine("The dairy is dark, dusty and strangely quiet.");
+        //        Console.WriteLine("Moonlight slips through the dusty windows.");
+        //        Console.WriteLine("You feel that something mysterious is nearby.");
+        //        Console.WriteLine();
 
-                Console.WriteLine("What do you want to do?");
-                Console.WriteLine("1. Search the counter");
-                Console.WriteLine("2. Look behind the dairy");
-                Console.WriteLine("3. Inspect the shelves");
-                Console.WriteLine("4. Leave the dairy");
-                Console.WriteLine("5. Try the mysterious locked door");
-                Console.Write("Enter your choice: ");
+        //        Console.WriteLine("What do you want to do?");
+        //        Console.WriteLine("1. Search the counter");
+        //        Console.WriteLine("2. Look behind the dairy");
+        //        Console.WriteLine("3. Inspect the shelves");
+        //        Console.WriteLine("4. Leave the dairy");
+        //        Console.WriteLine("5. Try the mysterious locked door");
+        //        Console.Write("Enter your choice: ");
 
-                choice = Console.ReadLine()?.Trim() ?? "";
-                Console.WriteLine();
+        //        choice = Console.ReadLine()?.Trim() ?? "";
+        //        Console.WriteLine();
 
-                if (choice == "1")
-                {
-                    Console.WriteLine("You search the dusty counter.");
+        //        if (choice == "1")
+        //        {
+        //            Console.WriteLine("You search the dusty counter.");
 
-                    if (!hasRustyKey)
-                    {
-                        Console.WriteLine("You find an old rusty key!");
-                        Console.WriteLine("The key feels strangely cold in your hand.");
-                        hasRustyKey = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("You already collected the rusty key.");
-                    }
-                }
-                else if (choice == "2")
-                {
-                    Console.WriteLine("You look behind the dairy.");
-                    Console.WriteLine("You hear a strange noise in the darkness.");
-                    Console.WriteLine("You notice fresh footprints in the dirt.");
-                }
-                else if (choice == "3")
-                {
-                    Console.WriteLine("You inspect the shelves.");
-                    Console.WriteLine("You find an old note with a strange symbol.");
-                    Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
-                    Console.WriteLine("The symbol looks like a warning.");
-                }
-                else if (choice == "4")
-                {
-                    Console.WriteLine("You hear the door creak shut behind you.");
-                    Console.WriteLine("You leave the dairy and return to the path.");
-                    Console.WriteLine("You wonder what other secrets the");
-                }
-            }
-        }
+        //            if (!hasRustyKey)
+        //            {
+        //                Console.WriteLine("You find an old rusty key!");
+        //                Console.WriteLine("The key feels strangely cold in your hand.");
+        //                hasRustyKey = true;
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("You already collected the rusty key.");
+        //            }
+        //        }
+        //        else if (choice == "2")
+        //        {
+        //            Console.WriteLine("You look behind the dairy.");
+        //            Console.WriteLine("You hear a strange noise in the darkness.");
+        //            Console.WriteLine("You notice fresh footprints in the dirt.");
+        //        }
+        //        else if (choice == "3")
+        //        {
+        //            Console.WriteLine("You inspect the shelves.");
+        //            Console.WriteLine("You find an old note with a strange symbol.");
+        //            Console.WriteLine("The note reads: 'The key opens a hidden secret.'");
+        //            Console.WriteLine("The symbol looks like a warning.");
+        //        }
+        //        else if (choice == "4")
+        //        {
+        //            Console.WriteLine("You hear the door creak shut behind you.");
+        //            Console.WriteLine("You leave the dairy and return to the path.");
+        //            Console.WriteLine("You wonder what other secrets the");
+        //        }
+        //    }
+        //}
     }
 }
