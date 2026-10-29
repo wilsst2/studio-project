@@ -2088,6 +2088,24 @@ namespace studio_project
                         }
                         break;
 
+                    case "9":
+                        if (room == 0 && hasLadder && !lanterns[2])
+                        {
+                            Console.WriteLine("\nYou place the ladder against the old tree.");
+                            Console.WriteLine("Carefully, you climb towards the glowing pumpkin.");
+                            Console.WriteLine("You reach the branch and collect the jack-o'-lantern!");
+                            Console.WriteLine("Its warm orange light pushes away the darkness.");
+
+                            lanterns[2] = true;
+
+                            WaitForPlayer();
+                        }
+                        else
+                        {
+                            ShowInvalidChoice();
+                        }
+                        break;
+
                     case "?":
                         Console.Clear();
                         Console.WriteLine("=== HAUNTED FOREST HELP ===");
@@ -2125,7 +2143,12 @@ namespace studio_project
             Console.WriteLine("\nPress ENTER to continue.");
             Console.ReadLine();
         }
-
+        //Puzzle 
+        //3. go to Briar Patch and find the key by press 5
+        //4. go to Witch's Grove and unlock the map by press 7
+        //5. go to Foggy Path and find the ladder by press 8
+        //6. go to Clearing and climb the ladder to get the lantern by press 9
+        
 
 
 
