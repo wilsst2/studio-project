@@ -2091,17 +2091,30 @@ namespace studio_project
                     case "9":
                         if (room == 0 && hasLadder && !lanterns[2])
                         {
+                            Console.WriteLine();
                             Console.WriteLine("   | |");
                             Console.WriteLine("   |-|");
                             Console.WriteLine("   |-|");
                             Console.WriteLine("   |-|");
                             Console.WriteLine("   |-|");
                             Console.WriteLine("   | |");
+                            Console.WriteLine();
                             Console.WriteLine("You place the ladder against the old tree.");
-                            Console.WriteLine(" Carefully, you climb towards the glowing pumpkin.");
-                            Console.WriteLine(" You reach the branch and collect the jack-o'-lantern!");
-                            Console.WriteLine(" Its warm orange light pushes away the darkness.");
-                            Console.WriteLine("\n Congratulations! You collected the forest lantern!");
+                            Console.WriteLine("Carefully, you climb towards the glowing pumpkin.");
+                            Console.WriteLine();
+                            Console.WriteLine("        .-''''-.");
+                            Console.WriteLine("       /        \\");
+                            Console.WriteLine("      |  .--.    |");
+                            Console.WriteLine("      |  |  |    |");
+                            Console.WriteLine("      |  '--'    |");
+                            Console.WriteLine("       \\        /");
+                            Console.WriteLine("        '-.__.-'");
+                            Console.WriteLine();
+                            Console.WriteLine("You collect the jack-o'-lantern!");
+                            Console.WriteLine("Its warm orange light pushes away the darkness.");
+                            Console.WriteLine();
+                            Console.WriteLine("*** CONGRATULATIONS! ***");
+                            Console.WriteLine("You collected the forest lantern!");
 
                             lanterns[2] = true;
 
@@ -2113,24 +2126,7 @@ namespace studio_project
                         }
                         break;
 
-                    case "?":
-                        Console.Clear();
-                        Console.WriteLine("=== HAUNTED FOREST HELP ===");
-                        Console.WriteLine("1 - Go to the clearing");
-                        Console.WriteLine("2 - Go to the foggy path");
-                        Console.WriteLine("3 - Go to the briar patch");
-                        Console.WriteLine("4 - Go to the Witch's grove");
-                        Console.WriteLine("5 - Search for the key when available");
-                        Console.WriteLine("6 - Leave the forest");
-                        Console.WriteLine("7 - Unlock the map when available");
-                        Console.WriteLine("8 - Find the ladder when available");
-                        Console.WriteLine("9 - Climb the ladder when available");
-                        Console.WriteLine("? - Display help");
 
-                        WaitForPlayer();
-                        break;
-
-                
                 }
             }
         }
