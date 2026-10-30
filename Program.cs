@@ -1598,7 +1598,6 @@ namespace studio_project
 
 
         //Akirah
-
         // hallway with options to enter bathroom or living room
         static void Hallway(bool[] lanterns, bool[] inv)
         {
@@ -1662,8 +1661,7 @@ namespace studio_project
         {
 
             Console.Clear();
-            Console.WriteLine("You enter the living room.");
-            Console.WriteLine("Dusty furniture fills the room, and an old fireplace stands against the wall.");
+            Console.WriteLine("You enter what appears to be an old living room. Dust covers the furniture, and the air smells faintly of damp wood.");
             Console.WriteLine("There is one door leading into the kitchen.");
 
             Console.WriteLine("\nWhat do you want to do?");
@@ -1717,9 +1715,10 @@ namespace studio_project
         static void Kitchen(bool[] lanterns, bool[] inv)
         {
             Console.Clear();
-            Console.WriteLine("You enter the kitchen.");
-            Console.WriteLine("Old cupboards line the walls, and rusty pots hang from the ceiling.");
-            Console.WriteLine("A rotten smell lingers in the air.");
+            Console.WriteLine("You step into the kitchen. The room is cold and strangely quiet.");
+            Console.WriteLine("Old pots and pans hang from the walls, and a thick layer of dust covers the countertops.");
+            Console.WriteLine("In the centre of the room sits a wooden table. Something rests upon it.");
+            Console.WriteLine("You notice another case file sitting on the table.");
 
 
             //if (inv[5])
@@ -1728,16 +1727,19 @@ namespace studio_project
             //}
             //else
             //{
-            //    Console.WriteLine("\nYou notice a dusty broomlying in the corner.");
+            //    Console.WriteLine("\nYou notice a dusty broom lying in the corner.");
             //}
 
-            Console.WriteLine("\nWhat do you want to do?");
-            Console.WriteLine("1. Leave\n2. Solve mysterious case file 2 ");
-
-            if (!inv[5])
-            {
-                Console.WriteLine("3. Pick up the broom");
-            }
+            Console.WriteLine("\nThe case looks considerably more sinister than the last one.");
+            Console.WriteLine("A strange binary sequence is engraved into its surface.");
+            Console.WriteLine("You feel an unsettling presence surrounding it.");
+            Console.WriteLine("\nAre you brave enough to attempt to open it, or are you afraid of what might happen if you fail?");
+            Console.WriteLine("1. Attempt to open the case");
+            Console.WriteLine("2. Leave it alone");
+            //if (!inv[5])
+            //{
+            //    Console.WriteLine("3. Pick up the broom");
+            //}
 
             //Console.WriteLine("3. Check inventory");
             //Console.WriteLine("4. Return to the living room");
@@ -1745,11 +1747,11 @@ namespace studio_project
 
 
             string user = Console.ReadLine();
-            if (user == "1") // temp for testing
+            if (user == "2") // temp for testing
             {
                 Hallway(lanterns, inv);
             }
-            else if (user == "2")
+            else if (user == "1")
             {
                 bool solved = Puzzle2();                    // case file 2
 
