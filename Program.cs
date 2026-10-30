@@ -1677,7 +1677,7 @@ namespace studio_project
             }
             else if (user == "2")
             {
-                Console.WriteLine("\nYou must solve case file 1 before entering the kitchen.");                 //solve case first
+                Console.WriteLine("\nYou must solve case file 1 before entering the kitchen.");                 //solve case first before entering kitchen
                 Console.ReadKey();
                 LivingRoom(lanterns, inv);
             }
@@ -1736,6 +1736,7 @@ namespace studio_project
             Console.WriteLine("\nAre you brave enough to attempt to open it, or are you afraid of what might happen if you fail?");
             Console.WriteLine("1. Attempt to open the case");
             Console.WriteLine("2. Leave it alone");
+
             //if (!inv[5])
             //{
             //    Console.WriteLine("3. Pick up the broom");
@@ -1763,20 +1764,24 @@ namespace studio_project
                     Console.WriteLine();
 
                     Console.WriteLine("What do you want to do?");
-                    Console.WriteLine("1. Exit the haunted house");
-                    Console.WriteLine("2. Return to the kitchen");
+                    Console.WriteLine("1. Return to the kitchen");
+                    Console.WriteLine("2. Exit the haunted house");
+                    
 
                     string choice = Console.ReadLine();
 
-                    if (choice == "1")
+                    if (choice == "2")
                     {
                         Console.Clear();
-                        Console.WriteLine("You escaped the haunted house!");
-                        Console.WriteLine("Thank you for playing our haunted house demo!");
-                        Console.ReadLine();
-                        return;
+                        Console.WriteLine("You leave the kitchen, holding the o");
+                        Console.WriteLine("The manor seems even quieter than before.");
+                        Console.WriteLine("You eventually make your way back through the hallway and out into the courtyard.");
+                        Console.WriteLine("\nYou are back where your journey first began.");
+                        // Console.ReadLine();
+                        Console.ReadKey();
+                        Courtyard(lanterns, inv);
                     }
-                    else if (choice == "2")
+                    else if (choice == "1")
                     {
                         Kitchen(lanterns, inv);
                     }
