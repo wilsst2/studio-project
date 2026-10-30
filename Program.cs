@@ -1638,11 +1638,11 @@ namespace studio_project
         }
 
         //bathroom scene and added a choice to go back to the hallway
-        static void BathRoom(bool[] lanterns, bool[] inv)
+        static void BathRoom(bool[] lanterns, bool[] inv)     
         {
             Console.Clear();
             Console.WriteLine("You enter the bathroom.");
-            Console.WriteLine("The mirror is cracked, the sink is stained, and the room feels unusually cold.");
+            Console.WriteLine("The mirror is cracked, the sink is stained, and the room feels unusually cold.");   // not much in here need to add something
 
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Return to hallway");
@@ -1666,8 +1666,8 @@ namespace studio_project
 
             Console.WriteLine("\nWhat do you want to do?");
             Console.WriteLine("1. Return to hallway");
-            Console.WriteLine("2. Enter kitchen");
-            Console.WriteLine("3. Solve mysterious case file 1");
+            Console.WriteLine("2. Enter kitchen");                      //cannot access unless solve puzzle 1, might remove 
+            Console.WriteLine("3. Solve mysterious case file 1");      //to enter kitchen
 
             string user = Console.ReadLine();
 
@@ -1734,8 +1734,8 @@ namespace studio_project
             Console.WriteLine("A strange binary sequence is engraved into its surface.");
             Console.WriteLine("You feel an unsettling presence surrounding it.");
             Console.WriteLine("\nAre you brave enough to attempt to open it, or are you afraid of what might happen if you fail?");
-            Console.WriteLine("1. Attempt to open the case");
-            Console.WriteLine("2. Leave it alone");
+            Console.WriteLine("1. Attempt to open the case");                   // if true choice to return to kitchen or exit back to courtyard
+            Console.WriteLine("2. Leave it alone");                             // back to hallway
 
             //if (!inv[5])
             //{
@@ -1760,12 +1760,12 @@ namespace studio_project
                 {
                     Console.Clear();
                     Console.WriteLine("You successfully converted the binary to decimal!");
-                    Console.WriteLine("The exit unlocks.");
+                    Console.WriteLine("The exit unlocks.");      //shortcut back to courtyard
                     Console.WriteLine();
 
                     Console.WriteLine("What do you want to do?");
-                    Console.WriteLine("1. Return to the kitchen");
-                    Console.WriteLine("2. Exit the haunted house");
+                    Console.WriteLine("1. Return to the kitchen"); // return to kitchen but have to attempt case 2 again
+                    Console.WriteLine("2. Exit the haunted house"); // choice to go back to courtyard, start
                     
 
                     string choice = Console.ReadLine();
@@ -1773,11 +1773,13 @@ namespace studio_project
                     if (choice == "2")
                     {
                         Console.Clear();
-                        Console.WriteLine("You leave the kitchen, holding the o");
+                        Console.WriteLine("You leave the kitchen");
                         Console.WriteLine("The manor seems even quieter than before.");
                         Console.WriteLine("You eventually make your way back through the hallway and out into the courtyard.");
                         Console.WriteLine("\nYou are back where your journey first began.");
-                        // Console.ReadLine();
+
+                       // Console.WriteLine("However, you now have something that might prove useful..."); if broom pick up
+
                         Console.ReadKey();
                         Courtyard(lanterns, inv);
                     }
